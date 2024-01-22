@@ -1,0 +1,9 @@
+set nocp ai bs=2 hls ic is lbr ls=2 mouse=a nu ru sc scs smd so=3 sw=4 ts=4
+filetype plugin indent on
+syn on
+map gA m'ggVG"+y''
+
+set cindent cino=j1,(0,ws,Ws
+
+com -range=% -nargs=1 P exe "<line1>,<line2>!".<q-args> |y|sil u|echom @"
+au FileType cpp com! -buffer -range=% Hash <line1>,<line2>P cpp -dD -P -fpreprocessed | tr -d '[:space:]' | md5sum

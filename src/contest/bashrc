@@ -1,0 +1,5 @@
+setxkbmap -option caps:escape
+alias e='vim'
+alias cls='clear -x'
+alias mv='mv -i'
+alias cp='cp -i'
