@@ -9,7 +9,18 @@
 
 #pragma once
 
-#include "algebra/monoid-pow.hpp"
+#include "contest/base.hpp"
+
+template <class T> T pow(T a, ll b) {
+	assert(b >= 0);
+	T r = 1;
+	while (b) {
+		if (b & 1) r *= a;
+		a *= a;
+		b >>= 1;
+	}
+	return r;
+}
 
 template <uint32_t mod> struct mint {
 	using U = uint32_t;

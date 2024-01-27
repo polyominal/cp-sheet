@@ -21,7 +21,6 @@
 #include "ad-hoc/palindromic-decomp-dp.hpp"
 
 // Algebra
-#include "algebra/monoid-pow.hpp"
 #include "algebra/modint.hpp"
 #include "algebra/nft.hpp"
 #include "algebra/matrix.hpp"
