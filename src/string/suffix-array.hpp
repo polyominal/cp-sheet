@@ -115,19 +115,19 @@ struct SuffixArray {
 		induce(buf); /// end-hash
 	}
 
-	void build_isa() {
+	void build_isa() { /// start-hash
 		isa.resize(n+1);
 		for (int i = 0; i <= n; i++) isa[sa[i]] = i;
-	}
+	} /// end-hash
 
 	template <class S> void build_lcp(const S& s) {
 		assert(n == int(s.size()));
-		lcp.resize(n+1);
+		lcp.resize(n+1); /// start-hash
 		for (int i = 0, k = 0; i < n-1; i++) {
 			int r = isa[i]-1, j = sa[r];
 			while (k < n - max(i, j) && s[i+k] == s[j+k]) k++;
 			lcp[r] = k;
 			if (k) k--;
-		}
+		} /// end-hash
 	}
 };
