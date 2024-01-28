@@ -53,3 +53,23 @@ TEST_CASE("Factorize", "[factor]") {
 		REQUIRE(factorize<int>(a) == factorize_naive(a));
 	}
 }
+
+TEST_CASE("Factorize: primitive roots", "[factor]") {
+	using namespace factor;
+
+	constexpr int MAX = 2345;
+	for (int p = 2; p < MAX; p++) {
+		if (!is_prime(p)) continue;
+
+		auto root = primitive_root(p);
+		V<bool> seen(p);
+		int v = 1;
+		for (int z = 0; z < p-1; z++) {
+			REQUIRE(!seen[v]);
+			REQUIRE(v);
+			seen[v] = true;
+			v = int(ll(v) * root % p);
+		}
+		REQUIRE(v == 1);
+	}
+}
