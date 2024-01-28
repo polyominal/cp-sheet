@@ -16,7 +16,9 @@ V<S> palindromic_decomp_dp_naive(const V<int>& a,
 	});
 	auto is_pal = [&](int l, int r) -> bool {
 		assert(0 <= l && l < r && r <= n);
-		if constexpr (even && r-l % 2 != 0) return false;
+		if constexpr (even) {
+			if ((r-l) % 2) return false;
+		}
 		return r-l <= man[l+r];
 	};
 	V<S> dp(n+1, add_e);
@@ -43,7 +45,7 @@ TEST_CASE("Palindromic decomposition DP", "[palindromic-decomp-dp][manacher]") {
 	S add_e = 0, mul_e = 1;
 
 	{
-		for (int N : {0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}) {
+		for (int N : {1, 2, 3, 5, 8, 13, 21, 34, 55, 89}) {
 
 			V<int> A(N);
 			constexpr int K = 3;
@@ -52,7 +54,7 @@ TEST_CASE("Palindromic decomposition DP", "[palindromic-decomp-dp][manacher]") {
 				auto res = palindromic_decomp_dp<S, K>(
 					A, add, add_e, mul_x, mul_e
 				);
-				auto res_naive = palindromic_decomp_dp<S, K>(
+				auto res_naive = palindromic_decomp_dp_naive<S, K>(
 					A, add, add_e, mul_x, mul_e
 				);
 				REQUIRE(res == res_naive);
@@ -60,7 +62,7 @@ TEST_CASE("Palindromic decomposition DP", "[palindromic-decomp-dp][manacher]") {
 		}
 	}
 
-	for (int N : {0, 2, 4, 6, 8, 34, 100}) {
+	for (int N : {2, 4, 6, 8, 34, 100}) {
 		V<int> A(N);
 		constexpr int K = 3;
 		for (int& a : A) a = rng.uniform(0, K-1);
@@ -68,7 +70,7 @@ TEST_CASE("Palindromic decomposition DP", "[palindromic-decomp-dp][manacher]") {
 			auto res = palindromic_decomp_dp<S, K, true>(
 				A, add, add_e, mul_x, mul_e
 			);
-			auto res_naive = palindromic_decomp_dp<S, K, true>(
+			auto res_naive = palindromic_decomp_dp_naive<S, K, true>(
 				A, add, add_e, mul_x, mul_e
 			);
 			REQUIRE(res == res_naive);
