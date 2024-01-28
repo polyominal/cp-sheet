@@ -15,11 +15,12 @@
 #include "contest/base.hpp"
 
 // Work in progress
-// TODO: isa, lcp
 
 struct SuffixArray {
 	int n;
 	V<int> sa;
+	V<int> isa;
+	V<int> lcp;
 	SuffixArray(int n_) : n(n_) {}
 
 	template <class S> static SuffixArray construct(const S& s) {
@@ -27,6 +28,9 @@ struct SuffixArray {
 		SuffixArray sa(n);
 
 		sa.build_sa_fast(s);
+
+		sa.build_isa();
+		sa.build_lcp(s);
 
 		return sa;
 	}
@@ -109,5 +113,21 @@ struct SuffixArray {
 		auto buf = lms + (n2+1);
 		for (int i = 0; i <= n2; i++) buf[i] = lms[sa[i]];
 		induce(buf); /// end-hash
+	}
+
+	void build_isa() {
+		isa.resize(n+1);
+		for (int i = 0; i <= n; i++) isa[sa[i]] = i;
+	}
+
+	template <class S> void build_lcp(const S& s) {
+		assert(n == int(s.size()));
+		lcp.resize(n+1);
+		for (int i = 0, k = 0; i < n-1; i++) {
+			int r = isa[i]-1, j = sa[r];
+			while (k < n - max(i, j) && s[i+k] == s[j+k]) k++;
+			lcp[r] = k;
+			if (k) k--;
+		}
 	}
 };
