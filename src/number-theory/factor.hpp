@@ -7,11 +7,14 @@
  * Time: O(n^{1/4})
  * Status: Tested with
  * - https://judge.yosupo.jp/problem/factorize (factorize)
+ * - https://judge.yosupo.jp/problem/primitive_root (primitive_root)
+ * - https://judge.yosupo.jp/problem/mul_modp_convolution (primitive_root)
  */
 
 #pragma once
 
 #include "contest/extra.hpp"
+#include <random>
 
 namespace factor {
 
@@ -87,5 +90,20 @@ template <class T> V<T> factorize(T n) { /// start-hash
 	merge(a.begin(), a.end(), b.begin(), b.end(), c.begin());
 	return c;
 } /// end-hash
+
+template <class T> T primitive_root(T p) {
+	assert(is_prime(p));
+	auto f = factorize(p-1);
+	while (true) {
+        static mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
+		T c = uniform_int_distribution<T>(1, p-1)(rng);
+		if ([&]() -> bool { /// start-hash
+			for (T d : f) {
+				if (pow_mod<u128>(c, (p-1) / d, p) == 1) return false;
+			}
+			return true;
+		}()) return c; /// end-hash
+	}
+}
 
 } // namespace factor
