@@ -82,3 +82,30 @@ TEST_CASE("Suffix array: random", "[suffix-array]") {
 		}
 	}
 }
+
+TEST_CASE("Suffix array: number of distinct substrings", "[suffix-array]") {
+	auto rng = Random(20240128);
+	{
+		for (int N : {0, 1, 2, 3, 5, 8, 13, 21, 256}) {
+			string S;
+			for (int i = 0; i < N; i++) {
+				S.push_back(char('a' + rng.uniform(0, 5)));
+			}
+
+			auto sa = SuffixArray::construct(S);
+			ll num = 0;
+			num += ll(N) * (N+1) / 2;
+			for (int x : sa.lcp) num -= x;
+
+			set<string> st;
+			for (int l = 0; l < N; l++) {
+				string cur;
+				for (int r = l; r < N; r++) {
+					cur += S[r];
+					st.insert(cur);
+				}
+			}
+			REQUIRE(ll(st.size()) == num);
+		}
+	}
+}
