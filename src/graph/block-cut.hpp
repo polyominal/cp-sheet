@@ -1,11 +1,13 @@
+#pragma once
+
 #include "contest/base.hpp"
 
 template <class E> VV<int> block_cut_tree(int n, const VV<E>& g) {
-	VV<int> tr(n);
+	VV<int> tr(n); /// start-hash
 	auto add = [&](int b, int v) -> void {
 		tr[b].push_back(v);
 		tr[v].push_back(b);
-	};
+	}; /// end-hash
 
 	V<int> stk; stk.reserve(n);
 	V<int> idx(n, -1);
@@ -13,7 +15,7 @@ template <class E> VV<int> block_cut_tree(int n, const VV<E>& g) {
 	for (int s = 0; s < n; s++) {
 		if (idx[s] != -1) continue;
 		yc([&](auto self, int v, int p) -> int {
-			stk.push_back(v);
+			stk.push_back(v); /// start-hash
 			idx[v] = t++;
 			int low = idx[v] = t++;
 			int c = 0;
@@ -37,12 +39,12 @@ template <class E> VV<int> block_cut_tree(int n, const VV<E>& g) {
 					low = min(low, idx[w]);
 				}
 			}
-			return low;
+			return low; /// end-hash
 		})(s, -1);
-		int b = int(tr.size());
+		int b = int(tr.size()); /// start-hash
 		tr.resize(b+1);
 		for (int v : stk) add(b, v);
-		stk.clear();
+		stk.clear(); /// end-hash
 	}
 
 	return tr;
