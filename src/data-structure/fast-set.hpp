@@ -84,4 +84,11 @@ struct FastSet {
 		}
 		return -1;
 	} /// end-hash
+
+	// not tested
+	template <class F> void enumerate(int l, int r, F f) {
+		for (int p = next(l); p < r; p = next(p+1)) {
+			f(p);
+		}
+	}
 };
