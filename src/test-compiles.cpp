@@ -4,7 +4,7 @@
 
 // Data Structure
 #include "data-structure/hash-map.hpp"
-#include "data-structure/segtree.hpp"
+#include "data-structure/lazy-segtree.hpp"
 #include "data-structure/treap.hpp"
 #include "data-structure/static-range.hpp"
 #include "data-structure/binary-indexed-tree.hpp"
@@ -12,6 +12,8 @@
 #include "data-structure/fast-set.hpp"
 #include "data-structure/line-container.hpp"
 #include "data-structure/persistent-array.hpp"
+#include "data-structure/segtree.hpp"
+#include "data-structure/assignment-segtree.hpp"
 
 // Ad Hoc
 #include "ad-hoc/tree-dp.hpp"
