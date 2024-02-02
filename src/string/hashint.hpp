@@ -2,6 +2,7 @@
  * Author: Hanfei Chen
  * Date: 2023-11-20
  * Description: Self-explanatory string hashing structure
+ * Source: https://yosupo.hatenablog.com/entry/2023/08/06/181942
  * Status: Tested with https://judge.yosupo.jp/problem/suffixarray
  */
 
