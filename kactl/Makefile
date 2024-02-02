@@ -17,12 +17,10 @@ help:
 .PHONY: fast
 fast:
 	$(LATEXCMD) kactl.tex </dev/null
-	cp kactl.pdf ../kactl.pdf
 
 .PHONY: kactl
 kactl:
 	$(LATEXCMD) kactl.tex && $(LATEXCMD) kactl.tex
-	cp kactl.pdf ../kactl.pdf
 
 .PHONY: clean
 clean: 
@@ -30,4 +28,4 @@ clean:
 
 .PHONY: veryclean
 veryclean: clean
-	rm -f kactl.pdf ../kactl.pdf
+	rm -f kactl.pdf
