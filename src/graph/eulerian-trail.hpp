@@ -9,9 +9,9 @@
  * can be somewhat ad-hoc :)
  * Time: $O(V+E)$
  * Status: Tested with
- * - https://judge.yosupo.jp/problem/eulerian_trail_directed
- * - https://judge.yosupo.jp/problem/eulerian_trail_undirected
- * - https://uoj.ac/problem/117
+ * - https://judge.yosupo.jp/problem/eulerian_trail_directed (trail_directed)
+ * - https://judge.yosupo.jp/problem/eulerian_trail_undirected (trail_undirected)
+ * - https://uoj.ac/problem/117 (go)
  */
 
 #pragma once
