@@ -23,3 +23,5 @@ template <class F> struct ycr { /// start-hash
 template <class F> decltype(auto) yc(F&& f) {
 	return ycr<decay_t<F>>(forward<F>(f));
 } /// end-hash
+
+static mt19937_64 mt(chrono::steady_clock::now().time_since_epoch().count());
