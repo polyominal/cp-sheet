@@ -51,9 +51,8 @@ template <class T> bool is_prime(T n) { /// start-hash
 template <class T> T pollard(T n) {
 	assert(n >= 2);
 	if (n % 2 == 0) return 2;
-	static mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-	T c = uniform_int_distribution<T>(1, n-1)(rng);
-	T y = uniform_int_distribution<T>(1, n-1)(rng);
+	T c = uniform_int_distribution<T>(1, n-1)(mt);
+	T y = uniform_int_distribution<T>(1, n-1)(mt);
 	auto f = [&](T a) -> T { /// start-hash
 		return T((u128(a) * a + c) % n);
 	};
@@ -95,8 +94,7 @@ template <class T> T primitive_root(T p) {
 	assert(is_prime(p));
 	auto f = factorize(p-1);
 	while (true) {
-        static mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-		T c = uniform_int_distribution<T>(1, p-1)(rng);
+		T c = uniform_int_distribution<T>(1, p-1)(mt);
 		if ([&]() -> bool { /// start-hash
 			for (T d : f) {
 				if (pow_mod<u128>(c, (p-1) / d, p) == 1) return false;
