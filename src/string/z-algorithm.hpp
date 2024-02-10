@@ -14,15 +14,18 @@
 
 template <class S> V<int> z_algo(const S& s) {
 	int n = int(s.size());
-	V<int> r(n+1);
+	V<int> res(n+1);
 	for (int i = 1, j = 0; i <= n; i++) {
-		int& k = r[i];
-		if (j + r[j] <= i) k = 0;
-		else k = min(r[j]+j-i, r[i-j]);
+		int& k = res[i];
+		if (j + res[j] <= i) {
+			k = 0;
+		} else {
+			k = min(res[j] + j - i, res[i-j]);
+		}
 		while (i+k < n && s[k] == s[i+k]) k++;
-		if (j+r[j] < i+r[i]) j = i;
+		if (j + res[j] < i + res[i]) j = i;
 	}
-	r[0] = n;
-	return r;
+	res[0] = n;
+	return res;
 }
 
