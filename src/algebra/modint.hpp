@@ -22,13 +22,14 @@ template <class T> T pow(T a, ll b) {
 	return r;
 }
 
-template <uint32_t mod> struct mint {
+template <uint32_t mod> struct modint {
 	using U = uint32_t;
+	using mint = modint;
 
 	static constexpr U m = mod; /// start-hash
 	U v;
-	constexpr mint() : v(0) {}
-	constexpr mint(ll a) { s(U(a % m + m)); }
+	constexpr modint() : v(0) {}
+	template <class T> constexpr modint(T a) { s(U(a % m + m)); }
 	constexpr mint& s(U a) { v = a < m ? a : a-m; return *this; }
 	friend mint inv(const mint& n) { return pow(n, m-2); } /// end-hash
 

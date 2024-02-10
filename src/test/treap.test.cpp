@@ -12,7 +12,7 @@ TEST_CASE("Treap: range affine range sum", "[treap]") {
 
 	for (int N : {0, 1, 2, 3, 5, 8, 13, 21, 34}) {
 		constexpr uint32_t mod = 998244353;
-		using num = mint<mod>;
+		using num = modint<mod>;
 		struct data_t {
 			using S = num;
 			using F = pair<num, num>;
