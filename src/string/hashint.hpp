@@ -46,6 +46,5 @@ struct HashInt {
 };
 
 inline HashInt rand_base() {
-	static mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
-	return 2 * uniform_int_distribution<uint64_t>(4e10, 5e10)(rng) + 1;
+	return 2 * uniform_int_distribution<uint64_t>(4e10, 5e10)(mt) + 1;
 }
