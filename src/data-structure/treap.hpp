@@ -28,7 +28,6 @@ template <class M, bool persistent = false> struct TreapManager {
 			assert(!persistent);
 		}
 
-		mt19937_64 mt(chrono::steady_clock::now().time_since_epoch().count());
 		for (int z = 0; z < 2; z++) {
 			states[z] = uint32_t(mt());
 		}
