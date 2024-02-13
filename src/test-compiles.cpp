@@ -24,6 +24,7 @@
 
 // Algebra
 #include "algebra/modint.hpp"
+#include "algebra/barrett.hpp"
 #include "algebra/nft.hpp"
 #include "algebra/matrix.hpp"
 
