@@ -29,7 +29,9 @@ TEST_CASE("Assignment segtree: affine") {
 		V<S> A(N);
 		for (S& a : A) a = uniform_affine();
 
-		auto ast = AssignmentSegtree(A, m);
+		auto ast = AssignmentSegtree(N, [&A](int i) {
+			return A[i];
+		}, m);
 
 		constexpr int Q = 20;
 		for (int q = 0; q < Q; q++) {

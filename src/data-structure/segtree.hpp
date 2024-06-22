@@ -1,34 +1,21 @@
 #pragma once
 
 #include "contest/base.hpp"
-#include "contest/extra.hpp"
 
 template <class M> struct Segtree {
-	using S = typename M::S;
+	using S = M::S;
 	M m;
 	V<S> d;
 	int n, h, sz;
 	Segtree(M m_) : m(m_), n(0), h(0), sz(0) {}
-	Segtree(int n_, M m_) : m(m_) {
-		build(n_);
-	}
-	Segtree(const V<S>& a, M m_) : m(m_) {
-		build(a);
-	}
 	template <class A> Segtree(int n_, A a, M m_) : m(m_) {
 		build(n_, a);
 	}
 
-	void build(int n_) {
-		build(n_, [&](int) -> S { return m.e(); });
-	}
-	void build(const V<S>& a) {
-		build(int(a.size()), [&](int i) -> S { return a[i]; });
-	}
 	template <class A> void build(int n_, A a) { /// start-hash
 		n = n_;
-		h = internal::next_pow2(n);
-		sz = 1 << h;
+		sz = bit_ceil<uint32_t>(n);
+		h = countr_zero<uint32_t>(sz);
 		d.resize(2*sz);
 		for (int i = 0; i < n; i++) d[sz+i] = a(i);
 		for (int i = n; i < sz; i++) d[sz+i] = m.e();

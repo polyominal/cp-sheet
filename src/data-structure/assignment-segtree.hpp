@@ -14,7 +14,7 @@
 #include "data-structure/segtree.hpp"
 
 template <class M> struct AssignmentSegtree {
-	using S = typename M::S;
+	using S = M::S;
 	M m;
 	int n;
 	Segtree<M> st;
@@ -22,32 +22,14 @@ template <class M> struct AssignmentSegtree {
 	V<S> dat;
 
 	AssignmentSegtree(M m_) : m(m_), n(0), st(m) {}
-	AssignmentSegtree(int n_, M m_) : m(m_), st(m) {
-		build(n_);
-	}
-	AssignmentSegtree(const V<S>& a, M m_) : m(m_), n(int(a.size())), st(m) {
-		build(a);
-	}
 	template <class A> AssignmentSegtree(int n_, A a, M m_) : m(m_), n(n_), st(m) {
 		build(n_, a);
-	}
-
-	void build(int n_) {
-		n = n_;
-		st.build(n);
-		init();
-	}
-	void build(const V<S>& a) {
-		n = int(a.size());
-		st.build(a);
-		init();
 	}
 	template <class A> void build(int n_, A a) {
 		n = n_;
 		st.build(n, a);
 		init();
 	}
-
 	void init() {
 		cut = FastSet(n);
 		for (int p = 0; p < n; p++) cut.set(p);
@@ -69,9 +51,7 @@ template <class M> struct AssignmentSegtree {
 		int a = cut.prev(l);
 		int b = cut.next(l);
 		int c = cut.prev(r);
-		if (a == c) {
-			return pow(dat[a], r-l);
-		}
+		if (a == c) return pow(dat[a], r-l);
 		S u = pow(dat[a], b-l);
 		S v = st.prod(b, c);
 		S w = pow(dat[c], r-c);
@@ -82,9 +62,7 @@ template <class M> struct AssignmentSegtree {
 		if (l == r) return;
 		int a = cut.prev(l);
 		int b = cut.next(r);
-		if (a < l) {
-			st.set(a, pow(dat[a], l-a));
-		}
+		if (a < l) st.set(a, pow(dat[a], l-a));
 		if (r < b) {
 			S t = dat[cut.prev(r)];
 			dat[r] = t;
