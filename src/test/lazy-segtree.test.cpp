@@ -130,8 +130,9 @@ TEST_CASE("Lazy segtree: runtime polymorphism example", "[seglazy]") {
 			x = S{rng.uniform<uint32_t>(0, mod-1)};
 		}
 
-		auto st = LazySegtree(init, m);
-		auto rst = LazySegtree(init, rm);
+		auto z = [&](int i) { return init[i]; };
+		auto st = LazySegtree(N, z, m);
+		auto rst = LazySegtree(N, z, rm);
 		REQUIRE(int(st.all_prod().size()) == N);
 		REQUIRE(int(rst.all_prod().size()) == N);
 
@@ -198,7 +199,7 @@ TEST_CASE("Segtree: single set and range affine composition", "[segtree]") {
 			f = uniform_affine();
 		}
 		Monoid m;
-		auto st = LazySegtree(A, m);
+		auto st = LazySegtree(N, [&A](int i) { return A[i]; }, m);
 
 		constexpr int Q = 20;
 		for (int q = 0; q < Q; q++) {

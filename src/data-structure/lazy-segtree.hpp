@@ -12,38 +12,25 @@
 
 #pragma once
 
-#include "contest/extra.hpp"
+#include "contest/base.hpp"
 
 template <class M> struct LazySegtree {
-	using S = typename M::S;
-	using F = typename M::F;
+	using S = M::S;
+	using F = M::F;
 	M m;
 	V<S> d;
-	V<pair<F, bool>> lz;
+	V<F> lz;
 	int n, h, sz;
 	LazySegtree(M m_) : m(m_), n(0), h(0), sz(0) {}
-	LazySegtree(int n_, M m_) : m(m_) {
-		build(n_);
-	}
-	LazySegtree(const V<S>& a, M m_) : m(m_) {
-		build(a);
-	}
 	template <class A> LazySegtree(int n_, A a, M m_) : m(m_) {
 		build(n_, a);
 	}
-
-	void build(int n_) {
-		build(n_, [&](int) -> S { return m.e(); });
-	}
-	void build(const V<S>& a) {
-		build(int(a.size()), [&](int i) -> S { return a[i]; });
-	}
 	template <class A> void build(int n_, A a) { /// start-hash
 		n = n_;
-		h = internal::next_pow2(n);
-		sz = 1 << h;
+		sz = bit_ceil<uint32_t>(n);
+		h = countr_zero<uint32_t>(sz);
 		d.resize(2*sz);
-		lz.assign(sz, {m.id(), false});
+		lz.assign(sz, m.id());
 		for (int i = 0; i < n; i++) d[sz+i] = a(i);
 		for (int i = n; i < sz; i++) d[sz+i] = m.e();
 		for (int i = sz-1; i >= 1; i--) update(i);
@@ -55,19 +42,13 @@ template <class M> struct LazySegtree {
 
 	void apply(int i, F f) { /// start-hash
 		d[i] = m.mapping(f, d[i]);
-		if (i < sz) {
-			auto& t = lz[i];
-			t = {m.composition(t.first, f), true};
-		}
+		if (i < sz) lz[i] = m.composition(lz[i], f);
 	} /// end-hash
 
 	void downdate(int i) { /// start-hash
-		auto& t = lz[i];
-		if (t.second) {
-			apply(2*i, t.first);
-			apply(2*i+1, t.first);
-			t = {m.id(), false};
-		}
+		apply(2*i, lz[i]);
+		apply(2*i+1, lz[i]);
+		lz[i] = m.id();
 	} /// end-hash
 
 	S prod(int l, int r) { /// start-hash
