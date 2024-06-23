@@ -12,8 +12,8 @@ TEST_CASE("Hashint: bit strings", "[hashint]") {
 			S += char('0' + rng.uniform(0, 1));
 		}
 
-		V<HashInt> pref(N+1);
-		V<HashInt> pows(N+1);
+		Vec<HashInt> pref(N+1);
+		Vec<HashInt> pows(N+1);
 		pows[0] = 1;
 		const HashInt base = rand_base();
 		for (int i = 0; i < N; i++) {

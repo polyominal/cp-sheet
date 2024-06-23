@@ -2,7 +2,7 @@
 using namespace std;
 
 template <class T> using V = vector<T>;
-template <class T> using VV = V<V<T>>;
+template <class T> using VV = Vec<Vec<T>>;
 
 using ll = int64_t;
 

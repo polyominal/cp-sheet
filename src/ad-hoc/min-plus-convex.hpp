@@ -12,7 +12,7 @@
 #include "monotone-minima.hpp"
 
 // a convex and b arbitrary
-template <class T> V<T> min_plus_convex(const V<T>& a, const V<T>& b) {
+template <class T> Vec<T> min_plus_convex(const Vec<T>& a, const Vec<T>& b) {
 	int n = int(a.size());
 	int m = int(b.size());
 	if (!n || !m) return {};
@@ -21,7 +21,7 @@ template <class T> V<T> min_plus_convex(const V<T>& a, const V<T>& b) {
 		if (i-j >= n) return false;
 		return a[i-j] + b[j] <= a[i-k] + b[k];
 	});
-	V<T> res(n+m-1);
+	Vec<T> res(n+m-1);
 	for (int i = 0; i < n+m-1; i++) {
 		int j = x[i];
 		res[i] = a[i-j] + b[j];

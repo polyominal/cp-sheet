@@ -19,7 +19,7 @@ template <class T>
 using F_zero = function<bool(T)>;
 
 template <bool rref = false, class T>
-pair<int, T> sweep(VV<T>& a,
+pair<int, T> sweep(Vec<Vec<T>>& a,
 	F_better<T> fb, F_zero<T> fz,
 	int c = -1) {
 	int h = int(a.size());
@@ -73,7 +73,7 @@ pair<int, T> sweep(VV<T>& a,
 }
 
 template <class T>
-pair<V<T>, VV<T>> solve_lineareq(VV<T> a, V<T> b,
+pair<Vec<T>, Vec<Vec<T>>> solve_lineareq(Vec<Vec<T>> a, Vec<T> b,
 	F_better<T> fb, F_zero<T> fz) {
 	int h = int(a.size());
 	assert(h);
@@ -83,17 +83,17 @@ pair<V<T>, VV<T>> solve_lineareq(VV<T> a, V<T> b,
 	for (int i = r; i < h; i++) {
 		if (!fz(a[i][w])) return {};
 	}
-	V<T> x(w);
-	V<int> pivot(w, -1);
+	Vec<T> x(w);
+	Vec<int> pivot(w, -1);
 	int z = 0;
 	for (int i = 0; i < r; i++) {
 		while (fz(a[i][z])) z++;
 		x[z] = a[i][w], pivot[z] = i;
 	} /// end-hash
-	VV<T> ker; /// start-hash
+	Vec<Vec<T>> ker; /// start-hash
 	for (int j = 0; j < w; j++) {
 		if (pivot[j] == -1) {
-			V<T> v(w);
+			Vec<T> v(w);
 			v[j] = 1;
 			for (int k = 0; k < j; k++) {
 				if (pivot[k] != -1) v[k] = -a[pivot[k]][j];
@@ -104,23 +104,23 @@ pair<V<T>, VV<T>> solve_lineareq(VV<T> a, V<T> b,
 	return {x, ker};
 }
 
-template <class T> VV<T> mat_inv(VV<T> a,
+template <class T> Vec<Vec<T>> mat_inv(Vec<Vec<T>> a,
 	F_better<T> fb, F_zero<T> fz) { /// start-hash
 	int n = int(a.size());
-	VV<T> m(n, V<T>(2*n));
+	Vec<Vec<T>> m(n, Vec<T>(2*n));
 	for (int i = 0; i < n; i++) {
 		copy(begin(a[i]), end(a[i]), begin(m[i]));
 		m[i][n+i] = 1;
 	}
 	if (sweep<true>(m, fb, fz, n).first != n) return {};
-	VV<T> b(n);
+	Vec<Vec<T>> b(n);
 	for (int i = 0; i < n; i++) {
 		copy(begin(m[i]) + n, end(m[i]), back_inserter(b[i]));
 	}
 	return b;
 } /// end-hash
 
-template <class T> T mat_det(VV<T> a,
+template <class T> T mat_det(Vec<Vec<T>> a,
 	F_better<T> fb, F_zero<T> fz) { /// start-hash
 	return sweep<false>(a, fb, fz).second;
 } /// end-hash

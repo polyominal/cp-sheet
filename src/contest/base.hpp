@@ -7,10 +7,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-template <class T> using V = vector<T>;
-template <class T> using VV = V<V<T>>;
+template <class T> using Vec = vector<T>;
 
-using ll = int64_t;
+using i64 = int64_t;
 
 template <class F> struct ycr { /// start-hash
 	F f;

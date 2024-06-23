@@ -11,7 +11,7 @@ TEST_CASE("Static range composition: min/max", "[static-range]") {
 		using T = int64_t;
 		constexpr T INF = 1e18;
 
-		V<T> A(N);
+		Vec<T> A(N);
 		for (T& a : A) {
 			a = rng.uniform(-INF/2, INF/2);
 		}
@@ -42,7 +42,7 @@ TEST_CASE("Static range composition: product mod 998244353", "[static-range]") {
 		using T = num;
 		const T e(1);
 
-		V<T> A(N);
+		Vec<T> A(N);
 		for (T& a : A) {
 			a = rng.uniform<uint32_t>(0, num::get_mod()-1);
 		}
@@ -72,7 +72,7 @@ TEST_CASE("Static range composition: affine mod 998244353", "[static-range]") {
 			return T(a.first * b.first, a.second * b.first + b.second);
 		};
 
-		V<T> A(N);
+		Vec<T> A(N);
 		for (auto& [a, b] : A) {
 			a = rng.uniform<uint32_t>(0, num::get_mod()-1);
 			b = rng.uniform<uint32_t>(0, num::get_mod()-1);

@@ -10,18 +10,18 @@
 
 #include "contest/base.hpp"
 
-template <class F> void triangles(int n, const V<pair<int, int>>& edges, F f) {
-	V<int> deg(n); /// start-hash
+template <class F> void triangles(int n, const Vec<pair<int, int>>& edges, F f) {
+	Vec<int> deg(n); /// start-hash
 	for (auto& [a, b] : edges) {
 		deg[a]++, deg[b]++;
 	}
-	VV<int> adj(n);
+	Vec<Vec<int>> adj(n);
 	for (auto [a, b] : edges) {
 		if (tie(deg[a], a) > tie(deg[b], b)) swap(a, b);
 		adj[a].push_back(b);
 	} /// end-hash
 
-	V<int> ind(n); /// start-hash
+	Vec<int> ind(n); /// start-hash
 	int i = 0;
 	for (int x = 0; x < n; x++) {
 		++i;

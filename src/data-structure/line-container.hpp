@@ -17,16 +17,16 @@
 namespace line_container {
 
 struct Line { /// start-hash
-	mutable ll k, m, p;
+	mutable i64 k, m, p;
 	bool operator < (const Line& o) const { return k < o.k; }
-	bool operator < (ll x) const { return p < x; }
+	bool operator < (i64 x) const { return p < x; }
 }; /// end-hash
 
 struct LineContainer : multiset<Line, less<>> {
 	using I = iterator; /// start-hash
 	// (for doubles, use inf = 1/.0, div(a,b) = a/b)
-	static const ll inf = numeric_limits<ll>::max();
-	static ll div(ll a, ll b) {
+	static const i64 inf = numeric_limits<i64>::max();
+	static i64 div(i64 a, i64 b) {
 		return a / b - ((a ^ b) < 0 && a % b);
 	} /// end-hash
 	bool isect(I x, I y) { /// start-hash
@@ -35,7 +35,7 @@ struct LineContainer : multiset<Line, less<>> {
 		else x->p = div(y->m - x->m, x->k - y->k);
 		return x->p >= y->p;
 	} /// end-hash
-	void add(ll k, ll m) { /// start-hash
+	void add(i64 k, i64 m) { /// start-hash
 		auto z = insert({k, m, 0}), y = z++, x = y;
 		while (isect(y, z)) z = erase(z);
 		if (x != begin() && isect(--x, y)) {
@@ -45,7 +45,7 @@ struct LineContainer : multiset<Line, less<>> {
 			isect(x, erase(y));
 		}
 	} /// end-hash
-	ll query(ll x) { /// start-hash
+	i64 query(i64 x) { /// start-hash
 		assert(!empty());
 		auto l = *lower_bound(x);
 		return l.k * x + l.m;

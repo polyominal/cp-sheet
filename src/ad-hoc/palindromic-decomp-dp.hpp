@@ -15,11 +15,11 @@
 
 // dp[j] := sum_{i s.t. [i, j) is palindromic} {dp[i] * x}
 template <class S, int sigma, bool even = false>
-V<S> palindromic_decomp_dp(const V<int>& a,
+Vec<S> palindromic_decomp_dp(const Vec<int>& a,
 	function<S(S, S)> add, S add_e,
 	function<S(S)> mul_x, S mul_e) {
 	int n = int(a.size()); /// start-hash
-	V<int> locs(n);
+	Vec<int> locs(n);
 	Eertree<sigma> et(n);
 	for (int i = 0; i < n; i++) {
 		assert(0 <= a[i] && a[i] < sigma);
@@ -27,7 +27,7 @@ V<S> palindromic_decomp_dp(const V<int>& a,
 	} /// end-hash
 
 	int nnodes = et.size();
-	V<int> nxt(nnodes);
+	Vec<int> nxt(nnodes);
 	nxt[0] = -1;
 	if constexpr (even) {
 		assert(n % 2 == 0);
@@ -38,8 +38,8 @@ V<S> palindromic_decomp_dp(const V<int>& a,
 		iota(nxt.begin()+1, nxt.end(), 1);
 	}
 
-	V<int> diff(nnodes, 1e9); /// start-hash
-	V<pair<int, int>> top(nnodes);
+	Vec<int> diff(nnodes, 1e9); /// start-hash
+	Vec<pair<int, int>> top(nnodes);
 	for (int v = 2; v < nnodes; v++) {
 		int w = nxt[et[v].fail];
 		int d = et[v].len() - et[w].len();
@@ -48,7 +48,7 @@ V<S> palindromic_decomp_dp(const V<int>& a,
 		top[v].second++;
 	} /// end-hash
 
-	V<S> dp(n+1, add_e), gdp = dp; /// start-hash
+	Vec<S> dp(n+1, add_e), gdp = dp; /// start-hash
 	dp[0] = mul_e;
 	for (int j = 0; j < n; j++) {
 		int v = nxt[locs[j]];

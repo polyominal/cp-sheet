@@ -58,13 +58,13 @@ template <class M, bool persistent = false> struct TreapManager {
 
 	Tree merge(Tree a, Tree b) { return _merge(a, b); }
 
-	Tree build(const V<S>& a) { /// start-hash
+	Tree build(const Vec<S>& a) { /// start-hash
 		if (a.empty()) return make_empty();
 		return _build(a, 0, int(a.size()));
 	} /// end-hash
 
-	V<S> to_array(const Tree& t) { /// start-hash
-		V<S> buf;
+	Vec<S> to_array(const Tree& t) { /// start-hash
+		Vec<S> buf;
 		buf.reserve(size(t));
 		_to_array(t, buf);
 		return buf;
@@ -80,7 +80,7 @@ private:
 		S a, s;
 		F f;
 	};
-	V<Node> nodes;
+	Vec<Node> nodes;
 	Node& node(int i) { return nodes[i]; }
 	int _size(int i) { return i == null ? 0 : node(i).sz; } /// end-hash
 
@@ -94,7 +94,7 @@ private:
 		return i;
 	} /// end-hash
 
-	int _build(const V<S>& a, int l, int r) { /// start-hash
+	int _build(const Vec<S>& a, int l, int r) { /// start-hash
 		if (r - l == 1) {
 			return make_single(a[l]);
 		}
@@ -210,7 +210,7 @@ private:
 		return r;
 	} /// end-hash
 
-	void _to_array(int i, V<S>& buf) { /// start-hash
+	void _to_array(int i, Vec<S>& buf) { /// start-hash
 		if (i == null) return;
 		downdate(i);
 		auto& n = node(i);

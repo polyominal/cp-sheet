@@ -24,11 +24,11 @@ TEST_CASE("Factorize: primality test", "[factor]") {
 TEST_CASE("Factorize", "[factor]") {
 	using namespace factor;
 	
-	REQUIRE(factorize<u64>(997748200186314745) == V<u64>{5, 7, 17, 17, 17581, 5610628223});
+	REQUIRE(factorize<u64>(997748200186314745) == Vec<u64>{5, 7, 17, 17, 17581, 5610628223});
 
 	const int N = 10000;
 	// minimum prime factor
-	V<int> pfac(N);
+	Vec<int> pfac(N);
 	iota(pfac.begin(), pfac.end(), 0);
 	for (int a = 2; a*a < N; a++) {
 		if (a == pfac[a]) {
@@ -40,8 +40,8 @@ TEST_CASE("Factorize", "[factor]") {
 		}
 	}
 
-	auto factorize_naive = [&](int n) -> V<int> {
-		V<int> res;
+	auto factorize_naive = [&](int n) -> Vec<int> {
+		Vec<int> res;
 		while (n > 1) {
 			int p = pfac[n];
 			n /= p;
@@ -62,13 +62,13 @@ TEST_CASE("Factorize: primitive roots", "[factor]") {
 		if (!is_prime(p)) continue;
 
 		auto root = primitive_root(p);
-		V<bool> seen(p);
+		Vec<bool> seen(p);
 		int v = 1;
 		for (int z = 0; z < p-1; z++) {
 			REQUIRE(!seen[v]);
 			REQUIRE(v);
 			seen[v] = true;
-			v = int(ll(v) * root % p);
+			v = int(i64(v) * root % p);
 		}
 		REQUIRE(v == 1);
 	}

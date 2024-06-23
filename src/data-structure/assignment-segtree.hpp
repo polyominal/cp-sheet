@@ -19,7 +19,7 @@ template <class M> struct AssignmentSegtree {
 	int n;
 	Segtree<M> st;
 	FastSet cut;
-	V<S> dat;
+	Vec<S> dat;
 
 	AssignmentSegtree(M m_) : m(m_), n(0), st(m) {}
 	template <class A> AssignmentSegtree(int n_, A a, M m_) : m(m_), n(n_), st(m) {

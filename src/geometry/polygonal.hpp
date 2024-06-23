@@ -16,7 +16,7 @@
 
 namespace geometry {
 
-inline D area2(const V<P>& pol) { /// start-hash
+inline D area2(const Vec<P>& pol) { /// start-hash
 	if (pol.empty()) return 0;
 	D res = 0;
 	P a = pol.back();
@@ -28,9 +28,9 @@ inline D area2(const V<P>& pol) { /// start-hash
 } /// end-hash
 
 // (1:left) | (2: right) is inside between v[i] -- v[i + 1]
-inline V<pair<P, int>> insPolL(const V<P>& pol, const L& l) {
+inline Vec<pair<P, int>> insPolL(const Vec<P>& pol, const L& l) {
 	using Pi = pair<P, int>;
-	V<Pi> v;
+	Vec<Pi> v;
 	P a, b = pol.back();
 	for (auto c: pol) {
 		a = b; b = c;
@@ -46,7 +46,7 @@ inline V<pair<P, int>> insPolL(const V<P>& pol, const L& l) {
 		return dot(vl, x.first - l.s) < dot(vl, y.first - l.s);
 	});
 	int m = int(v.size());
-	V<Pi> res;
+	Vec<Pi> res;
 	for (int i = 0; i < m; i++) {
 		if (i) v[i].second ^= v[i - 1].second;
 		if (!res.empty() && res.back().first == v[i].first) res.pop_back();
@@ -56,7 +56,7 @@ inline V<pair<P, int>> insPolL(const V<P>& pol, const L& l) {
 }
 
 // 0: outside, 1: on line, 2: inside
-inline int contains(const V<P>& pol, const P& p) { /// start-hash
+inline int contains(const Vec<P>& pol, const P& p) { /// start-hash
 	if (!pol.size()) return 0;
 	int in = -1;
 	P a_, b_ = pol.back();
@@ -72,9 +72,9 @@ inline int contains(const V<P>& pol, const P& p) { /// start-hash
 } /// end-hash
 
 // pol: sorted and distinct
-inline V<P> convex_lower(const V<P>& pts) { /// start-hash
+inline Vec<P> convex_lower(const Vec<P>& pts) { /// start-hash
 	assert(pts.size() >= 2);
-	V<P> res;
+	Vec<P> res;
 	for (P d : pts) {
 		while (res.size() > 1) {
 			//if (ccw(res.end()[-2], res.end()[-1], d) != -1) break;
@@ -86,20 +86,20 @@ inline V<P> convex_lower(const V<P>& pts) { /// start-hash
 	return res;
 } /// end-hash
 
-inline V<P> convex(V<P> pts) { /// start-hash
+inline Vec<P> convex(Vec<P> pts) { /// start-hash
 	sort(pts.begin(), pts.end());
 	pts.erase(unique(pts.begin(), pts.end()), pts.end());
 	if (pts.size() <= 1) return pts;
-	V<P> lo = convex_lower(pts);
+	Vec<P> lo = convex_lower(pts);
 	reverse(pts.begin(), pts.end());
-	V<P> up = convex_lower(pts);
+	Vec<P> up = convex_lower(pts);
 	lo.insert(lo.begin(), up.begin() + 1, up.end() - 1);
 	return lo;
 } /// end-hash
 
-inline V<P> convex_cut(const V<P>& pol, const L& l) { /// start-hash
+inline Vec<P> convex_cut(const Vec<P>& pol, const L& l) { /// start-hash
 	if (pol.empty()) return {};
-	V<P> q;
+	Vec<P> q;
 	P a, b = pol.back();
 	for (auto c : pol) {
 		a = b, b = c;
@@ -114,7 +114,7 @@ inline V<P> convex_cut(const V<P>& pol, const L& l) { /// start-hash
 } /// end-hash
 
 // pol: convex
-inline D diameter(const V<P>& pol) { /// start-hash
+inline D diameter(const Vec<P>& pol) { /// start-hash
 	int n = int(pol.size());
 	if (n == 2) return dist(pol[1] - pol[0]);
 	int x = 0, y = 0;

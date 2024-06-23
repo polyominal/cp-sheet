@@ -5,9 +5,9 @@
 #include "util/random.hpp"
 
 // TODO: Generate "uniform" random trees
-V<int> get_random_tree_stupid(int N) {
+Vec<int> get_random_tree_stupid(int N) {
 	static auto rng = Random(20240106);
-	V<int> par(N);
+	Vec<int> par(N);
 	par[0] = -1;
 	for (int i = 1; i < N; i++) {
 		par[i] = rng.uniform<int>(0, i-1);
@@ -16,18 +16,18 @@ V<int> get_random_tree_stupid(int N) {
 }
 
 TEST_CASE("HLD: tree compression", "[hld]") {
-	V<int> par = {2, 2, -1, 0, 1, 0};
+	Vec<int> par = {2, 2, -1, 0, 1, 0};
 	HLD hld(par);
-	REQUIRE(hld.compress({1, 0}) == make_pair(V<int>{2, 0, 1}, V<int>{-1, 0, 0}));
-	REQUIRE(hld.compress({5, 3}) == make_pair(V<int>{0, 3, 5}, V<int>{-1, 0, 0}));
-	REQUIRE(hld.compress({5, 3, 4}) == make_pair(V<int>{2, 0, 3, 5, 4}, V<int>{-1, 0, 1, 1, 0}));
-	REQUIRE(hld.compress({5, 0, 2}) == make_pair(V<int>{2, 0, 5}, V<int>{-1, 0, 1}));
+	REQUIRE(hld.compress({1, 0}) == make_pair(Vec<int>{2, 0, 1}, Vec<int>{-1, 0, 0}));
+	REQUIRE(hld.compress({5, 3}) == make_pair(Vec<int>{0, 3, 5}, Vec<int>{-1, 0, 0}));
+	REQUIRE(hld.compress({5, 3, 4}) == make_pair(Vec<int>{2, 0, 3, 5, 4}, Vec<int>{-1, 0, 1, 1, 0}));
+	REQUIRE(hld.compress({5, 0, 2}) == make_pair(Vec<int>{2, 0, 5}, Vec<int>{-1, 0, 1}));
 }
 
 TEST_CASE("HLD (par_i < i): lca, get_ancestor and get_lowest", "[hld]") {
 	for (int N : {1, 2, 3, 5, 8, 13, 21, 34, 55, 89}) {
 		auto par = get_random_tree_stupid(N);
-		V<int> depth(N);
+		Vec<int> depth(N);
 		depth[0] = 0;
 		for (int i = 1; i < N; i++) {
 			depth[i] = depth[par[i]] + 1;

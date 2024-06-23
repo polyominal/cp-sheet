@@ -18,16 +18,16 @@
 
 struct Bipartite {
 	int nl, nr;
-	VV<int> g;
-	V<int> mtl, mtr, lvl;
-	V<bool> seen;
-	Bipartite(int nl_, int nr_, const V<pair<int, int>>& edges)
+	Vec<Vec<int>> g;
+	Vec<int> mtl, mtr, lvl;
+	Vec<bool> seen;
+	Bipartite(int nl_, int nr_, const Vec<pair<int, int>>& edges)
 		: nl(nl_), nr(nr_),
 		g(nl), mtl(nl, -1), mtr(nr, -1), lvl(nl), seen(nr) {
 		for (auto [i, j] : edges) {
 			g[i].push_back(j);
 		}
-		V<int> q; q.reserve(nl);
+		Vec<int> q; q.reserve(nl);
 		while (true) {
 			q.clear(); /// start-hash
 			for (int i = 0; i < nl; i++) {
@@ -59,7 +59,7 @@ struct Bipartite {
 			} /// end-hash
 
 
-			V<bool> done(nl); /// start-hash
+			Vec<bool> done(nl); /// start-hash
 			for (int s = 0; s < nl; s++) {
 				if (mtl[s] != -1) continue;
 
@@ -79,8 +79,8 @@ struct Bipartite {
 		}
 	}
 
-	V<pair<int, int>> matching() { /// start-hash
-		V<pair<int, int>> res;
+	Vec<pair<int, int>> matching() { /// start-hash
+		Vec<pair<int, int>> res;
 		for (int i = 0; i < nl; i++) {
 			int j = mtl[i];
 			if (j != -1) res.emplace_back(i, j);
@@ -88,8 +88,8 @@ struct Bipartite {
 		return res;
 	} /// end-hash
 
-	pair<V<int>, V<int>> vertex_cover() { /// start-hash
-		V<int> lvs, rvs;
+	pair<Vec<int>, Vec<int>> vertex_cover() { /// start-hash
+		Vec<int> lvs, rvs;
 		for (int i = 0; i < nl; i++) {
 			if (lvl[i] == -1) lvs.push_back(i);
 		}

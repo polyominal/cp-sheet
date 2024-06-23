@@ -8,8 +8,8 @@ TEST_CASE("Triangle enumeration", "[enumerate-triangles]") {
 	auto rng = Random(1145141);
 
 	for (int N : {2, 3, 5, 8, 13, 21, 34, 55, 89}) {
-		VV<bool> adj(N, V<bool>(N));
-		V<pair<int, int>> edges;
+		Vec<Vec<bool>> adj(N, Vec<bool>(N));
+		Vec<pair<int, int>> edges;
 		for (int a = 0; a < N; a++) {
 			for (int b = a+1; b < N; b++) {
 				if (rng.uniform(0, 9) < 7) {
@@ -19,7 +19,7 @@ TEST_CASE("Triangle enumeration", "[enumerate-triangles]") {
 			}
 		}
 
-		V<tuple<int, int, int>> res;
+		Vec<tuple<int, int, int>> res;
 		triangles(N, edges, [&](int x, int y, int z) -> void {
 			if (x > y) swap(x, y);
 			if (x > z) swap(x, z);
@@ -28,7 +28,7 @@ TEST_CASE("Triangle enumeration", "[enumerate-triangles]") {
 		});
 		sort(res.begin(), res.end());
 
-		V<tuple<int, int, int>> res_naive;
+		Vec<tuple<int, int, int>> res_naive;
 		for (int x = 0; x < N; x++) {
 			for (int y = x+1; y < N; y++) {
 				for (int z = y+1; z < N; z++) {

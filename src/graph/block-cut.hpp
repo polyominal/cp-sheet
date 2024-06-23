@@ -2,15 +2,15 @@
 
 #include "contest/base.hpp"
 
-template <class E> VV<int> block_cut_tree(int n, const VV<E>& g) {
-	VV<int> tr(n); /// start-hash
+template <class E> Vec<Vec<int>> block_cut_tree(int n, const Vec<Vec<E>>& g) {
+	Vec<Vec<int>> tr(n); /// start-hash
 	auto add = [&](int b, int v) -> void {
 		tr[b].push_back(v);
 		tr[v].push_back(b);
 	}; /// end-hash
 
-	V<int> stk; stk.reserve(n);
-	V<int> idx(n, -1);
+	Vec<int> stk; stk.reserve(n);
+	Vec<int> idx(n, -1);
 	int t = 0;
 	for (int s = 0; s < n; s++) {
 		if (idx[s] != -1) continue;

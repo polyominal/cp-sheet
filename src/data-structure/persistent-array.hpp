@@ -15,7 +15,7 @@ template <class D> struct PersistentArray {
 		N(const D& a) : v(a) {}
 		N(int a, int b) : c{a, b} {}
 	};
-	V<N> x;
+	Vec<N> x;
 	int s, h;
 	// Modify this so that it can reserve memory for x
 	PersistentArray() {} /// end-hash

@@ -20,7 +20,7 @@ TEST_CASE("Matrix inverse modulo prime", "[matrix]") {
 	for (int N : {1, 5, 10, 55, 88}) {
 		constexpr uint32_t mod = uint32_t(1e9) + 7;
 		using num = modint<mod>;
-		VV<num> A(N, V<num>(N));
+		Vec<Vec<num>> A(N, Vec<num>(N));
 		while (true) {
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < N; j++) {
@@ -30,7 +30,7 @@ TEST_CASE("Matrix inverse modulo prime", "[matrix]") {
 			auto iA = mat_inv(A, f_better<mod>, f_zero<mod>);
 			if (!iA.empty()) {
 				for (int z = 0; z < 2; z++) {
-					VV<num> prod(N, V<num>(N));
+					Vec<Vec<num>> prod(N, Vec<num>(N));
 					for (int i = 0; i < N; i++) {
 						for (int k = 0; k < N; k++) {
 							num v = A[i][k];
@@ -59,8 +59,8 @@ TEST_CASE("Matrix equation modulo prime", "[matrix]") {
 	for (int N : {1, 5, 10, 55, 88}) {
 		constexpr uint32_t mod = uint32_t(1e9) + 7;
 		using num = modint<mod>;
-		VV<num> A(N, V<num>(N));
-		V<num> b(N);
+		Vec<Vec<num>> A(N, Vec<num>(N));
+		Vec<num> b(N);
 		while (true) {
 			for (int i = 0; i < N; i++) {
 				for (int j = 0; j < N; j++) {

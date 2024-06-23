@@ -12,11 +12,11 @@
 struct FastSet {
 	using U = uint64_t; /// start-hash
 	int n, h;
-	VV<U> x;
+	Vec<Vec<U>> x;
 	FastSet(int n_ = 0) : n(n_) {
 		int m = (n ? n : 1);
 		do {
-			x.push_back(V<U>((m + 63) >> 6));
+			x.push_back(Vec<U>((m + 63) >> 6));
 			m = (m + 63) >> 6;
 		} while (m > 1);
 		h = int(x.size());

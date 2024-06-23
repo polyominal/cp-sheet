@@ -14,17 +14,17 @@
 #include "contest/base.hpp"
 
 template <class T> struct BIT {
-	V<T> x;
+	Vec<T> x;
 	int s;
 	BIT(int n) { build(n); }
-	BIT(const V<T>& a) { build(a); }
+	BIT(const Vec<T>& a) { build(a); }
 
 	void build(int n) { /// start-hash
 		x.clear();
 		x.resize(s = n);
 	} /// end-hash
 
-	void build(const V<T>& a) { /// start-hash
+	void build(const Vec<T>& a) { /// start-hash
 		build(int(a.size()));
 		copy(a.begin(), a.end(), x.begin());
 		for (int i = 0; i < s; i++) {

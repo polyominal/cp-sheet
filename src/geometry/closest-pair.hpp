@@ -12,7 +12,7 @@
 
 namespace geometry {
 
-inline D closest_pair(V<P> pts) { /// start-hash
+inline D closest_pair(Vec<P> pts) { /// start-hash
 	assert(pts.size() > 1);
 	sort(pts.begin(), pts.end(), [](const P& a, const P& b) -> bool {
 		return a.x < b.x;
@@ -22,7 +22,7 @@ inline D closest_pair(V<P> pts) { /// start-hash
 		if (l+1 == r) return;
 		int md = (l+r)/2;
 		self(l, md), self(md, r);
-		V<P> cnds;
+		Vec<P> cnds;
 		for (int i = l; i < r; i++) {
 			D dx = (pts[i] - pts[md-1]).x;
 			if (sgn(dx * dx, best) <= 0) cnds.push_back(pts[i]);

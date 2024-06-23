@@ -11,7 +11,7 @@
 template <class T, class F> struct QueueAggregation {
 	const F f; /// start-hash
 	const T e;
-	V<T> as, bs, ae, be;
+	Vec<T> as, bs, ae, be;
 	T vs, ve;
 	QueueAggregation(F f_, T e_) : f(f_), e(e_), vs(e), ve(e) {} /// end-hash
 

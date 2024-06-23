@@ -15,24 +15,21 @@
 
 namespace multiplicative_sum {
 
-inline ll isqrt(ll n) {
-	return ll(sqrt(n));
+inline i64 isqrt(i64 n) {
+	return i64(sqrt(n));
 }
-inline ll icbrt(ll n) {
-	return ll(cbrt(n));
+inline i64 icbrt(i64 n) {
+	return i64(cbrt(n));
 }
-inline ll sq(ll a) {
+inline i64 sq(i64 a) {
 	return a * a;
 }
 
-inline ll sump(int k, ll n) {
+inline i64 sump(int k, i64 n) {
 	if (k == 0) {
 		return n;
 	} else assert(false);
 }
-
-// Somehow precompute small primes and store them in ps[]
-static V<int> ps;
 
 template <class T, int K> struct counting_primes {
 	using A = array<T, K>; /// start-hash
@@ -42,11 +39,12 @@ template <class T, int K> struct counting_primes {
 	void sub(A& a, const A& b) {
 		for (int k = 0; k < K; k++) a[k] -= b[k];
 	}
-	const ll n;
+	const Vec<int>& ps;
+	const i64 n;
 	const int n2, n3, n6;
 	int s;
-	V<ll> vs;
-	V<A> sum, fw;
+	Vec<i64> vs;
+	Vec<A> sum, fw;
 	A pref; /// end-hash
 
 	A getpows(T p) { /// start-hash
@@ -81,7 +79,7 @@ template <class T, int K> struct counting_primes {
 		}
 	} /// end-hash
 
-	void upd(int i, ll cur, bool f) { /// start-hash
+	void upd(int i, i64 cur, bool f) { /// start-hash
 		if (!f) {
 			A w = getpows(cur);
 			for (int j = get_idx(cur)-n3; j >= 0; j -= (j+1) & (-j-1)) {
@@ -93,9 +91,10 @@ template <class T, int K> struct counting_primes {
 		}
 	} /// end-hash
 
-	counting_primes(ll n_) : n(n_), n2(int(isqrt(n))), n3(int(icbrt(n))), n6(int(icbrt(n2))) { /// start-hash
+	counting_primes(i64 n_, const Vec<int>& ps_)
+		: ps(ps_), n(n_), n2(int(isqrt(n))), n3(int(icbrt(n))), n6(int(icbrt(n2))) { /// start-hash
 		{
-			ll v = n;
+			i64 v = n;
 			while (v) {
 				vs.push_back(v);
 				v = n / (n/v+1);
@@ -155,13 +154,13 @@ template <class T, int K> struct counting_primes {
 		}
 	} /// end-hash
 
-	int get_idx(ll a) { /// start-hash
+	int get_idx(i64 a) { /// start-hash
 		return int(a <= n2 ? s-a : n/a-1);
 	} /// end-hash
 
 	// f(v)=f(p^c), where p is some prime
 	// totient function as an example:
-	T f(ll, int p, int c) {
+	T f(i64, int p, int c) {
 		T res = p-1;
 		for (int z = 0; z < c-1; z++) {
 			res *= p;
@@ -169,7 +168,7 @@ template <class T, int K> struct counting_primes {
 		return res;
 	}
 
-	V<T> buf;
+	Vec<T> buf;
 	T multiplicative_sum() { /// start-hash
 		// sum of [p is prime] f(p)
 		buf.resize(s);
@@ -178,7 +177,7 @@ template <class T, int K> struct counting_primes {
 		}
 
 		T ans = 1 + buf[0];
-		auto dfs = yc([&](auto self, int i, int c, ll v, ll lim, T cur) -> void {
+		auto dfs = yc([&](auto self, int i, int c, i64 v, i64 lim, T cur) -> void {
 			ans += cur * f(v*ps[i], ps[i], c+1);
 			if (lim >= sq(ps[i])) {
 				self(i, c+1, v * ps[i], lim/ps[i], cur);
@@ -189,7 +188,7 @@ template <class T, int K> struct counting_primes {
 				self(j, 1, ps[j], lim/ps[j], cur);
 			}
 		});
-		for (int i = 0; i < int(ps.size()); i++) {
+		for (int i = 0; true; i++) {
 			if (sq(ps[i]) <= n) {
 				dfs(i, 1, ps[i], n/ps[i], 1);
 			} else {

@@ -11,8 +11,8 @@
 #include "contest/base.hpp"
 
 // f(i, j, k) := [A_{i, j} <= A_{i, k}], given j < k
-template <class F> V<int> monotone_minima(int n, int m, F f) {
-	V<int> res(n);
+template <class F> Vec<int> monotone_minima(int n, int m, F f) {
+	Vec<int> res(n);
 	yc([&](auto self, int s, int e, int l, int r) -> void {
 		if (s == e) return;
 		int i = (s+e)/2;

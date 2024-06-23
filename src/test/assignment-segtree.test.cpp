@@ -26,7 +26,7 @@ TEST_CASE("Assignment segtree: affine") {
 			return S(rng.uniform<uint32_t>(0, mod - 1),
 					rng.uniform<uint32_t>(0, mod - 1));
 		};
-		V<S> A(N);
+		Vec<S> A(N);
 		for (S& a : A) a = uniform_affine();
 
 		auto ast = AssignmentSegtree(N, [&A](int i) {

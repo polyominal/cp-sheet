@@ -18,9 +18,9 @@
 
 struct SuffixArray {
 	int n;
-	V<int> sa;
-	V<int> isa;
-	V<int> lcp;
+	Vec<int> sa;
+	Vec<int> isa;
+	Vec<int> lcp;
 	SuffixArray(int n_) : n(n_) {}
 
 	template <class S> static SuffixArray construct(const S& s) {
@@ -46,8 +46,8 @@ struct SuffixArray {
 		++sigma;
 		s.push_back(0);
 		// what exactly should be these sizes?
-		V<int> freq(2 * max(n+1, sigma)), lms(2 * (n+1));
-		V<char> type(2 * (n+1));
+		Vec<int> freq(2 * max(n+1, sigma)), lms(2 * (n+1));
+		Vec<char> type(2 * (n+1));
 		sais(n, s.data(), sa.data(), sigma, freq.data(), lms.data(), type.data());
 	}
 

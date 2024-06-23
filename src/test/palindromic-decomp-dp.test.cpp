@@ -6,7 +6,7 @@
 #include "algebra/modint.hpp"
 
 template <class S, int K, bool even = false>
-V<S> palindromic_decomp_dp_naive(const V<int>& a,
+Vec<S> palindromic_decomp_dp_naive(const Vec<int>& a,
 	function<S(S, S)> add, S add_e,
 	function<S(S)> mul_x, S mul_e) {
 	int n = int(a.size());
@@ -21,7 +21,7 @@ V<S> palindromic_decomp_dp_naive(const V<int>& a,
 		}
 		return r-l <= man[l+r];
 	};
-	V<S> dp(n+1, add_e);
+	Vec<S> dp(n+1, add_e);
 	dp[0] = mul_e;
 	for (int i = 0; i < n; i++) {
 		for (int j = i+1; j <= n; j++) {
@@ -47,7 +47,7 @@ TEST_CASE("Palindromic decomposition DP", "[palindromic-decomp-dp][manacher]") {
 	{
 		for (int N : {1, 2, 3, 5, 8, 13, 21, 34, 55, 89}) {
 
-			V<int> A(N);
+			Vec<int> A(N);
 			constexpr int K = 3;
 			for (int& a : A) a = rng.uniform(0, K-1);
 			{
@@ -63,7 +63,7 @@ TEST_CASE("Palindromic decomposition DP", "[palindromic-decomp-dp][manacher]") {
 	}
 
 	for (int N : {2, 4, 6, 8, 34, 100}) {
-		V<int> A(N);
+		Vec<int> A(N);
 		constexpr int K = 3;
 		for (int& a : A) a = rng.uniform(0, K-1);
 		{

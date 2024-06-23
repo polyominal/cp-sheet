@@ -5,19 +5,19 @@
 
 TEST_CASE("Eratosthenes sieve: enumerating primes", "[eratosthenes]") {
 	constexpr int MAXN = 1e6;
-	V<bool> not_prime(MAXN);
+	Vec<bool> not_prime(MAXN);
 	for (int a = 2; a * a < MAXN; a++) {
 		if (not_prime[a]) continue;
 		for (int b = a * a; b < MAXN; b += a) {
 			not_prime[b] = true;
 		}
 	}
-	V<int> primes;
+	Vec<int> primes;
 	for (int a = 2; a < MAXN; a++) {
 		if (!not_prime[a]) primes.push_back(a);
 	}
 
-	V<int> pref;
+	Vec<int> pref;
 	auto verify_given_N = [&](int N) -> void {
 		pref.clear();
 		for (int p : primes) {

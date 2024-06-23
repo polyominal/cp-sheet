@@ -4,19 +4,18 @@
 #include "number-theory/multiplicative-sum.hpp"
 
 TEST_CASE("Multiplicative sum helper: counting primes", "[eratosthenes][multiplicative-sum]") {
-	multiplicative_sum::ps = prime_enumerate(1234567);
+	auto all_ps = prime_enumerate(1234567);
 
 	for (int N : {5, 19, 168, 1234567}) {
 		auto ps = prime_enumerate(N);
-		auto cp = multiplicative_sum::counting_primes<ll, 1>(N);
+		auto cp = multiplicative_sum::counting_primes<i64, 1>(N, all_ps);
 		REQUIRE(int(ps.size()) == int(cp.sum[0][0]));
 	}
 
-	/*
 	{
-		auto cp = multiplicative_sum::counting_primes<ll, 1>(ll(1e11));
+		auto cp = multiplicative_sum::counting_primes<i64, 1>(i64(1e11), all_ps);
+		// Reference:
 		// https://www.wolframalpha.com/input?i=number+of+primes+not+greater+than+10%5E11
-		REQUIRE(cp.sum[0][0] == ll(4'118'054'813));
+		REQUIRE(cp.sum[0][0] == i64(4'118'054'813));
 	}
-	*/
 }

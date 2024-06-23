@@ -20,8 +20,8 @@ template <int sigma> struct Eertree {
 		Node(int f_, int l_, int r_) : ch{}, fail(f_), l(l_), r(r_) {}
 		int len() const { return r-l; }
 	};
-	V<Node> x;
-	V<int> buf;
+	Vec<Node> x;
+	Vec<int> buf;
 	int cur; /// end-hash
 	Eertree(int alloc = 0) {
 		if (alloc) {

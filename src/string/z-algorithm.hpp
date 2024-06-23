@@ -12,9 +12,9 @@
 
 #include "contest/base.hpp"
 
-template <class S> V<int> z_algo(const S& s) {
+template <class S> Vec<int> z_algo(const S& s) {
 	int n = int(s.size());
-	V<int> res(n+1);
+	Vec<int> res(n+1);
 	for (int i = 1, j = 0; i <= n; i++) {
 		int& k = res[i];
 		if (j + res[j] <= i) {

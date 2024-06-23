@@ -12,10 +12,10 @@
 #include "contest/base.hpp"
 
 template <class T, class F> struct StaticRange {
-	VV<T> d; /// start-hash
+	Vec<Vec<T>> d; /// start-hash
 	const F f;
 	const T e;
-	StaticRange(const V<T>& a, F f_, T e_) : f(f_), e(e_) {
+	StaticRange(const Vec<T>& a, F f_, T e_) : f(f_), e(e_) {
 		int n = int(a.size());
 		int h = 0;
 		while ((2 << h) < n) h++;

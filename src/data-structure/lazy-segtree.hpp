@@ -18,8 +18,8 @@ template <class M> struct LazySegtree {
 	using S = M::S;
 	using F = M::F;
 	M m;
-	V<S> d;
-	V<F> lz;
+	Vec<S> d;
+	Vec<F> lz;
 	int n, h, sz;
 	LazySegtree(M m_) : m(m_), n(0), h(0), sz(0) {}
 	template <class A> LazySegtree(int n_, A a, M m_) : m(m_) {
@@ -111,7 +111,7 @@ template <class M> struct LazySegtree {
 			if (((l >> i) << i) != l) downdate(l >> i);
 			if (((r >> i) << i) != r) downdate((r-1) >> i);
 		}
-		static V<int> ls, rs;
+		static Vec<int> ls, rs;
 		ls.clear(), rs.clear();
 		for (int a = l, b = r; a < b; a /= 2, b /= 2) {
 			if (a & 1) ls.push_back(a++);

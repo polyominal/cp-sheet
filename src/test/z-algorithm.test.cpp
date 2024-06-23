@@ -3,9 +3,9 @@
 #include "string/z-algorithm.hpp"
 #include "util/random.hpp"
 
-template <class S> V<int> z_naive(const S& s) {
+template <class S> Vec<int> z_naive(const S& s) {
 	int n = int(s.size());
-	V<int> r(n+1);
+	Vec<int> r(n+1);
 	for (int i = 0; i <= n; i++) {
 		int& k = r[i];
 		while (i+k < n && s[k] == s[i+k]) k++;

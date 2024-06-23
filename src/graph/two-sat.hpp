@@ -22,7 +22,7 @@
 
 struct TwoSat {
 	int n;
-	VV<int> g;
+	Vec<Vec<int>> g;
 	TwoSat(int n_ = 0) : n(n_), g(2*n) {}
 
 	int add_var() {
@@ -41,7 +41,7 @@ struct TwoSat {
 		either(x, x);
 	}
 
-	void at_most_one(const V<int>& vs) { /// start-hash
+	void at_most_one(const Vec<int>& vs) { /// start-hash
 		int m = int(vs.size());
 		if (m <= 1) return;
 		int cur = ~vs[0];
@@ -55,10 +55,10 @@ struct TwoSat {
 		either(cur, ~vs[1]);
 	} /// end-hash
 
-	optional<V<bool>> solve() { /// start-hash
-		V<int> idx(2*n, -1), comp(2*n, -1), stk;
+	optional<Vec<bool>> solve() { /// start-hash
+		Vec<int> idx(2*n, -1), comp(2*n, -1), stk;
 		int tm = 0;
-		V<char> r(n, -1); /// end-hash
+		Vec<char> r(n, -1); /// end-hash
 
 		for (int s = 0; s < 2*n; s++) { /// start-hash
 			if (comp[s] != -1) continue;
@@ -86,7 +86,7 @@ struct TwoSat {
 		for (int i = 0; i < n; i++) { /// start-hash
 			if (comp[2*i] == comp[2*i+1]) return {};
 		}
-		V<bool> res(n);
+		Vec<bool> res(n);
 		for (int i = 0; i < n; i++) res[i] = bool(r[i]);
 		return res; /// end-hash
 	}

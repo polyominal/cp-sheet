@@ -10,7 +10,7 @@ TEST_CASE("BIT: point add range sum", "[binary-index-tree]") {
 		using T = int64_t;
 		constexpr T INF = 1e18;
 
-		V<T> A(N);
+		Vec<T> A(N);
 		for (T& a : A) {
 			a = rng.uniform(-INF/2, INF/2);
 		}

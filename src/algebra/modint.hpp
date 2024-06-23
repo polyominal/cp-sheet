@@ -11,7 +11,7 @@
 
 #include "contest/base.hpp"
 
-template <class T> T pow(T a, ll b) {
+template <class T> T pow(T a, i64 b) {
 	assert(b >= 0);
 	T r = 1;
 	while (b) {

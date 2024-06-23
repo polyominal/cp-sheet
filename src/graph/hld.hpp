@@ -13,25 +13,25 @@
 
 struct HLD {
 	int n;
-	V<int> ord, st, en, depth;
-	V<pair<int, int>> heavy;
+	Vec<int> ord, st, en, depth;
+	Vec<pair<int, int>> heavy;
 	HLD() {}
-	HLD(const V<int>& par, int rt = -1) { build(par, rt); }
+	HLD(const Vec<int>& par, int rt = -1) { build(par, rt); }
 
-	void build(const V<int>& par, int rt = -1) {
+	void build(const Vec<int>& par, int rt = -1) {
 		n = int(par.size()); /// start-hash
 		ord.resize(n);
 		st.resize(n);
 		en.resize(n);
 		depth.resize(n);
 		heavy.resize(n);
-		VV<int> ch(n);
+		Vec<Vec<int>> ch(n);
 		for (int i = 0; i < n; i++) {
 			if (par[i] != -1) ch[par[i]].push_back(i);
 		} /// end-hash
 
 		int i = 0;
-		V<int> sub(n);
+		Vec<int> sub(n);
 		auto go = [&](int g) -> void {
 			yc([&](auto self, int v, int d = 0) -> void { /// start-hash
 				sub[v] = 1;
@@ -116,8 +116,8 @@ struct HLD {
 		}
 	} /// end-hash
 
-	V<array<int, 2>> extract(int s, int t) { /// start-hash
-		static V<array<int, 2>> res;
+	Vec<array<int, 2>> extract(int s, int t) { /// start-hash
+		static Vec<array<int, 2>> res;
 		res.clear();
 		s = st[s], t = st[t];
 		while (true) {
@@ -166,8 +166,8 @@ struct HLD {
 		return -1;
 	} /// end-hash
 
-	V<int> inds; /// start-hash
-  	pair<V<int>, V<int>> compress(V<int> vs) {
+	Vec<int> inds; /// start-hash
+  	pair<Vec<int>, Vec<int>> compress(Vec<int> vs) {
 		inds.resize(n, -1);
 		auto cmp = [&](int a, int b) -> bool {
 			return st[a] < st[b];
@@ -183,7 +183,7 @@ struct HLD {
 		vs.erase(unique(vs.begin(), vs.end()), vs.end());
 		num = int(vs.size());
 		for (int z = 0; z < num; z++) inds[vs[z]] = z;
-		V<int> par(num, -1);
+		Vec<int> par(num, -1);
 		for (int z = 1; z < num; z++) {
 			par[z] = inds[lca(vs[z-1], vs[z])];
 		}

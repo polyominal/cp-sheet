@@ -10,8 +10,8 @@
 
 #include "contest/base.hpp"
 
-inline V<int> prime_enumerate(int n) {
-	V<bool> sieve(n/3+1, true); /// start-hash
+inline Vec<int> prime_enumerate(int n) {
+	Vec<bool> sieve(n/3+1, true); /// start-hash
 	int qe = int(sieve.size());
 	int n2 = int(sqrt(n));
 	for (int p = 5, d = 4, i = 1; p <= n2; p += d = 6-d, i++) {
@@ -20,7 +20,7 @@ inline V<int> prime_enumerate(int n) {
 			sieve[q] = false;
 		}
 	} /// end-hash
-	V<int> res{2, 3}; /// start-hash
+	Vec<int> res{2, 3}; /// start-hash
 	for (int p = 5, d = 4, i = 1; p <= n; p += d = 6-d, i++) {
 		if (sieve[i]) res.push_back(p);
 	}

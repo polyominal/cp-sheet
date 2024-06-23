@@ -40,9 +40,9 @@ TEST_CASE("Modint: addition/subtraction", "[modint]") {
 	using num = modint<mod>;
 
 	constexpr int N = 233;
-	V<num> A(N);
+	Vec<num> A(N);
 	for (num& a : A) a = rng.uniform<uint32_t>(0, mod-1);
-	V<num> pref(N+1);
+	Vec<num> pref(N+1);
 	for (int i = 0; i < N; i++) {
 		pref[i+1] = pref[i] + A[i];
 	}

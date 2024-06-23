@@ -8,14 +8,14 @@ TEST_CASE("Line containers: large random", "[line-container]") {
 
 	for (int Q : {1, 30, 200}) {
 		using line_container::LineContainer;
-		const ll MAX = 1e9;
-		const ll INF = 4e18;
+		const i64 MAX = 1e9;
+		const i64 INF = 4e18;
 
-		V<pair<ll, ll>> lines;
+		Vec<pair<i64, i64>> lines;
 		LineContainer lc_min, lc_max;
 		auto add_line = [&]() -> void {
-			ll m = rng.uniform<ll>(-MAX, MAX);
-			ll b = rng.uniform<ll>(-MAX, MAX);
+			i64 m = rng.uniform<i64>(-MAX, MAX);
+			i64 b = rng.uniform<i64>(-MAX, MAX);
 			lines.emplace_back(m, b);
 			lc_min.add(-m, -b);
 			lc_max.add(m, b);
@@ -31,10 +31,10 @@ TEST_CASE("Line containers: large random", "[line-container]") {
 				add_line();
 			}
 
-			ll x = rng.uniform(-MAX, MAX);
-			ll mi = INF, ma = -INF;
+			i64 x = rng.uniform(-MAX, MAX);
+			i64 mi = INF, ma = -INF;
 			for (auto [m, b] : lines) {
-				ll v = m * x + b;
+				i64 v = m * x + b;
 				mi = min(mi, v);
 				ma = max(ma, v);
 			}

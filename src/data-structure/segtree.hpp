@@ -5,7 +5,7 @@
 template <class M> struct Segtree {
 	using S = M::S;
 	M m;
-	V<S> d;
+	Vec<S> d;
 	int n, h, sz;
 	Segtree(M m_) : m(m_), n(0), h(0), sz(0) {}
 	template <class A> Segtree(int n_, A a, M m_) : m(m_) {
@@ -56,7 +56,7 @@ template <class M> struct Segtree {
 		assert(0 <= l && l <= r && r <= n);
 		if (l == r) return; /// start-hash
 		l += sz, r += sz;
-		static V<int> ls, rs;
+		static Vec<int> ls, rs;
 		ls.clear(), rs.clear();
 		for (int a = l, b = r; a < b; a /= 2, b /= 2) {
 			if (a & 1) ls.push_back(a++);
@@ -73,7 +73,7 @@ template <class M> struct Segtree {
 
 	const S& all_prod() const { return d[1]; }
 
-	V<S> to_array() const { return V<S>(d.begin() + sz, d.begin() + sz + n); }
+	Vec<S> to_array() const { return Vec<S>(d.begin() + sz, d.begin() + sz + n); }
 
 	template <class P> pair<int, S> max_right(int l, P p) { /// start-hash
 		assert(0 <= l && l <= n);

@@ -15,14 +15,14 @@
 
 template <class D, class E> struct TreeDP {
 	using S = typename D::S;
-	const VV<E>& g;
+	const Vec<Vec<E>>& g;
 	int n;
-	V<S> dp, dp2, res;
-	V<E> par;
+	Vec<S> dp, dp2, res;
+	Vec<E> par;
 
-	TreeDP(D d, const VV<E>& g_) : g(g_), n(int(g.size())), dp(n), dp2(n), res(n), par(n) {
+	TreeDP(D d, const Vec<Vec<E>>& g_) : g(g_), n(int(g.size())), dp(n), dp2(n), res(n), par(n) {
 		assert(n >= 1);
-		V<S> up(n), pref(n);
+		Vec<S> up(n), pref(n);
 
 		yc([&](auto self, int v, int p) -> void { /// start-hash
 			up[v] = d.make(v);

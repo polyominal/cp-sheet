@@ -44,7 +44,7 @@ TEST_CASE("Queue aggregation: static range product", "[queue-aggregation]") {
 	const S e = 1;
 
 	for (int N : {0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}) {
-		V<S> A(N);
+		Vec<S> A(N);
 		for (S& a : A) {
 			a = rng.uniform<uint32_t>(1, mod-1);
 		}

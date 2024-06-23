@@ -7,9 +7,9 @@
 
 #include "contest/extra.hpp"
 
-template <class T> void nft(V<T>& a, int n) {
-	static V<int> rev = {0, 1}; /// start-hash
-	static V<T> rt(2, 1);
+template <class T> void nft(Vec<T>& a, int n) {
+	static Vec<int> rev = {0, 1}; /// start-hash
+	static Vec<T> rt(2, 1);
 	if (int(rt.size()) < n) {
 		rev.resize(n);
 		for (int i = 0; i < n; i++) {
@@ -43,14 +43,14 @@ template <class T> void nft(V<T>& a, int n) {
 	} /// end-hash
 }
 
-template <class T> void inft(V<T>& a, int n) { /// start-hash
+template <class T> void inft(Vec<T>& a, int n) { /// start-hash
 	T d = inv(T(n));
 	for (int i = 0; i < n; i++) a[i] *= d;
 	reverse(a.begin()+1, a.begin()+n);
 	nft(a, n);
 } /// end-hash
 
-template <class T> V<T> multiply(V<T> a, V<T> b) { /// start-hash
+template <class T> Vec<T> multiply(Vec<T> a, Vec<T> b) { /// start-hash
 	int n = int(a.size()), m = int(b.size());
 	if (!n || !m) return {};
 	int s = 1 << internal::next_pow2(n + m - 1);

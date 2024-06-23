@@ -12,7 +12,7 @@ TEST_CASE("Fast input: not-so-large integers", "[fast-input]") {
 	const int N = 1234;
 	using T = int64_t;
 	const T bound = 1e18;
-	V<T> A(N);
+	Vec<T> A(N);
 	for (T& a : A) {
 		a = rng.uniform<T>(-bound, +bound);
 	}
@@ -37,7 +37,7 @@ TEST_CASE("Fast input: sequence of alphabetic strings", "[fast-input]") {
 
 	const int N = 1234;
 	using T = string;
-	V<T> A(N);
+	Vec<T> A(N);
 	for (T& a : A) {
 		int len = rng.uniform(1, 100);
 		for (int i = 0; i < len; i++) {

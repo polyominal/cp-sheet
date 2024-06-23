@@ -80,12 +80,12 @@ template <class T> T pollard(T n) {
 }
 
 // Returns prime factors in ascending order
-template <class T> V<T> factorize(T n) { /// start-hash
+template <class T> Vec<T> factorize(T n) { /// start-hash
 	if (n == 1) return {};
 	if (is_prime(n)) return {n};
 	T f = pollard(n);
 	auto a = factorize(f), b = factorize(n / f);
-	V<T> c(a.size() + b.size());
+	Vec<T> c(a.size() + b.size());
 	merge(a.begin(), a.end(), b.begin(), b.end(), c.begin());
 	return c;
 } /// end-hash

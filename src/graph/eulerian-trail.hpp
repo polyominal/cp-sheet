@@ -25,16 +25,16 @@ namespace eulerian_trail {
 // edge is the preceding edge of that vertex
 using E = pair<int, int>;
 template <bool cyc_only = false>
-optional<V<E>> go(int nv, const VV<E>& g, int ne, int src = 0) {
+optional<Vec<E>> go(int nv, const Vec<Vec<E>>& g, int ne, int src = 0) {
 	assert(nv == int(g.size()));
 	assert(0 <= src && src < nv);
 
-	V<V<E>::const_iterator> its(nv); /// start-hash
+	Vec<Vec<E>::const_iterator> its(nv); /// start-hash
 	for (int i = 0; i < nv; i++) its[i] = g[i].begin();
-	V<int> state(nv);
+	Vec<int> state(nv);
 	if constexpr (!cyc_only) state[src]++;
-	V<bool> seen(ne);
-	V<E> res, stk = {E(src, -1)}; /// end-hash
+	Vec<bool> seen(ne);
+	Vec<E> res, stk = {E(src, -1)}; /// end-hash
 
 	while (!stk.empty()) { /// start-hash
 		auto [i, p] = stk.back();
@@ -53,14 +53,14 @@ optional<V<E>> go(int nv, const VV<E>& g, int ne, int src = 0) {
 	}
 	if (int(res.size()) != ne+1) return {};
 	for (int s : state) if (s < 0) return {};
-	return V<E>{res.rbegin(), res.rend()}; /// end-hash
+	return Vec<E>{res.rbegin(), res.rend()}; /// end-hash
 }
 
 template <bool cyc_only = false>
-optional<V<E>> trail_undirected(int nv, const V<pair<int, int>>& edges) {
+optional<Vec<E>> trail_undirected(int nv, const Vec<pair<int, int>>& edges) {
 	assert(nv > 0);
 
-	VV<E> g(nv);
+	Vec<Vec<E>> g(nv);
 	int e = 0;
 	for (auto [a, b] : edges) {
 		g[a].emplace_back(b, e);
@@ -79,11 +79,11 @@ optional<V<E>> trail_undirected(int nv, const V<pair<int, int>>& edges) {
 }
 
 template <bool cyc_only = false>
-optional<V<E>> trail_directed(int nv, const V<pair<int, int>>& edges) {
+optional<Vec<E>> trail_directed(int nv, const Vec<pair<int, int>>& edges) {
 	assert(nv > 0);
 
-	VV<E> g(nv);
-	V<int> indeg(nv);
+	Vec<Vec<E>> g(nv);
+	Vec<int> indeg(nv);
 	int e = 0;
 	for (auto [a, b] : edges) {
 		g[a].emplace_back(b, e);
