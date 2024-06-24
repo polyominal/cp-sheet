@@ -37,6 +37,9 @@
 # VS Code
 .vscode/
 
+# clangd
+.cache/
+
 # TeX
 *.aux
 *.lof
