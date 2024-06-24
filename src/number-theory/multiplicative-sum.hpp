@@ -28,7 +28,10 @@ inline i64 sq(i64 a) {
 inline i64 sump(int k, i64 n) {
 	if (k == 0) {
 		return n;
-	} else assert(false);
+	}
+	// Unreachable
+	assert(false);
+	return 0;
 }
 
 template <class T, int K> struct counting_primes {
