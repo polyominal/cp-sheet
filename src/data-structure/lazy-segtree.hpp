@@ -51,16 +51,20 @@ template <class M> struct LazySegtree {
 		lz[i] = m.id();
 	} /// end-hash
 
-	S prod(int l, int r) { /// start-hash
-		assert(0 <= l && l <= r && r <= n);
-		if (l == r) return m.e();
+	void downdate_range(int l, int r) { /// start-hash
 		l += sz, r += sz;
 		for (int i = h; i >= 1; i--) {
 			if (((l >> i) << i) != l) downdate(l >> i);
 			if (((r >> i) << i) != r) downdate((r-1) >> i);
 		}
+	} /// end-hash
+
+	S prod(int l, int r) { /// start-hash
+		assert(0 <= l && l <= r && r <= n);
+		if (l == r) return m.e();
+		downdate_range(l, r);
 		S sl = m.e(), sr = m.e();
-		for (int a = l, b = r; a < b; a /= 2, b /= 2) {
+		for (int a = l+sz, b = r+sz; a < b; a /= 2, b /= 2) {
 			if (a & 1) sl = m.op(sl, d[a++]);
 			if (b & 1) sr = m.op(d[--b], sr);
 		}
@@ -70,11 +74,8 @@ template <class M> struct LazySegtree {
 	void apply(int l, int r, F f) { /// start-hash
 		assert(0 <= l && l <= r && r <= n);
 		if (l == r) return;
+		downdate_range(l, r);
 		l += sz, r += sz;
-		for (int i = h; i >= 1; i--) {
-			if (((l >> i) << i) != l) downdate(l >> i);
-			if (((r >> i) << i) != r) downdate((r-1) >> i);
-		}
 		for (int a = l, b = r; a < b; a /= 2, b /= 2) {
 			if (a & 1) apply(a++, f);
 			if (b & 1) apply(--b, f);
@@ -90,12 +91,8 @@ template <class M> struct LazySegtree {
 	template <class G> void enumerate(int l, int r, G g) { /// start-hash
 		assert(0 <= l && l <= r && r <= n);
 		if (l == r) return;
-		l += sz, r += sz;
-		for (int i = h; i >= 1; i--) {
-			if (((l >> i) << i) != l) downdate(l >> i);
-			if (((r >> i) << i) != r) downdate((r-1) >> i);
-		}
-		for (int a = l, b = r; a < b; a /= 2, b /= 2) {
+		downdate_range(l, r);
+		for (int a = l+sz, b = r+sz; a < b; a /= 2, b /= 2) {
 			if (a & 1) g(d[a++]);
 			if (b & 1) g(d[--b]);
 		}
@@ -106,14 +103,10 @@ template <class M> struct LazySegtree {
 	void enumerate_in_order(int l, int r, G g) {
 		assert(0 <= l && l <= r && r <= n);
 		if (l == r) return; /// start-hash
-		l += sz, r += sz;
-		for (int i = h; i >= 1; i--) {
-			if (((l >> i) << i) != l) downdate(l >> i);
-			if (((r >> i) << i) != r) downdate((r-1) >> i);
-		}
+		downdate_range(l, r);
 		static Vec<int> ls, rs;
 		ls.clear(), rs.clear();
-		for (int a = l, b = r; a < b; a /= 2, b /= 2) {
+		for (int a = l+sz, b = r+sz; a < b; a /= 2, b /= 2) {
 			if (a & 1) ls.push_back(a++);
 			if (b & 1) rs.push_back(--b);
 		} /// end-hash
