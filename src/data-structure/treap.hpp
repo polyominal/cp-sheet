@@ -17,8 +17,8 @@
 #include "contest/base.hpp"
 
 template <class M, bool persistent = false> struct TreapManager {
-	using S = typename M::S;
-	using F = typename M::F;
+	using S = M::S;
+	using F = M::F;
 
 	TreapManager(M m_, int alloc = 0) : m(m_) {
 		if (alloc > 0) {
@@ -129,7 +129,7 @@ private:
 		n.app = true;
 		return i;
 	} /// end-hash
-	
+
 	int downdate(int i) { /// start-hash
 		assert(i != null);
 		i = _make_copy(i);

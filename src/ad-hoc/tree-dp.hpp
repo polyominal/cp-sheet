@@ -4,7 +4,7 @@
  * Description: ``Solving for all roots'' abstraction.
  * This seems to bear some huge constant factor,
  * so try out ad-hoc implementations if you get TLs
- * Status: Tested with 
+ * Status: Tested with
  * - https://judge.yosupo.jp/problem/tree_path_composite_sum
  * - https://cses.fi/problemset/task/1133
  */
@@ -14,7 +14,7 @@
 #include "contest/base.hpp"
 
 template <class D, class E> struct TreeDP {
-	using S = typename D::S;
+	using S = D::S;
 	const Vec<Vec<E>>& g;
 	int n;
 	Vec<S> dp, dp2, res;
