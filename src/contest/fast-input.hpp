@@ -42,7 +42,7 @@ struct Scanner {
 		}
 		r = 0;
 		do {
-			r = 10 * r + (c & 0x0f);
+			r = 10 * r + (c & 15);
 		} while ((c = get()) >= '0');
 		if (neg) r = -r;
 	} /// end-hash
