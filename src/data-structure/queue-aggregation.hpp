@@ -25,7 +25,7 @@ template <class T, class F> struct QueueAggregation {
 		while (!ae.empty()) {
 			push_s(ae.back()), ae.pop_back();
 		}
-		while (!be.empty()) be.pop_back();
+		be.clear();
 		ve = e;
 	} /// end-hash
 
