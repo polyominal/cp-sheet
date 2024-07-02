@@ -34,9 +34,6 @@
 # CMake build directory
 /build/
 
-# VS Code
-.vscode/
-
 # clangd
 .cache/
 
