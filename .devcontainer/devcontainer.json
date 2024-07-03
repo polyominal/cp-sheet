@@ -15,7 +15,7 @@
 			},
 			"extensions": [
 				"llvm-vs-code-extensions.vscode-clangd",
-				"ms-vscode.cmake-tools"
+				"github.vscode-github-actions"
 			]
 		}
 	},
