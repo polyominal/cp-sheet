@@ -15,9 +15,9 @@
 template <int sigma> struct Eertree {
 	struct Node { /// start-hash
 		array<int, sigma> ch;
-		int fail;
+		int par, fail;
 		int l, r; // location of the first ocurrence
-		Node(int f_, int l_, int r_) : ch{}, fail(f_), l(l_), r(r_) {}
+		Node(int p_, int f_, int l_, int r_) : ch{}, par(p_), fail(f_), l(l_), r(r_) {}
 		int len() const { return r-l; }
 	};
 	Vec<Node> x;
@@ -28,8 +28,8 @@ template <int sigma> struct Eertree {
 			x.reserve(alloc+2);
 			buf.reserve(alloc);
 		}
-		x.emplace_back(-1, 1, 0);
-		x.emplace_back(0, 0, 0);
+		x.emplace_back(-1, -1, 1, 0);
+		x.emplace_back(0, 0, 0, 0);
 		reset();
 	}
 
@@ -47,13 +47,13 @@ template <int sigma> struct Eertree {
 		};
 		for (; !works(cur); cur = x[cur].fail) {}
 		if (!x[cur].ch[a]) {
-			int par = x[cur].fail;
-			if (par != -1) {
-				for (; !works(par); par = x[par].fail) {}
+			int f = x[cur].fail;
+			if (f != -1) {
+				for (; !works(f); f = x[f].fail) {}
 			}
-			int npar = (par == -1 ? 1 : x[par].ch[a]);
+			int nf = (f == -1 ? 1 : x[f].ch[a]);
 			x[cur].ch[a] = int(x.size());
-			x.emplace_back(npar, i - x[cur].len() - 1, i + 1);
+			x.emplace_back(cur, nf, i - x[cur].len() - 1, i + 1);
 		}
 		cur = x[cur].ch[a];
 		return cur;
