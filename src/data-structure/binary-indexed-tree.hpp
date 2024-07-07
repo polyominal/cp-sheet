@@ -15,13 +15,14 @@
 
 template <class T> struct BIT {
 	Vec<T> x;
-	int s;
+	int s, w;
 	BIT(int n) { build(n); }
 	BIT(const Vec<T>& a) { build(a); }
 
 	void build(int n) { /// start-hash
 		x.clear();
 		x.resize(s = n);
+		w = bit_width<u32>(s)-1;
 	} /// end-hash
 
 	void build(const Vec<T>& a) { /// start-hash
@@ -45,7 +46,7 @@ template <class T> struct BIT {
 	// Slightly tested; requires s >= 1
 	int kth(T k) { /// start-hash
 		int cur = 0;
-		for (int i = 31 - __builtin_clz(s); i >= 0; i--) {
+		for (int i = w; i >= 0; i--) {
 			int nxt = cur + (1 << i);
 			if (nxt <= s && x[nxt-1] <= k) {
 				k -= x[nxt-1];

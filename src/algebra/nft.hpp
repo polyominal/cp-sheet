@@ -25,7 +25,7 @@ template <class T> void nft(Vec<T>& a, int n) {
 			}
 		}
 	} /// end-hash
-	int s = __builtin_ctz(int(rev.size()) / n); /// start-hash
+	int s = countr_zero(u32(rev.size()) / n); /// start-hash
 	for (int i = 0; i < n; i++) {
 		int j = rev[i] >> s;
 		if (i < j) swap(a[i], a[j]);

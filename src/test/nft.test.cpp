@@ -43,7 +43,7 @@ template <class num> void retromorphic_test_single() {
 		Vec<num> A(N);
 		for (num& v : A) v = rng.uniform<i64>(0, mod-1);
 
-		int S = 1 << (N <= 1 ? 0 : 32 - __builtin_clz(N-1));
+		int S = bit_ceil<u32>(N);
 		auto fa = A;
 		fa.resize(S);
 		nft(fa, S);
