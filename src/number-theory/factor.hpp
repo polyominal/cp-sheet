@@ -13,7 +13,7 @@
 
 #pragma once
 
-#include "contest/extra.hpp"
+#include "contest/base.hpp"
 #include <random>
 
 namespace factor {

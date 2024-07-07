@@ -5,7 +5,7 @@
  */
 #pragma once
 
-#include "contest/extra.hpp"
+#include "contest/base.hpp"
 
 template <class T> void nft(Vec<T>& a, int n) {
 	static Vec<int> rev = {0, 1}; /// start-hash
@@ -53,7 +53,7 @@ template <class T> void inft(Vec<T>& a, int n) { /// start-hash
 template <class T> Vec<T> multiply(Vec<T> a, Vec<T> b) { /// start-hash
 	int n = int(a.size()), m = int(b.size());
 	if (!n || !m) return {};
-	int s = 1 << internal::next_pow2(n + m - 1);
+	int s = bit_ceil<u32>(n + m - 1);
 	a.resize(s), nft(a, s);
 	b.resize(s), nft(b, s);
 	T is = inv(T(s));

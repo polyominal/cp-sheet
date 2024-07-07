@@ -2,7 +2,7 @@
 
 // WIP
 
-#include "contest/extra.hpp"
+#include "contest/base.hpp"
 
 struct Barrett {
 	static constexpr int k = 96;
