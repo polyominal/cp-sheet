@@ -9,7 +9,10 @@ using namespace std;
 
 template <class T> using Vec = vector<T>;
 
+using i32 = int32_t;
 using i64 = int64_t;
+using u32 = uint32_t;
+using u64 = uint64_t;
 
 template <class F> struct yc_result { /// start-hash
 	F f;
@@ -22,4 +25,4 @@ template <class F> decltype(auto) yc(F&& f) {
 	return yc_result<std::decay_t<F>>(std::forward<F>(f));
 } /// end-hash
 
-static mt19937_64 mt(chrono::steady_clock::now().time_since_epoch().count());
+inline mt19937_64 mt(chrono::steady_clock::now().time_since_epoch().count());
