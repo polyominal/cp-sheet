@@ -53,7 +53,7 @@ template <class D, class E> struct TreeDP {
 		})(0, -1, d.make(0)); /// end-hash
 	}
 
-	const S& operator [](int i) const {
+	const S& operator[](int i) const {
 		return res[i];
 	}
 };
