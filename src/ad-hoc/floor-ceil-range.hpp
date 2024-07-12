@@ -1,7 +1,6 @@
 /**
  * Author: Hanfei Chen
  * Date: 2024-01-12
- * Description: TODO
  * Status: Unit tested
  */
 
