@@ -9,7 +9,7 @@ TEST_CASE("Assignment segtree: affine") {
 	auto rng = Random(20240130);
 
 	const uint32_t mod = uint32_t(1e9) + 7;
-	using num = modint<mod>;
+	using num = ModInt<mod>;
 
 	struct Monoid {
 		using S = pair<num, num>;

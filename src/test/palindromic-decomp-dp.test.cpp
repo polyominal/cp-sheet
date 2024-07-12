@@ -37,7 +37,7 @@ TEST_CASE("Palindromic decomposition DP", "[palindromic-decomp-dp][manacher]") {
 	auto rng = Random(20240112);
 
 	const uint32_t mod = int(1e9) + 7;
-	using num = modint<mod>;
+	using num = ModInt<mod>;
 	using S = num;
 	const S x = rng.uniform<uint32_t>(1, mod-1);
 	auto add = [](S a, S b) -> S { return a + b; };

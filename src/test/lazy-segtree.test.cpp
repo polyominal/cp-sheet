@@ -10,7 +10,7 @@ TEST_CASE("Lazy segtree: range affine range sum", "[seglazy]") {
 
 	for (int N : {0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 214}) {
 		const uint32_t mod = uint32_t(1e9) + 7;
-		using num = modint<mod>;
+		using num = ModInt<mod>;
 
 		Vec<num> A(N);
 		for (num& a : A) {
@@ -96,7 +96,7 @@ TEST_CASE("Lazy segtree: runtime polymorphism example", "[seglazy]") {
 	auto rng = Random(20240111);
 
 	const uint32_t mod = uint32_t(1e9) + 7;
-	using num = modint<mod>;
+	using num = ModInt<mod>;
 
 	struct StrConcatMonoid {
 		using S = Vec<num>;
@@ -171,7 +171,7 @@ TEST_CASE("Segtree: single set and range affine composition", "[segtree]") {
 	auto rng = Random(20240119);
 
 	const uint32_t mod = 998244353;
-	using num = modint<mod>;
+	using num = ModInt<mod>;
 
 	struct Monoid {
 		using S = pair<num, num>;

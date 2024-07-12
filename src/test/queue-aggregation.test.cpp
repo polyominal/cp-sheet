@@ -38,7 +38,7 @@ TEST_CASE("Queue aggregation: static range product", "[queue-aggregation]") {
 	auto rng = Random(20240107);
 
 	constexpr uint32_t mod = 998244353;
-	using num = modint<mod>;
+	using num = ModInt<mod>;
 	using S = num;
 	auto op = [](S a, S b) -> S { return a * b; };
 	const S e = 1;

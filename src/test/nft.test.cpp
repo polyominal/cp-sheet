@@ -17,7 +17,7 @@ template <class T> Vec<T> multiply_textbook(const Vec<T>& a, const Vec<T> b) {
 
 TEST_CASE("NFT multiply mod 998244353 simple", "[nft]") {
 	constexpr uint mod = 998244353;
-	using num = modint<mod>;
+	using num = ModInt<mod>;
 	Vec<num> A = {1,2,3,4};
 	Vec<num> B = {5,6,7,8,9};
 	REQUIRE(multiply(A, B) == Vec<num>{5,16,34,60,70,70,59,36});
@@ -27,7 +27,7 @@ TEST_CASE("NFT multiply mod 998244353", "[nft]") {
 	auto rng = Random(1145141);
 
 	constexpr uint mod = 998244353;
-	using num = modint<mod>;
+	using num = ModInt<mod>;
 	Vec<num> A(123);
 	for (num& v : A) v = rng.uniform<i64>(0, mod-1);
 	Vec<num> B(233);
@@ -56,6 +56,6 @@ template <class num> void retromorphic_test_single() {
 
 TEST_CASE("NFT retromorphic test multiple mods (essentially A == inft(nft(A)))", "[nft]") {
 	// make sure static things don't collide
-	retromorphic_test_single<modint<998244353>>();
-	retromorphic_test_single<modint<1053818881>>();
+	retromorphic_test_single<ModInt<998244353>>();
+	retromorphic_test_single<ModInt<1053818881>>();
 }

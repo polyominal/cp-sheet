@@ -36,7 +36,7 @@ TEST_CASE("Static range composition: min/max", "[static-range]") {
 TEST_CASE("Static range composition: product mod 998244353", "[static-range]") {
 	auto rng = Random(1145141);
 
-	using num = modint<998244353>;
+	using num = ModInt<998244353>;
 
 	for (int N : {0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}) {
 		using T = num;
@@ -63,7 +63,7 @@ TEST_CASE("Static range composition: product mod 998244353", "[static-range]") {
 TEST_CASE("Static range composition: affine mod 998244353", "[static-range]") {
 	auto rng = Random(20240115);
 
-	using num = modint<998244353>;
+	using num = ModInt<998244353>;
 
 	for (int N : {0, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89}) {
 		using T = pair<num, num>;

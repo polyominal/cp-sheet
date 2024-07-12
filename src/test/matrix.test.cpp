@@ -7,10 +7,10 @@
 
 namespace matrix {
 
-template <uint32_t mod> F_zero<modint<mod>> f_zero  = [](modint<mod> a) -> bool {
+template <uint32_t mod> F_zero<ModInt<mod>> f_zero  = [](ModInt<mod> a) -> bool {
 	return a.v == 0;
 };
-template <uint32_t mod> F_better<modint<mod>> f_better = [](modint<mod> a, modint<mod>) -> bool {
+template <uint32_t mod> F_better<ModInt<mod>> f_better = [](ModInt<mod> a, ModInt<mod>) -> bool {
 	return !f_zero<mod>(a);
 };
 
@@ -19,7 +19,7 @@ TEST_CASE("Matrix inverse modulo prime", "[matrix]") {
 
 	for (int N : {1, 5, 10, 55, 88}) {
 		constexpr uint32_t mod = uint32_t(1e9) + 7;
-		using num = modint<mod>;
+		using num = ModInt<mod>;
 		Vec<Vec<num>> A(N, Vec<num>(N));
 		while (true) {
 			for (int i = 0; i < N; i++) {
@@ -58,7 +58,7 @@ TEST_CASE("Matrix equation modulo prime", "[matrix]") {
 
 	for (int N : {1, 5, 10, 55, 88}) {
 		constexpr uint32_t mod = uint32_t(1e9) + 7;
-		using num = modint<mod>;
+		using num = ModInt<mod>;
 		Vec<Vec<num>> A(N, Vec<num>(N));
 		Vec<num> b(N);
 		while (true) {
