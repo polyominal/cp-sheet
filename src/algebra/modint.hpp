@@ -22,15 +22,14 @@ template <class T> T pow(T a, i64 b) {
 	return r;
 }
 
-template <uint32_t mod> struct ModInt {
-	using U = uint32_t;
+template <u32 mod> struct ModInt {
 	using mint = ModInt;
 
-	static constexpr U m = mod; /// start-hash
-	U v;
+	static constexpr u32 m = mod; /// start-hash
+	u32 v;
 	constexpr ModInt() : v(0) {}
-	template <class T> constexpr ModInt(T a) { s(U(a % m + m)); }
-	constexpr mint& s(U a) { v = a < m ? a : a-m; return *this; }
+	template <class T> constexpr ModInt(T a) { s(u32(a % m + m)); }
+	constexpr mint& s(u32 a) { v = a < m ? a : a-m; return *this; }
 	friend mint inv(const mint& n) { return pow(n, m-2); } /// end-hash
 
 	mint operator- () const { /// start-hash
@@ -44,7 +43,7 @@ template <uint32_t mod> struct ModInt {
 
 	mint& operator += (const mint& o) { return s(v + o.v); } /// start-hash
 	mint& operator -= (const mint& o) { return s(v + m - o.v); }
-	mint& operator *= (const mint& o) { v = U(uint64_t(v) * o.v % m); return *this; }
+	mint& operator *= (const mint& o) { v = u32(u64(v) * o.v % m); return *this; }
 	mint& operator /= (const mint& o) { return *this *= inv(o); } /// end-hash
 
 	friend mint operator + (const mint& a, const mint& b) { return mint(a) += b; } /// start-hash
@@ -52,7 +51,7 @@ template <uint32_t mod> struct ModInt {
 	friend mint operator * (const mint& a, const mint& b) { return mint(a) *= b; }
 	friend mint operator / (const mint& a, const mint& b) { return mint(a) /= b; } /// end-hash
 
-	static constexpr U get_mod() { return m; }
+	static constexpr u32 get_mod() { return m; }
 	static constexpr mint get_root() {
 		if (m == 998244353) return 3;
 		if (m == 1053818881) return 2789;
