@@ -10,6 +10,8 @@
 
 namespace geometry {
 
+using std::fmod;
+
 using D = double; /// start-hash
 const D EPS = D(1e-9);
 inline int sgn(D a) { return (a > EPS) - (a < -EPS); }
@@ -52,7 +54,7 @@ template <class T = D> struct Point {
 
 	friend D arg(const P& p) { return atan2(p.y, p.x); }
 
-	friend D rabs(const P& p) { return max(std::abs(p.x), std::abs(p.y)); }
+	friend D rabs(const P& p) { return max(abs(p.x), abs(p.y)); }
 
 	friend bool operator == (const P& a, const P& b) { return sgn(rabs(a - b)) == 0; }
 	friend bool operator != (const P& a, const P& b) { return !(a == b); }
@@ -65,7 +67,7 @@ using P = Point<D>;
 
 inline int sgncrs(const P& a, const P& b) { /// start-hash
 	D cr = crs(a, b);
-	if (std::abs(cr) <= (rabs(a) + rabs(b)) * EPS) return 0;
+	if (abs(cr) <= (rabs(a) + rabs(b)) * EPS) return 0;
 	return (cr < 0 ? -1 : 1);
 } /// end-hash
 
@@ -87,7 +89,7 @@ inline D norm_nonnegative(D a) { /// start-hash
 // arg given lengths a, b, c,
 // assumming a, b, c are valid
 inline D arg(D a, D b, D c) { /// start-hash
-	return acos(clamp<D>((a * a + b * b - c * c) / (2 * a * b), -1, 1));
+	return acos(std::clamp<D>((a * a + b * b - c * c) / (2 * a * b), -1, 1));
 } /// end-hash
 
 } // namespace geometry

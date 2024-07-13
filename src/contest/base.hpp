@@ -5,9 +5,16 @@
 #pragma once
 
 #include <bits/stdc++.h>
-using namespace std;
+
+using std::vector, std::array, std::string;
+using std::set, std::map, std::multiset;
+using std::min, std::max, std::swap;
+using std::pair, std::tuple;
+using std::tie;
+using std::abs, std::sin, std::cos, std::tan, std::asin, std::acos, std::atan2;
 
 template <class T> using Vec = vector<T>;
+template <class T> using Opt = std::optional<T>;
 
 using i32 = int32_t;
 using i64 = int64_t;
@@ -26,4 +33,4 @@ template <class F> decltype(auto) yc(F&& f) {
 	return yc_result<std::decay_t<F>>(std::forward<F>(f));
 } /// end-hash
 
-inline mt19937_64 mt(chrono::steady_clock::now().time_since_epoch().count());
+inline std::mt19937_64 mt(std::chrono::steady_clock::now().time_since_epoch().count());

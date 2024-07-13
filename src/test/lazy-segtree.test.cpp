@@ -102,7 +102,7 @@ TEST_CASE("Lazy segtree: runtime polymorphism example", "[seglazy]") {
 		using S = Vec<num>;
 		using F = num;
 
-		function<S(S, S)> str_op;
+		std::function<S(S, S)> str_op;
 
 		S e() { return S(); }
 		S op(S a, S b) { return str_op(a, b); }

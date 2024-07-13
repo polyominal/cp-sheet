@@ -13,10 +13,10 @@
 namespace matrix {
 
 template <class T>
-using F_better = function<bool(T, T)>;
+using F_better = std::function<bool(T, T)>;
 
 template <class T>
-using F_zero = function<bool(T)>;
+using F_zero = std::function<bool(T)>;
 
 template <bool rref = false, class T>
 pair<int, T> sweep(Vec<Vec<T>>& a,
@@ -25,7 +25,7 @@ pair<int, T> sweep(Vec<Vec<T>>& a,
 	int h = int(a.size());
 	if (!h) return {0, 0};
 	int w = int(a[0].size());
-	
+
 	if (c == -1) c = w; /// start-hash
 	int r = 0;
 	T det = 1;

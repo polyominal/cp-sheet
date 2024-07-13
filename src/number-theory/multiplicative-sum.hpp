@@ -15,6 +15,8 @@
 
 namespace multiplicative_sum {
 
+using std::sqrt, std::cbrt;
+
 inline i64 isqrt(i64 n) {
 	return i64(sqrt(n));
 }

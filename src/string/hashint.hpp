@@ -46,5 +46,5 @@ struct HashInt {
 };
 
 inline HashInt rand_base() {
-	return 2 * uniform_int_distribution<uint64_t>(4e10, 5e10)(mt) + 1;
+	return 2 * std::uniform_int_distribution<uint64_t>(4e10, 5e10)(mt) + 1;
 }

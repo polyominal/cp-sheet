@@ -37,11 +37,11 @@ template <class T, class F> struct StaticRange {
 		}
 	} /// end-hash
 
-	T operator ()(int l, int r) const { /// start-hash
+	T operator()(int l, int r) const { /// start-hash
 		if (l >= r) return e;
 		r--;
 		if (l == r) return d[0][l];
-		int k = __lg(l^r);
+		int k = std::bit_width<u32>(l ^ r) - 1;
 		return f(d[k][l], d[k][r]);
 	} /// end-hash
 };

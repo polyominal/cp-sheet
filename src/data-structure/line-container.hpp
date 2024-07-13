@@ -22,10 +22,10 @@ struct Line { /// start-hash
 	bool operator < (i64 x) const { return p < x; }
 }; /// end-hash
 
-struct LineContainer : multiset<Line, less<>> {
+struct LineContainer : multiset<Line, std::less<>> {
 	using I = iterator; /// start-hash
 	// (for doubles, use inf = 1/.0, div(a,b) = a/b)
-	static const i64 inf = numeric_limits<i64>::max();
+	static const i64 inf = std::numeric_limits<i64>::max();
 	static i64 div(i64 a, i64 b) {
 		return a / b - ((a ^ b) < 0 && a % b);
 	} /// end-hash

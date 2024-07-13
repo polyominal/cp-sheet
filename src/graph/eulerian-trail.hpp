@@ -25,7 +25,7 @@ namespace eulerian_trail {
 // edge is the preceding edge of that vertex
 using E = pair<int, int>;
 template <bool cyc_only = false>
-optional<Vec<E>> go(int nv, const Vec<Vec<E>>& g, int ne, int src = 0) {
+Opt<Vec<E>> go(int nv, const Vec<Vec<E>>& g, int ne, int src = 0) {
 	assert(nv == int(g.size()));
 	assert(0 <= src && src < nv);
 
@@ -57,7 +57,7 @@ optional<Vec<E>> go(int nv, const Vec<Vec<E>>& g, int ne, int src = 0) {
 }
 
 template <bool cyc_only = false>
-optional<Vec<E>> trail_undirected(int nv, const Vec<pair<int, int>>& edges) {
+Opt<Vec<E>> trail_undirected(int nv, const Vec<pair<int, int>>& edges) {
 	assert(nv > 0);
 
 	Vec<Vec<E>> g(nv);
@@ -79,7 +79,7 @@ optional<Vec<E>> trail_undirected(int nv, const Vec<pair<int, int>>& edges) {
 }
 
 template <bool cyc_only = false>
-optional<Vec<E>> trail_directed(int nv, const Vec<pair<int, int>>& edges) {
+Opt<Vec<E>> trail_directed(int nv, const Vec<pair<int, int>>& edges) {
 	assert(nv > 0);
 
 	Vec<Vec<E>> g(nv);

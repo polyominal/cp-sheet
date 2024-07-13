@@ -55,7 +55,7 @@ struct TwoSat {
 		either(cur, ~vs[1]);
 	} /// end-hash
 
-	optional<Vec<bool>> solve() { /// start-hash
+	Opt<Vec<bool>> solve() { /// start-hash
 		Vec<int> idx(2*n, -1), comp(2*n, -1), stk;
 		int tm = 0;
 		Vec<int> r(n, -1); /// end-hash
@@ -73,7 +73,8 @@ struct TwoSat {
 				tm++;
 				if (low == idx[i]) {
 					while (true) {
-						int z = stk.back(); stk.pop_back();
+						int z = stk.back();
+						stk.pop_back();
 						comp[z] = tm;
 						if (r[z>>1] == -1) r[z>>1] = !(z&1);
 						if (i == z) break;

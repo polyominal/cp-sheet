@@ -25,7 +25,7 @@ template <class T> void nft(Vec<T>& a, int n) {
 			}
 		}
 	} /// end-hash
-	int s = countr_zero(u32(rev.size()) / n); /// start-hash
+	int s = std::countr_zero(u32(rev.size()) / n); /// start-hash
 	for (int i = 0; i < n; i++) {
 		int j = rev[i] >> s;
 		if (i < j) swap(a[i], a[j]);
@@ -53,7 +53,7 @@ template <class T> void inft(Vec<T>& a, int n) { /// start-hash
 template <class T> Vec<T> multiply(Vec<T> a, Vec<T> b) { /// start-hash
 	int n = int(a.size()), m = int(b.size());
 	if (!n || !m) return {};
-	int s = bit_ceil<u32>(n + m - 1);
+	int s = std::bit_ceil<u32>(n + m - 1);
 	a.resize(s), nft(a, s);
 	b.resize(s), nft(b, s);
 	T is = inv(T(s));

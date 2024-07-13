@@ -54,7 +54,7 @@ inline C incircle(const P& a, const P& b, const P& c) {
 	D s = da + db + dc;
 	return C(
 		(a * da + b * db + c * dc) / s,
-		std::abs(crs(b-a, c-a)) / s
+		abs(crs(b-a, c-a)) / s
 	); /// end-hash
 }
 

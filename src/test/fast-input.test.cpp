@@ -19,7 +19,7 @@ TEST_CASE("Fast input: not-so-large integers", "[fast-input]") {
 
 	auto tmpf = tmpfile();
 	for (T a : A) {
-		auto t = to_string(a) + "\n";
+		auto t = std::to_string(a) + "\n";
 		fputs(t.c_str(), tmpf);
 	}
 	rewind(tmpf);

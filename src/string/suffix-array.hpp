@@ -62,24 +62,24 @@ struct SuffixArray {
 				lms[++n2] = i+1;
 			}
 		}
-		reverse(lms, lms + (n2+1));
-		fill(freq, freq + sigma, 0);
+		std::reverse(lms, lms + (n2+1));
+		std::fill(freq, freq + sigma, 0);
 		for (int i = 0; i <= n; i++) ++freq[int(s[i])];
-		partial_sum(freq, freq + sigma, freq); /// end-hash
+		std::partial_sum(freq, freq + sigma, freq); /// end-hash
 
 		auto induce = [&](int* v) { /// start-hash
-			fill(sa, sa + n+1, 0);
+			std::fill(sa, sa + n+1, 0);
 			int* cur = freq + sigma;
 			auto pushS = [&](int i) { sa[--cur[int(s[i])]] = i; };
 			auto pushL = [&](int i) { sa[cur[int(s[i])]++] = i; };
-			copy(freq, freq + sigma, cur);
+			std::copy(freq, freq + sigma, cur);
 			for (int i = n2; i >= 0; i--) pushS(v[i]);
-			copy(freq, freq + sigma-1, cur + 1);
+			std::copy(freq, freq + sigma-1, cur + 1);
 			for (int i = 0; i <= n; i++) {
 				int j = sa[i]-1;
 				if (j >= 0 && which[j] == 0) pushL(j);
 			}
-			copy(freq, freq + sigma, cur);
+			std::copy(freq, freq + sigma, cur);
 			for (int i = n; i >= 0; i--) {
 				int j = sa[i]-1;
 				if (j >= 0 && which[j]) pushS(j);
@@ -97,7 +97,7 @@ struct SuffixArray {
 
 		induce(lms); /// start-hash
 		int sigma2 = -1;
-		int* s2 = remove_if(sa, sa + n, [&](int i) { return which[i] != 2; });
+		int* s2 = std::remove_if(sa, sa + n, [&](int i) { return which[i] != 2; });
 		for (int i = 0; i <= n2; i++) {
 			if (sigma2 <= 0 || !eq(sa[i], sa[i-1])) sigma2++;
 			s2[sa[i]>>1] = sigma2;

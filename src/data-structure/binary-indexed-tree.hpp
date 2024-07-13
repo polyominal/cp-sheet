@@ -22,7 +22,7 @@ template <class T> struct BIT {
 	void build(int n) { /// start-hash
 		x.clear();
 		x.resize(s = n);
-		w = bit_width<u32>(s)-1;
+		w = std::bit_width<u32>(s)-1;
 	} /// end-hash
 
 	void build(const Vec<T>& a) { /// start-hash

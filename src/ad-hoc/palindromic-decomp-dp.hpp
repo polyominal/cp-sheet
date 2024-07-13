@@ -16,8 +16,8 @@
 // dp[j] := sum_{i s.t. [i, j) is palindromic} {dp[i] * x}
 template <class S, int sigma, bool even = false>
 Vec<S> palindromic_decomp_dp(const Vec<int>& a,
-	function<S(S, S)> add, S add_e,
-	function<S(S)> mul_x, S mul_e) {
+	auto add, S add_e,
+	auto mul_x, S mul_e) {
 	int n = int(a.size()); /// start-hash
 	Vec<int> locs(n);
 	Eertree<sigma> et(n);

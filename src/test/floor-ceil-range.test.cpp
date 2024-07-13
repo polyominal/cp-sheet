@@ -50,7 +50,7 @@ TEST_CASE("Ceil ranges", "[floor-ceil-range]") {
 		Vec<T> res;
 		for (i64 x = 1; x <= N; x++) {
 			if (x == 1) {
-				res.emplace_back(x, N, numeric_limits<i64>::max());
+				res.emplace_back(x, N, std::numeric_limits<i64>::max());
 				continue;
 			}
 			if (!buf[x].empty()) {

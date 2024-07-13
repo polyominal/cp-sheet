@@ -14,8 +14,8 @@ template <class M> struct Segtree {
 
 	template <class A> void build(int n_, A a) { /// start-hash
 		n = n_;
-		sz = bit_ceil<uint32_t>(n);
-		h = countr_zero<uint32_t>(sz);
+		sz = std::bit_ceil<uint32_t>(n);
+		h = std::countr_zero<uint32_t>(sz);
 		d.resize(2*sz);
 		for (int i = 0; i < n; i++) d[sz+i] = a(i);
 		for (int i = n; i < sz; i++) d[sz+i] = m.e();

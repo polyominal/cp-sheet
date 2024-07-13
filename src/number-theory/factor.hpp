@@ -51,8 +51,8 @@ template <class T> bool is_prime(T n) { /// start-hash
 template <class T> T pollard(T n) {
 	assert(n >= 2);
 	if (n % 2 == 0) return 2;
-	T c = uniform_int_distribution<T>(1, n-1)(mt);
-	T y = uniform_int_distribution<T>(1, n-1)(mt);
+	T c = std::uniform_int_distribution<T>(1, n-1)(mt);
+	T y = std::uniform_int_distribution<T>(1, n-1)(mt);
 	auto f = [&](T a) -> T { /// start-hash
 		return T((u128(a) * a + c) % n);
 	};
@@ -66,12 +66,12 @@ template <class T> T pollard(T n) {
 				y = f(y);
 				d = T(u128(d) * (y-x+n) % n);
 			}
-			d = __gcd(n, d);
+			d = std::gcd(n, d);
 			if (d == 1) continue;
 			if (d == n) {
 				for (d = 1, y = yb; d == 1; ) {
 					y = f(y);
-					d = __gcd(n, y-x+n);
+					d = std::gcd(n, y-x+n);
 				}
 			}
 			return d;
@@ -94,7 +94,7 @@ template <class T> T primitive_root(T p) {
 	assert(is_prime(p));
 	auto f = factorize(p-1);
 	while (true) {
-		T c = uniform_int_distribution<T>(1, p-1)(mt);
+		T c = std::uniform_int_distribution<T>(1, p-1)(mt);
 		if ([&]() -> bool { /// start-hash
 			for (T d : f) {
 				if (pow_mod<u128>(c, (p-1) / d, p) == 1) return false;

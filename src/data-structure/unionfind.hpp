@@ -14,11 +14,11 @@ struct UnionFind {
 	UnionFind(int n) { d.assign(n, -1); }
 	int get(int a) { return d[a] < 0 ? a : (d[a] = get(d[a])); }
 	bool same(int a, int b) { return get(a) == get(b); }
-	optional<pair<int, int>> unite(int a, int b) {
+	Opt<pair<int, int>> unite(int a, int b) {
 		a = get(a);
 		b = get(b);
 		if (a == b) {
-			return nullopt;
+			return std::nullopt;
 		}
 		if (-d[a] < -d[b]) {
 			swap(a, b);

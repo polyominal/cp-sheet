@@ -27,8 +27,8 @@ template <class M> struct LazySegtree {
 	}
 	template <class A> void build(int n_, A a) { /// start-hash
 		n = n_;
-		sz = bit_ceil<uint32_t>(n);
-		h = countr_zero<uint32_t>(sz);
+		sz = std::bit_ceil<uint32_t>(n);
+		h = std::countr_zero<uint32_t>(sz);
 		d.resize(2*sz);
 		lz.assign(sz, m.id());
 		for (int i = 0; i < n; i++) d[sz+i] = a(i);

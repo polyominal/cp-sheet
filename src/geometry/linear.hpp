@@ -43,7 +43,7 @@ inline bool insSS(const L& s, const L& t) { /// start-hash
 } /// end-hash
 
 inline D distLP(const L& l, const P& p) { /// start-hash
-	return std::abs(crs(vec(l), p - l.s)) / dist(l);
+	return abs(crs(vec(l), p - l.s)) / dist(l);
 } /// end-hash
 
 inline D distSP(const L& s, const P& p) { /// start-hash

@@ -15,7 +15,7 @@
 
 struct CustomHash { /// start-hash
 	size_t operator()(uint64_t x) const {
-		static const uint64_t z = chrono::steady_clock::now().time_since_epoch().count(),
+		static const uint64_t z = std::chrono::steady_clock::now().time_since_epoch().count(),
 							  c = uint64_t(4e18*acos(0))+71;
 		return __builtin_bswap64((x^z)*c);
 	}

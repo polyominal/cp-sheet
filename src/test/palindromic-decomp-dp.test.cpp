@@ -7,8 +7,8 @@
 
 template <class S, int K, bool even = false>
 Vec<S> palindromic_decomp_dp_naive(const Vec<int>& a,
-	function<S(S, S)> add, S add_e,
-	function<S(S)> mul_x, S mul_e) {
+	auto add, S add_e,
+	auto mul_x, S mul_e) {
 	int n = int(a.size());
 	assert(n > 0);
 	auto man = manacher(n, [&](int i, int j) -> bool {

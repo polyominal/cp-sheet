@@ -8,7 +8,7 @@
 
 #include "contest/base.hpp"
 
-inline void floor_range(i64 n, function<void(i64, i64, i64)> f) {
+inline void floor_range(i64 n, auto f) {
 	int rt = int(sqrtl(n)); /// start-hash
 	int num = (rt * rt + rt <= n ? rt : rt - 1);
 	i64 prv = n + 1;
@@ -22,9 +22,9 @@ inline void floor_range(i64 n, function<void(i64, i64, i64)> f) {
 	} /// end-hash
 }
 
-inline void ceil_range(i64 n, function<void(i64, i64, i64)> f) {
+inline void ceil_range(i64 n, auto f) {
   	int rt = int(sqrtl(n)); /// start-hash
-  	i64 prv = numeric_limits<i64>::max();
+  	i64 prv = std::numeric_limits<i64>::max();
   	for (int q = 1; q <= rt; ++q) {
 		i64 x = i64(double(n + q - 1) / q);
 		f(q, x, prv);
