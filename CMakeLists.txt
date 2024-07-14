@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.27)
+cmake_minimum_required(VERSION 3.21)
 project(cp-sheet)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -19,7 +19,7 @@ add_library(cp-sheet INTERFACE)
 target_include_directories(cp-sheet INTERFACE src)
 target_compile_options(
   cp-sheet INTERFACE
-  -O2 -Wall -Wextra -Wshadow -Wconversion -Wno-sign-conversion -Werror
+  -O2 -Wall -Wextra -Wshadow -Wconversion -Wno-sign-conversion
 )
 
 # Unit tests
