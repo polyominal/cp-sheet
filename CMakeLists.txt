@@ -19,7 +19,7 @@ add_library(cp-sheet INTERFACE)
 target_include_directories(cp-sheet INTERFACE src)
 target_compile_options(
   cp-sheet INTERFACE
-  -O2 -Wall -Wextra -Wshadow -Wconversion -Wno-sign-conversion
+  -O2 -Wall -Wextra -Wshadow -Wconversion -Wno-sign-conversion -Werror
 )
 
 # Unit tests
