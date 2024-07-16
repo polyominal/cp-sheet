@@ -16,7 +16,7 @@ template <class T, class F> struct StaticRange {
 	const F f;
 	const T e;
 	StaticRange(const Vec<T>& a, F f_, T e_) : f(f_), e(e_) {
-		int n = int(a.size());
+		int n = int(size(a));
 		int h = 0;
 		while ((2 << h) < n) h++;
 		d.resize(h+1);

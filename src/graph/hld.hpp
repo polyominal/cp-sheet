@@ -1,12 +1,3 @@
-/**
- * Author: Hanfei Chen
- * Date: 2023-11-09
- * Description: Heavy-light decomposition with derived funcionalities
- * Status: Slightly tested with Library Checker problems.
- * You might want to test it on forests though it seems quite rare.
- * In particular, this is tested with
- * - https://judge.yosupo.jp/problem/vertex_set_path_composite
- */
 #pragma once
 
 #include "contest/base.hpp"
@@ -106,13 +97,17 @@ struct HLD {
 		}
 	} /// end-hash
 
-	int jump(int s, int t, int d) const { /// start-hash
+	Opt<int> jump(int s, int t, int d) const { /// start-hash
 		int w = lca(s, t);
 		if (d <= depth[s] - depth[w]) {
 			return get_ancestor(s, d);
 		} else {
 			d = (depth[s] + depth[t] - 2 * depth[w]) - d;
-			return d >= 0 ? get_ancestor(t, d) : -1;
+			if (d >= 0) {
+				return get_ancestor(t, d);
+			} else {
+				return std::nullopt;
+			}
 		}
 	} /// end-hash
 
