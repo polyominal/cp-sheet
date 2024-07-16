@@ -1,7 +1,3 @@
-/**
- * Description: Somehow type this up before you do anything
- */
-
 #pragma once
 
 #include <bits/stdc++.h>

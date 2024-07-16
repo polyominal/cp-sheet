@@ -1,10 +1,3 @@
-/**
- * Author: Hanfei Chen
- * Date: 2024-07-12
- * Description: A typical unionfind implementation
- * Status: Tested
- */
-
 #pragma once
 
 #include "contest/base.hpp"
