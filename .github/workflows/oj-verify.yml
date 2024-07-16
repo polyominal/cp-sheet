@@ -18,6 +18,4 @@ jobs:
       - name: Run tests
         working-directory: ${{github.workspace}}
         run: |
-          oj-verify run src/oj-test/aplusb.test.cpp
-          oj-verify run src/oj-test/range-parallel-unionfind.test.cpp
-          oj-verify run src/oj-test/tree-path-composite-sum.test.cpp
+          oj-verify run
