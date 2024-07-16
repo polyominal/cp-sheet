@@ -1,0 +1,22 @@
+name: OJ verification
+
+on:
+  push:
+    branches: ["oj-integration"]
+  pull_request:
+    branches: ["oj-integration"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+      - name: Install dependencies
+        run: pip3 install online-judge-verify-helper
+      - name: Run tests
+        working-directory: ${{github.workspace}}
+        run: |
+          oj-verify run src/oj-test/aplusb.test.cpp
+          oj-verify run src/oj-test/range-parallel-unionfind.test.cpp
