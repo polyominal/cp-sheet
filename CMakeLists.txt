@@ -22,8 +22,8 @@ target_compile_options(
   -O2 -Wall -Wextra -Wshadow -Wconversion -Wno-sign-conversion -Werror
 )
 
-# Unit tests
-file(GLOB TEST_SRC_FILES "src/test/*.test.cpp")
+# Cache tests
+file(GLOB TEST_SRC_FILES "src/ctest/*.ctest.cpp")
 add_executable(tests "${TEST_SRC_FILES}")
 target_link_libraries(tests PUBLIC cp-sheet)
 target_link_libraries(tests PRIVATE Catch2::Catch2WithMain)
