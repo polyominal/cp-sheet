@@ -1,10 +1,10 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Description: A queue that supports querying the compositition of all elements
  * Status: Tested with https://judge.yosupo.jp/problem/queue_operate_all_composite
  */
-
-#pragma once
 
 #include "contest/base.hpp"
 

@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Description: Faster and safer hash map.
@@ -7,8 +9,6 @@
  * Status: Tested with
  * - https://judge.yosupo.jp/problem/associative_array (int64_t, uint64_t)
  */
-
-#pragma once
 
 #include "contest/base.hpp"
 #include <ext/pb_ds/assoc_container.hpp>

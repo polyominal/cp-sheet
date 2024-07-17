@@ -1,11 +1,11 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Description: Fast scanner implementation based on \texttt{fread}
  * Status: Tested with
  * - https://judge.yosupo.jp/problem/associative_array (uint64_t)
  */
-
-#pragma once
 
 #include "contest/base.hpp"
 

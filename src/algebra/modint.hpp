@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Date: 2023-09-15
@@ -6,8 +8,6 @@
  * determined during compile-time
  * Status: Tested with many
  */
-
-#pragma once
 
 #include "contest/base.hpp"
 

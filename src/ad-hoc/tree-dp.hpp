@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Date: 2022-12-24
@@ -8,8 +10,6 @@
  * - https://judge.yosupo.jp/problem/tree_path_composite_sum
  * - https://cses.fi/problemset/task/1133
  */
-
-#pragma once
 
 #include "contest/base.hpp"
 

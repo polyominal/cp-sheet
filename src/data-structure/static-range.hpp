@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Date: 2023-08-05
@@ -6,8 +8,6 @@
  * Time: $O(N \log N)$ building and $O(1)$ querying
  * Status: To be tested
  */
-
-#pragma once
 
 #include "contest/base.hpp"
 
