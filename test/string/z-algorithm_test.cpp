@@ -1,6 +1,6 @@
-#include "contest/base.hpp"
-#include "util/random.hpp"
-#include "string/z-algorithm.hpp"
+#include <contest/base.hpp>
+#include <util/random.hpp>
+#include <string/z-algorithm.hpp>
 #include <gtest/gtest.h>
 
 template <class S> Vec<int> z_naive(const S& s) {
