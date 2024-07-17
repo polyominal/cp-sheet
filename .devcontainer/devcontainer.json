@@ -2,7 +2,8 @@
 	"image": "mcr.microsoft.com/vscode/devcontainers/base:ubuntu-22.04",
 
 	"features": {
-		"ghcr.io/devcontainers/features/common-utils:2": {}
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		"ghcr.io/balazs23/devcontainers-features/bazel:1.0.1": {}
 	},
 
 	"postCreateCommand": "./.devcontainer/extra.sh",
