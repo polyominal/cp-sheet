@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Date: 2024-01-03
@@ -8,24 +10,21 @@
  * Status: Tested with https://judge.yosupo.jp/problem/zalgorithm
  */
 
-#pragma once
-
 #include "contest/base.hpp"
 
 template <class S> Vec<int> z_algo(const S& s) {
 	int n = int(size(s));
-	Vec<int> res(n+1);
+	auto res = Vec<int>(n + 1);
 	for (int i = 1, j = 0; i <= n; i++) {
 		int& k = res[i];
 		if (j + res[j] <= i) {
 			k = 0;
 		} else {
-			k = min(res[j] + j - i, res[i-j]);
+			k = min(res[j] + j - i, res[i - j]);
 		}
-		while (i+k < n && s[k] == s[i+k]) k++;
+		while (i + k < n && s[k] == s[i + k]) k++;
 		if (j + res[j] < i + res[i]) j = i;
 	}
 	res[0] = n;
 	return res;
 }
-

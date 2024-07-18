@@ -1,14 +1,14 @@
-#include <contest/base.hpp>
-#include <util/random.hpp>
-#include <string/z-algorithm.hpp>
 #include <gtest/gtest.h>
+#include <contest/base.hpp>
+#include <string/z-algorithm.hpp>
+#include <util/random.hpp>
 
 template <class S> Vec<int> z_naive(const S& s) {
 	int n = int(size(s));
-	auto r = Vec<int>(n+1);
+	auto r = Vec<int>(n + 1);
 	for (int i = 0; i <= n; i++) {
 		int& k = r[i];
-		while (i+k < n && s[k] == s[i+k]) k++;
+		while (i + k < n && s[k] == s[i + k]) k++;
 	}
 	return r;
 }
