@@ -15,13 +15,13 @@ struct Scanner {
 	FILE* f;
 	Scanner(FILE* f_) : f(f_) {}
 
-	void read() {} /// start-hash
+	void read() {}	/// start-hash
 	template <class H, class... T> void read(H& h, T&... t) {
 		read_single(h);
 		read(t...);
-	} /// end-hash
+	}  /// end-hash
 
-	char buf[1 << 16]; /// start-hash
+	char buf[1 << 16];	/// start-hash
 	size_t s = 0, e = 0;
 	char get() {
 		if (s >= e) {
@@ -30,11 +30,12 @@ struct Scanner {
 			e = fread(buf, 1, sizeof(buf), f);
 		}
 		return buf[s++];
-	} /// end-hash
+	}  /// end-hash
 
-	template <class T> void read_single(T& r) { /// start-hash
+	template <class T> void read_single(T& r) {	 /// start-hash
 		char c;
-		while ((c = get()) <= ' ') {}
+		while ((c = get()) <= ' ') {
+		}
 		bool neg = false;
 		if (c == '-') {
 			neg = true;
@@ -45,22 +46,23 @@ struct Scanner {
 			r = 10 * r + (c & 15);
 		} while ((c = get()) >= '0');
 		if (neg) r = -r;
-	} /// end-hash
+	}  /// end-hash
 
-	void read_single(string& r) { /// start-hash
+	void read_single(string& r) {  /// start-hash
 		char c;
-		while ((c = get()) <= ' ') {}
-		r = "";
+		while ((c = get()) <= ' ') {
+		}
+		r = {};
 		do {
 			r += c;
 		} while ((c = get()) > ' ');
-	} /// end-hash
+	}  /// end-hash
 
-	void read_single(double& r) { /// start-hash
+	void read_single(double& r) {  /// start-hash
 		string z;
 		read_single(z);
 		r = stod(z);
-	} /// end-hash
+	}  /// end-hash
 };
 
-} // namespace fast_input
+}  // namespace fast_input
