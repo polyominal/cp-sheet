@@ -51,3 +51,6 @@
 *.cb2
 .*.lb
 *.ptc
+
+# oj-bundle-generated
+/combined.cpp
