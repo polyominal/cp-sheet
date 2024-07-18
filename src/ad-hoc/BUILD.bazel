@@ -8,5 +8,5 @@ my_cc_library(
 my_cc_test(
     name = "floor-ceil-range_test",
     srcs = ["floor-ceil-range_test.cpp"],
-    deps = [":floor-ceil-range"],
+    deps = ["//src/ad-hoc:floor-ceil-range"],
 )
