@@ -1,0 +1,12 @@
+load("//:rules.bzl", "my_cc_library", "my_cc_test")
+
+my_cc_library(
+    name = "binary-indexed-tree",
+    hdrs = ["binary-indexed-tree.hpp"],
+)
+
+my_cc_test(
+    name = "binary-indexed-tree_test",
+    srcs = ["binary-indexed-tree_test.cpp"],
+    deps = ["//src/data-structure:binary-indexed-tree"],
+)

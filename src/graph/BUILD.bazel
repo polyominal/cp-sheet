@@ -1,0 +1,12 @@
+load("//:rules.bzl", "my_cc_library", "my_cc_test")
+
+my_cc_library(
+    name = "enumerate-triangles",
+    hdrs = ["enumerate-triangles.hpp"],
+)
+
+my_cc_test(
+    name = "enumerate-triangles_test",
+    srcs = ["enumerate-triangles_test.cpp"],
+    deps = ["//src/graph:enumerate-triangles"],
+)

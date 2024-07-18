@@ -1,0 +1,12 @@
+load("//:rules.bzl", "my_cc_library", "my_cc_test")
+
+my_cc_library(
+    name = "modint",
+    hdrs = ["modint.hpp"],
+)
+
+my_cc_test(
+    name = "modint_test",
+    srcs = ["modint_test.cpp"],
+    deps = ["//src/algebra:modint"],
+)

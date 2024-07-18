@@ -2,9 +2,9 @@ name: Test via Bazel
 
 on:
   push:
-    branches: ["main", "ci-bazel"]
+    branches: ["main"]
   pull_request:
-    branches: ["main", "ci-bazel"]
+    branches: ["main"]
 
 jobs:
   build:

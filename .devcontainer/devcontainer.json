@@ -1,22 +1,13 @@
 {
 	"image": "mcr.microsoft.com/vscode/devcontainers/base:ubuntu-22.04",
-
 	"features": {
-		"ghcr.io/devcontainers/features/common-utils:2": {},
-		"ghcr.io/balazs23/devcontainers-features/bazel:1.0.1": {}
+		"ghcr.io/devcontainers/features/common-utils:2": {}
 	},
-
-	"postCreateCommand": "./.devcontainer/extra.sh",
-
+	"updateContentCommand": "./.devcontainer/extra.sh",
 	"customizations": {
 		"vscode": {
 			"settings": {
 				"C_Cpp.intelliSenseEngine": "disabled",
-
-				"[cpp]": {
-					"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
-				},
-
 				"clangd.fallbackFlags": [
 					"-std=c++20",
 					"-Wall",
@@ -26,7 +17,12 @@
 					"-Wno-sign-conversion",
 					"-Isrc"
 				],
-
+				"clangd.arguments": [
+					"--background-index",
+					"--log=verbose",
+					"--pretty",
+					"--function-arg-placeholders=true"
+				],
 				// Reference: https://stackoverflow.com/questions/55987337/visual-studio-code-remote-containers-change-shell
 				"terminal.integrated.defaultProfile.linux": "zsh",
 				"terminal.integrated.profiles.linux": {
@@ -36,8 +32,13 @@
 				}
 			},
 			"extensions": [
-				"llvm-vs-code-extensions.vscode-clangd"
+				"llvm-vs-code-extensions.vscode-clangd",
+				"BazelBuild.vscode-bazel"
 			]
 		}
+	},
+	"containerEnv": {
+		"BAZELISK_VERSION": "latest",
+		"BUILDIFIER_VERSION": "latest"
 	}
 }

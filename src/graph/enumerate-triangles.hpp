@@ -12,7 +12,7 @@
 
 template <class F> void triangles(int n, const Vec<pair<int, int>>& edges, F f) {
 	Vec<int> deg(n); /// start-hash
-	for (auto& [a, b] : edges) {
+	for (auto [a, b] : edges) {
 		deg[a]++, deg[b]++;
 	}
 	Vec<Vec<int>> adj(n);
@@ -28,7 +28,9 @@ template <class F> void triangles(int n, const Vec<pair<int, int>>& edges, F f) 
 		for (int y : adj[x]) ind[y] = i;
 		for (int y : adj[x]) {
 			for (int z : adj[y]) {
-				if (ind[z] == i) f(x, y, z);
+				if (ind[z] == i) {
+					f(x, y, z);
+				}
 			}
 		}
 	} /// end-hash

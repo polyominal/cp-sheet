@@ -13,7 +13,7 @@
 #include "contest/base.hpp"
 
 template <class S> Vec<int> z_algo(const S& s) {
-	int n = int(s.size());
+	int n = int(size(s));
 	Vec<int> res(n+1);
 	for (int i = 1, j = 0; i <= n; i++) {
 		int& k = res[i];

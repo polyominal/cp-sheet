@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Nyaan on Codeforces
  * Date: 2023-09-09
@@ -5,8 +7,6 @@
  * Description: Prime sieve for generating all primes up to a certain limit $n$
  * Status: Good luck
  */
-
-#pragma once
 
 #include "contest/base.hpp"
 

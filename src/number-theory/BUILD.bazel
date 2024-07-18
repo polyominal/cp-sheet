@@ -1,0 +1,12 @@
+load("//:rules.bzl", "my_cc_library", "my_cc_test")
+
+my_cc_library(
+    name = "eratosthenes",
+    hdrs = ["eratosthenes.hpp"],
+)
+
+my_cc_test(
+    name = "eratosthenes_test",
+    srcs = ["eratosthenes_test.cpp"],
+    deps = [":eratosthenes"],
+)

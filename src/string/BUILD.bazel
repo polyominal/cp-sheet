@@ -1,0 +1,23 @@
+load("//:rules.bzl", "my_cc_library", "my_cc_test")
+
+my_cc_library(
+    name = "z-algorithm",
+    hdrs = ["z-algorithm.hpp"],
+)
+
+my_cc_library(
+    name = "suffix-array",
+    hdrs = ["suffix-array.hpp"],
+)
+
+my_cc_test(
+    name = "z-algorithm_test",
+    srcs = ["z-algorithm_test.cpp"],
+    deps = ["//src/string:z-algorithm"],
+)
+
+my_cc_test(
+    name = "suffix-array_test",
+    srcs = ["suffix-array_test.cpp"],
+    deps = ["//src/string:suffix-array"],
+)
