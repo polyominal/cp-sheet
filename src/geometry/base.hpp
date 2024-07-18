@@ -47,8 +47,8 @@ template <class T = D> struct Point {
 	friend bool operator < (const P& a, const P& b) { return cmp(a, b) < 0; }
 	friend bool operator <= (const P& a, const P& b) { return cmp(a, b) <= 0; }
 
-	friend D dist2(const P& p) { return p.x * p.x + p.y * p.y; }
-	friend auto dist(const P& p) { return sqrt(dist2(p)); }
+	friend T dist2(const P& p) { return p.x * p.x + p.y * p.y; }
+	friend auto dist(const P& p) { return sqrt(D(dist2(p))); }
 
 	friend P unit(const P& p) { return p / p.dist(); }
 
