@@ -19,9 +19,8 @@ int main() {
 		cin >> a;
 	}
 
-	auto sr = StaticRange(A, [](T a, T b) -> T {
-		return min(a, b);
-	}, T(1.1e9));
+	auto sr = StaticRange(
+		A, [](T a, T b) -> T { return min(a, b); }, T(1.1e9));
 
 	for (int q = 0; q < Q; q++) {
 		int l, r;

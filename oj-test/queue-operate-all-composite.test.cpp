@@ -1,7 +1,7 @@
 // verification-helper: PROBLEM https://judge.yosupo.jp/problem/queue_operate_all_composite
 
-#include "contest/base.hpp"
 #include "algebra/modint.hpp"
+#include "contest/base.hpp"
 #include "contest/fast-input.hpp"
 #include "data-structure/queue-aggregation.hpp"
 
@@ -16,9 +16,11 @@ int main() {
 	using Z = ModInt<998244353>;
 	using F = pair<Z, Z>;
 
-	auto qa = QueueAggregation([](const F& f, const F& g) -> F {
-		return {f.first * g.first, f.second * g.first + g.second};
-	}, F{1, 0});
+	auto qa = QueueAggregation(
+		[](const F& f, const F& g) -> F {
+			return {f.first * g.first, f.second * g.first + g.second};
+		},
+		F{1, 0});
 
 	for (int q = 0; q < Q; q++) {
 		int t;
@@ -35,7 +37,8 @@ int main() {
 			sc.read(x.v);
 			F prod = qa.prod();
 			std::cout << (prod.first * x + prod.second).v << '\n';
-		} else assert(false);
+		} else
+			assert(false);
 	}
 
 	return 0;

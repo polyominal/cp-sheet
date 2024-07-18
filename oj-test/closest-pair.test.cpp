@@ -1,7 +1,7 @@
 // verification-helper: PROBLEM https://judge.yosupo.jp/problem/closest_pair
 
-#include "contest/base.hpp"
 #include "geometry/closest-pair.hpp"
+#include "contest/base.hpp"
 #include "contest/fast-input.hpp"
 
 using P = pair<i64, i64>;

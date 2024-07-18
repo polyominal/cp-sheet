@@ -1,9 +1,9 @@
 // verification-helper: PROBLEM https://judge.yosupo.jp/problem/point_set_range_composite
 
-#include <contest/base.hpp>
-#include <data-structure/segtree.hpp>
-#include <algebra/modint.hpp>
-#include <contest/fast-input.hpp>
+#include "algebra/modint.hpp"
+#include "contest/base.hpp"
+#include "contest/fast-input.hpp"
+#include "data-structure/segtree.hpp"
 
 int main() {
 	std::ios_base::sync_with_stdio(false);
@@ -23,11 +23,14 @@ int main() {
 		}
 	};
 
-	auto segtree = Segtree(N, [&](int) -> Monoid::S {
-		u32 a, b;
-		sc.read(a, b);
-		return Monoid::S{a, b};
-	}, Monoid());
+	auto segtree = Segtree(
+		N,
+		[&](int) -> Monoid::S {
+			u32 a, b;
+			sc.read(a, b);
+			return Monoid::S{a, b};
+		},
+		Monoid());
 
 	for (int q = 0; q < Q; q++) {
 		int t;
@@ -44,7 +47,8 @@ int main() {
 			auto f = segtree.prod(l, r);
 			Z res = f.first * x + f.second;
 			std::cout << res.v << '\n';
-		} else assert(false);
+		} else
+			assert(false);
 	}
 
 	return 0;

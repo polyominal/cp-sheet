@@ -33,7 +33,9 @@ int main() {
 			} else {
 				cout << 0 << '\n';
 			}
-		} else assert(false);
+		} else {
+			assert(false);
+		}
 	}
 
 	return 0;

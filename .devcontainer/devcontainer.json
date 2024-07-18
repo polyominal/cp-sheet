@@ -29,6 +29,12 @@
 					"zsh": {
 						"path": "/usr/bin/zsh"
 					}
+				},
+				"[cpp]": {
+					"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+				},
+				"[starlark]": {
+					"editor.formatOnSave": true
 				}
 			},
 			"extensions": [

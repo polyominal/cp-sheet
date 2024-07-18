@@ -1,9 +1,9 @@
 // verification-helper: PROBLEM https://judge.yosupo.jp/problem/enumerate_triangles
 
-#include <contest/base.hpp>
-#include <contest/fast-input.hpp>
-#include <graph/enumerate-triangles.hpp>
-#include <algebra/modint.hpp>
+#include "algebra/modint.hpp"
+#include "contest/base.hpp"
+#include "contest/fast-input.hpp"
+#include "graph/enumerate-triangles.hpp"
 
 int main() {
 	std::ios_base::sync_with_stdio(false);
@@ -26,9 +26,8 @@ int main() {
 	}
 
 	auto tot = Z(0);
-	triangles(N, edges, [&](int x, int y, int z) -> void {
-		tot += X[x] * X[y] * X[z];
-	});
+	triangles(N, edges,
+			  [&](int x, int y, int z) -> void { tot += X[x] * X[y] * X[z]; });
 
 	std::cout << tot.v << '\n';
 
