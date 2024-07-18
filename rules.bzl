@@ -1,6 +1,6 @@
 load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
 
-def my_cc_test(name, srcs, deps = [], **kwargs):
+def my_cc_test(name, srcs, deps = [], size = "small", **kwargs):
     cc_test(
         name = name,
         srcs = srcs,
@@ -11,6 +11,7 @@ def my_cc_test(name, srcs, deps = [], **kwargs):
             "//src/contest:base",
             "//src/util:random",
         ],
+        size = size,
         **kwargs
     )
 
