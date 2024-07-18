@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Date: 2024-01-30
@@ -6,8 +8,6 @@
  * Source: https://maspypy.com/library-checker-range-set-range-composite
  * Status: Tested with https://judge.yosupo.jp/problem/range_set_range_composite
  */
-
-#pragma once
 
 #include "contest/base.hpp"
 #include "data-structure/fast-set.hpp"
@@ -22,7 +22,8 @@ template <class M> struct AssignmentSegtree {
 	Vec<S> dat;
 
 	AssignmentSegtree(M m_) : m(m_), n(0), st(m) {}
-	template <class A> AssignmentSegtree(int n_, A a, M m_) : m(m_), n(n_), st(m) {
+	template <class A>
+	AssignmentSegtree(int n_, A a, M m_) : m(m_), n(n_), st(m) {
 		build(n_, a);
 	}
 	template <class A> void build(int n_, A a) {
@@ -51,10 +52,10 @@ template <class M> struct AssignmentSegtree {
 		int a = cut.prev(l);
 		int b = cut.next(l);
 		int c = cut.prev(r);
-		if (a == c) return pow(dat[a], r-l);
-		S u = pow(dat[a], b-l);
+		if (a == c) return pow(dat[a], r - l);
+		S u = pow(dat[a], b - l);
 		S v = st.prod(b, c);
-		S w = pow(dat[c], r-c);
+		S w = pow(dat[c], r - c);
 		return m.op(u, m.op(v, w));
 	}
 
@@ -62,19 +63,19 @@ template <class M> struct AssignmentSegtree {
 		if (l == r) return;
 		int a = cut.prev(l);
 		int b = cut.next(r);
-		if (a < l) st.set(a, pow(dat[a], l-a));
+		if (a < l) st.set(a, pow(dat[a], l - a));
 		if (r < b) {
 			S t = dat[cut.prev(r)];
 			dat[r] = t;
 			cut.set(r);
-			st.set(r, pow(t, b-r));
+			st.set(r, pow(t, b - r));
 		}
-		cut.enumerate(l+1, r, [&](int i) -> void {
+		cut.enumerate(l + 1, r, [&](int i) -> void {
 			st.set(i, m.e());
 			cut.reset(i);
 		});
 		dat[l] = s;
 		cut.set(l);
-		st.set(l, pow(s, r-l));
+		st.set(l, pow(s, r - l));
 	}
 };

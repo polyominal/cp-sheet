@@ -5,8 +5,38 @@ my_cc_library(
     hdrs = ["binary-indexed-tree.hpp"],
 )
 
+my_cc_library(
+    name = "segtree",
+    hdrs = ["segtree.hpp"],
+)
+
+my_cc_library(
+    name = "fast-set",
+    hdrs = ["fast-set.hpp"],
+)
+
+my_cc_library(
+    name = "assignment-segtree",
+    hdrs = ["assignment-segtree.hpp"],
+    deps = [
+        "//src/data-structure:fast-set",
+        "//src/data-structure:segtree",
+    ],
+)
+
 my_cc_test(
     name = "binary-indexed-tree_test",
     srcs = ["binary-indexed-tree_test.cpp"],
-    deps = ["//src/data-structure:binary-indexed-tree"],
+    deps = [
+        "//src/data-structure:binary-indexed-tree",
+    ],
+)
+
+my_cc_test(
+    name = "assignment-segtree_test",
+    srcs = ["assignment-segtree_test.cpp"],
+    deps = [
+        "//src/algebra:modint",
+        "//src/data-structure:assignment-segtree",
+    ],
 )
