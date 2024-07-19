@@ -8,5 +8,27 @@ my_cc_library(
 my_cc_test(
     name = "eratosthenes-test",
     srcs = ["eratosthenes-test.cpp"],
-    deps = [":eratosthenes"],
+    deps = ["//src/number-theory:eratosthenes"],
+)
+
+my_cc_library(
+    name = "factor",
+    hdrs = ["factor.hpp"],
+)
+
+my_cc_test(
+    name = "factor-test",
+    srcs = ["factor-test.cpp"],
+    deps = ["//src/number-theory:factor"],
+)
+
+my_cc_library(
+    name = "int-kth-root",
+    hdrs = ["int-kth-root.hpp"],
+)
+
+my_cc_test(
+    name = "int-kth-root-test",
+    srcs = ["int-kth-root-test.cpp"],
+    deps = ["//src/number-theory:int-kth-root"],
 )

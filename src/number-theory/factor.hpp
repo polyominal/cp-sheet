@@ -1,9 +1,13 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Date: 2024-01-16
  * Description: Returns prime
  * factors in ascending order (e.g. 2299 -> \{11, 11, 19\})
- * Source: https://miller-rabin.appspot.com/
+ * Source:
+ * - https://miller-rabin.appspot.com/
+ * - https://github.com/kth-competitive-programming/kactl/blob/5d1e141e617ff73643b4b1d57d8e6df5d70f902e/content/number-theory/Factor.h
  * Time: O(n^{1/4})
  * Status: Tested with
  * - https://judge.yosupo.jp/problem/factorize (factorize)
@@ -11,14 +15,11 @@
  * - https://judge.yosupo.jp/problem/mul_modp_convolution (primitive_root)
  */
 
-#pragma once
-
 #include "contest/base.hpp"
-#include <random>
 
 namespace factor {
 
-template <class T> T pow_mod(T a, u64 b, T m) { /// start-hash
+template <class T> T pow_mod(T a, u64 b, T m) {	 /// start-hash
 	T r = 1;
 	while (b) {
 		if (b & 1) r = r * a % m;
@@ -26,82 +27,66 @@ template <class T> T pow_mod(T a, u64 b, T m) { /// start-hash
 		b >>= 1;
 	}
 	return r;
-} /// end-hash
+}  /// end-hash
 
-template <class T> bool is_prime(T n) { /// start-hash
+template <class T> bool is_prime(T n) {	 /// start-hash
 	if (n <= 1 || n % 2 == 0) return (n == 2);
-	int s = __builtin_ctzll(n-1);
-	T d = (n-1) >> s;
+	int s = __builtin_ctzll(n - 1);
+	T d = (n - 1) >> s;
 	for (u128 a : {2, 325, 9375, 28178, 450775, 9780504, 1795265022}) {
 		a %= n;
 		if (a == 0) continue;
 		a = pow_mod<u128>(a, d, n);
-		if (T(a) == 1 || T(a) == n-1) continue;
-		for (int i = 0; i < s-1; i++) {
+		if (T(a) == 1 || T(a) == n - 1) continue;
+		for (int i = 0; i < s - 1; i++) {
 			a = a * a % n;
-			if (T(a) == n-1) break;
+			if (T(a) == n - 1) break;
 		}
-		if (T(a) != n-1) return false;
+		if (T(a) != n - 1) return false;
 	}
 	return true;
-} /// end-hash
+}  /// end-hash
 
-// Fake pollard-rho, which does not guarantee
-// to return a nontrivial divisor of n
-template <class T> T pollard(T n) {
-	assert(n >= 2);
-	if (n % 2 == 0) return 2;
-	T c = std::uniform_int_distribution<T>(1, n-1)(mt);
-	T y = std::uniform_int_distribution<T>(1, n-1)(mt);
-	auto f = [&](T a) -> T { /// start-hash
-		return T((u128(a) * a + c) % n);
-	};
-	for (int s = 1; ; s *= 2) {
-		T x = y, d = 1;
-		for (int i = 0; i < s; i++) y = f(y);
-		static constexpr int block = 256;
-		for (int i = 0; i < s; i += block) {
-			T yb = y;
-			for (int j = 0; j < block && j < s-i; j++) {
-				y = f(y);
-				d = T(u128(d) * (y-x+n) % n);
-			}
-			d = std::gcd(n, d);
-			if (d == 1) continue;
-			if (d == n) {
-				for (d = 1, y = yb; d == 1; ) {
-					y = f(y);
-					d = std::gcd(n, y-x+n);
-				}
-			}
-			return d;
+template <class T> T pollard(T n) {	 /// start-hash
+	T x = 0, y = 0, t = 30, p = 2, it = 1;
+	auto f = [&](T a) { return T(u128(a) * a % n) + it; };
+	while (t++ % 40 || std::gcd(p, n) == 1) {
+		if (x == y) {
+			x = ++it, y = f(x);
 		}
-	} /// end-hash
-}
+		T d = max(x, y) - min(x, y);
+		if (T q = T(u128(p) * d % n); q) {
+			p = q;
+		}
+		x = f(x), y = f(f(y));
+	}
+	return std::gcd(p, n);
+}  /// end-hash
 
 // Returns prime factors in ascending order
-template <class T> Vec<T> factorize(T n) { /// start-hash
+template <class T> Vec<T> factorize(T n) {	/// start-hash
 	if (n == 1) return {};
 	if (is_prime(n)) return {n};
 	T f = pollard(n);
 	auto a = factorize(f), b = factorize(n / f);
 	Vec<T> c(a.size() + b.size());
-	merge(a.begin(), a.end(), b.begin(), b.end(), c.begin());
+	merge(begin(a), end(a), begin(b), end(b), begin(c));
 	return c;
-} /// end-hash
+}  /// end-hash
 
 template <class T> T primitive_root(T p) {
 	assert(is_prime(p));
-	auto f = factorize(p-1);
+	auto f = factorize(p - 1);
+	T c;
 	while (true) {
-		T c = std::uniform_int_distribution<T>(1, p-1)(mt);
-		if ([&]() -> bool { /// start-hash
-			for (T d : f) {
-				if (pow_mod<u128>(c, (p-1) / d, p) == 1) return false;
-			}
-			return true;
-		}()) return c; /// end-hash
+		c = rand_int<T>(1, p - 1);
+		if (!std::ranges::any_of(f, [&](T d) {
+				return pow_mod<u128>(c, (p - 1) / d, p) == 1;
+			})) {
+			break;
+		}
 	}
+	return c;
 }
 
-} // namespace factor
+}  // namespace factor

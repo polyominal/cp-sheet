@@ -1,6 +1,6 @@
+#include <gtest/gtest.h>
 #include <number-theory/eratosthenes.hpp>
 #include <util/random.hpp>
-#include <gtest/gtest.h>
 
 TEST(EratosthenesSieveTest, EnumeratingPrimes) {
 	constexpr int MAXN = 1e5;
@@ -30,7 +30,7 @@ TEST(EratosthenesSieveTest, EnumeratingPrimes) {
 
 	auto rng = Random(20240111);
 	for (int z = 0; z < 5; z++) {
-		int N = rng.uniform(1, MAXN-1);
+		int N = rng.uniform(1, MAXN - 1);
 		verify_given_N(N);
 	}
 	// use prime bounds

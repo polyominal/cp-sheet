@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Date: 2024-01-12
@@ -7,7 +9,7 @@
 
 #include "contest/base.hpp"
 
-template <class I = uint64_t> I int_kth_root(I a, I k) {
+template <class I = u64> I int_kth_root(I a, I k) {
 	if (k == 1) return a;
 	if (k >= 64) return (a == 0 ? 0 : 1);
 
@@ -21,7 +23,7 @@ template <class I = uint64_t> I int_kth_root(I a, I k) {
 		return r <= a;
 	};
 	if (a == I(-1)) a--;
-	I rt = I(pow(a, nextafter(1 / double(k), 0)));
-	while (works(rt+1)) rt++;
+	I rt = I(pow(double(a), nextafter(1 / double(k), 0)));
+	while (works(rt + 1)) rt++;
 	return rt;
 }
