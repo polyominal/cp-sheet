@@ -1,5 +1,18 @@
+load("//:rules.bzl", "my_cc_library", "my_cc_test")
+
 cc_library(
     name = "base",
     hdrs = ["base.hpp"],
     visibility = ["//visibility:public"],
+)
+
+my_cc_library(
+    name = "fast-input",
+    hdrs = ["fast-input.hpp"],
+)
+
+my_cc_test(
+    name = "fast-input_test",
+    srcs = ["fast-input_test.cpp"],
+    deps = ["//src/contest:fast-input"],
 )
