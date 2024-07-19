@@ -25,16 +25,16 @@ my_cc_library(
 )
 
 my_cc_test(
-    name = "binary-indexed-tree_test",
-    srcs = ["binary-indexed-tree_test.cpp"],
+    name = "binary-indexed-tree-test",
+    srcs = ["binary-indexed-tree-test.cpp"],
     deps = [
         "//src/data-structure:binary-indexed-tree",
     ],
 )
 
 my_cc_test(
-    name = "assignment-segtree_test",
-    srcs = ["assignment-segtree_test.cpp"],
+    name = "assignment-segtree-test",
+    srcs = ["assignment-segtree-test.cpp"],
     deps = [
         "//src/algebra:modint",
         "//src/data-structure:assignment-segtree",

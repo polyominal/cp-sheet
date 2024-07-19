@@ -12,7 +12,7 @@ my_cc_library(
 )
 
 my_cc_test(
-    name = "closest-pair_test",
-    srcs = ["closest-pair_test.cpp"],
+    name = "closest-pair-test",
+    srcs = ["closest-pair-test.cpp"],
     deps = ["//src/geometry:closest-pair"],
 )

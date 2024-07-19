@@ -12,7 +12,7 @@ my_cc_library(
 )
 
 my_cc_test(
-    name = "fast-input_test",
-    srcs = ["fast-input_test.cpp"],
+    name = "fast-input-test",
+    srcs = ["fast-input-test.cpp"],
     deps = ["//src/contest:fast-input"],
 )

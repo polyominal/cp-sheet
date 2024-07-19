@@ -6,7 +6,7 @@ my_cc_library(
 )
 
 my_cc_test(
-    name = "eratosthenes_test",
-    srcs = ["eratosthenes_test.cpp"],
+    name = "eratosthenes-test",
+    srcs = ["eratosthenes-test.cpp"],
     deps = [":eratosthenes"],
 )

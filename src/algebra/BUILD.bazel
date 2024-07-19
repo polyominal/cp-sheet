@@ -6,7 +6,7 @@ my_cc_library(
 )
 
 my_cc_test(
-    name = "modint_test",
-    srcs = ["modint_test.cpp"],
+    name = "modint-test",
+    srcs = ["modint-test.cpp"],
     deps = ["//src/algebra:modint"],
 )

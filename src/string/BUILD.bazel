@@ -11,13 +11,13 @@ my_cc_library(
 )
 
 my_cc_test(
-    name = "z-algorithm_test",
-    srcs = ["z-algorithm_test.cpp"],
+    name = "z-algorithm-test",
+    srcs = ["z-algorithm-test.cpp"],
     deps = ["//src/string:z-algorithm"],
 )
 
 my_cc_test(
-    name = "suffix-array_test",
-    srcs = ["suffix-array_test.cpp"],
+    name = "suffix-array-test",
+    srcs = ["suffix-array-test.cpp"],
     deps = ["//src/string:suffix-array"],
 )

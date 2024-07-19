@@ -6,7 +6,7 @@ my_cc_library(
 )
 
 my_cc_test(
-    name = "floor-ceil-range_test",
-    srcs = ["floor-ceil-range_test.cpp"],
+    name = "floor-ceil-range-test",
+    srcs = ["floor-ceil-range-test.cpp"],
     deps = ["//src/ad-hoc:floor-ceil-range"],
 )

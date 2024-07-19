@@ -6,7 +6,7 @@ my_cc_library(
 )
 
 my_cc_test(
-    name = "enumerate-triangles_test",
-    srcs = ["enumerate-triangles_test.cpp"],
+    name = "enumerate-triangles-test",
+    srcs = ["enumerate-triangles-test.cpp"],
     deps = ["//src/graph:enumerate-triangles"],
 )
