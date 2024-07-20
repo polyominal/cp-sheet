@@ -6,7 +6,6 @@ using std::abs, std::sin, std::cos, std::tan, std::asin, std::acos, std::atan2;
 using std::min, std::max, std::swap;
 using std::pair, std::tuple;
 using std::set, std::map, std::multiset;
-using std::sqrt, std::cbrt;
 using std::tie;
 using std::vector, std::array, std::string;
 
@@ -32,3 +31,7 @@ template <class F> decltype(auto) yc(F&& f) {
 
 inline std::mt19937_64 mt(
 	std::chrono::steady_clock::now().time_since_epoch().count());
+
+template <class T> T rand_int(T l, T r) {
+	return std::uniform_int_distribution<T>(l, r)(mt);
+}
