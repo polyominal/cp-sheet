@@ -10,3 +10,17 @@ my_cc_test(
     srcs = ["floor-ceil-range-test.cpp"],
     deps = ["//src/ad-hoc:floor-ceil-range"],
 )
+
+my_cc_library(
+    name = "tree-dp",
+    hdrs = ["tree-dp.hpp"],
+)
+
+my_cc_test(
+    name = "tree-dp-test",
+    srcs = ["tree-dp-test.cpp"],
+    deps = [
+        "//src/ad-hoc:tree-dp",
+        "//src/algebra:modint",
+    ],
+)

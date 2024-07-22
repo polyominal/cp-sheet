@@ -2,10 +2,8 @@
 
 /**
  * Author: Hanfei Chen
- * Date: 2022-12-24
- * Description: ``Solving for all roots'' abstraction.
- * This seems to bear some huge constant factor,
- * so try out ad-hoc implementations if you get TLs
+ * Date: 2024-07-22
+ * Description: ``All-direction tree DP`` solver
  * Status: Tested with
  * - https://judge.yosupo.jp/problem/tree_path_composite_sum
  * - https://cses.fi/problemset/task/1133
@@ -13,48 +11,80 @@
 
 #include "contest/base.hpp"
 
-// REQUIRED: n >= 1 and g represents (bidirectionally) a tree
-// int(E): edge -> index of its destination
-// TODO:
-// - subtree(v, p): subtree rooted at v with parent p
-// - Avoid recursion?
-template <class M, class E> struct TreeDP {
-	using S = M::S;
-	int n;
-	Vec<S> sub, psub, res;
-	Vec<E> par;
-	TreeDP(M d, const Vec<Vec<E>>& g)
-		: n(int(size(g))), sub(n), psub(n), res(n), par(n) {
-		Vec<S> up(n), pref(n);
-		auto dfs_up = [&](auto self, int v, int p) -> void { /// start-hash
-			up[v] = d.make(v);
-			for (const auto& e : g[v]) {
-				if (e != p) {
-					self(self, e, v);
-					pref[e] = up[v];
-					up[v] = d.op(up[v], up[e]);
-				} else {
-					par[v] = e;
+using std::views::reverse;
+
+template <class S> struct TreeDP {
+	template <class RF, class CF> struct Inner {
+		Vec<S> low, high;
+		Vec<int> edges, par;
+		const RF rake;
+		const CF compress;
+		Inner(const Vec<Vec<int>>& g, auto make, RF rake_, CF compress_)
+			: rake(rake_), compress(compress_) {
+			int n = int(size(g));
+			auto single = Vec<S>(n);
+			edges.resize(n - 1);
+			for (int v = 0; v < n; v++) {
+				single[v] = make(v);
+				for (int e : g[v]) edges[e] ^= v;
+			}
+
+			auto bfs = Vec<int>{0};
+			bfs.reserve(n);
+			par.assign(n, -1);
+			for (size_t z = 0; z < size(bfs); z++) {
+				int v = bfs[z];
+				for (int e : g[v]) {
+					if (par[v] == e) continue;
+					int w = v ^ edges[e];
+					par[w] = e;
+					bfs.push_back(w);
 				}
 			}
-			sub[v] = up[v];
-			if (p != -1) {
-				up[v] = d.up(up[v], par[v]);
+
+			low = single;
+			auto up = Vec<S>(n);
+			auto pref = Vec<S>(n);
+			for (int v : bfs | reverse) {
+				for (int e : g[v]) {
+					if (par[v] == e) continue;
+					int w = v ^ edges[e];
+					pref[w] = low[v];
+					up[w] = compress(low[w], e, v);
+					low[v] = rake(low[v], up[w], v);
+				}
 			}
-		};
-		dfs_up(dfs_up, 0, -1); /// end-hash
-		auto dfs_down = [&](auto self, int v, int p, S f) -> void { /// start-hash
-			for (const auto& e : g[v] | std::views::reverse) {
-				if (e == p) continue;
-				psub[e] = d.op(f, pref[e]);
-				self(self, e, v, d.up(psub[e], e));
-				f = d.op(f, up[e]);
+
+			high.resize(n);
+			bool empty = true;
+			for (int v : bfs) {
+				S f;
+				if (v != 0) {
+					f = compress(high[v], par[v], v);
+				}
+				for (int e : g[v] | reverse) {
+					if (par[v] == e) continue;
+					int w = v ^ edges[e];
+					if (!empty) {
+						high[w] = rake(pref[w], f, v);
+						f = rake(up[w], f, v);
+					} else {
+						high[w] = pref[w];
+						f = up[w];
+						empty = false;
+					}
+				}
 			}
-			res[v] = f;
-		};
-		dfs_down(dfs_down, 0, -1, d.make(0)); /// end-hash
-	}
-	const S& operator[](int i) const {
-		return res[i];
+		}
+
+		S get_vertex(int v) const {
+			if (v == 0) return low[v];
+			return rake(low[v], compress(high[v], par[v], v), v);
+		}
+	};
+
+	template <class RF, class CF>
+	static auto solve(const Vec<Vec<int>>& g, auto make, RF rake, CF compress) {
+		return Inner(g, make, rake, compress);
 	}
 };

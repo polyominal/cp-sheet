@@ -3,57 +3,44 @@
 #include "ad-hoc/tree-dp.hpp"
 #include "algebra/modint.hpp"
 #include "contest/base.hpp"
+#include "contest/fast-input.hpp"
 
 using std::cin, std::cout;
 
 int main() {
+	using fast_input::Scanner;
+	auto sc = Scanner(stdin);
+
 	int N;
-	cin >> N;
+	sc.read(N);
 
 	using Z = ModInt<998244353>;
 	auto A = Vec<Z>(N);
-	for (auto& a : A) cin >> a.v;
+	for (auto& a : A) sc.read(a.v);
 
-	struct E {
-		int dest;
-		int idx;
-
-		operator int() const { return dest; }
-	};
-	auto adj = Vec<Vec<E>>(N);
+	auto adj = Vec<Vec<int>>(N);
 	auto B = Vec<Z>(N - 1);
 	auto C = Vec<Z>(N - 1);
 	for (int e = 0; e < N - 1; e++) {
 		int u, v;
-		cin >> u >> v >> B[e].v >> C[e].v;
-		adj[u].push_back(E{v, e});
-		adj[v].push_back(E{u, e});
+		sc.read(u, v, B[e].v, C[e].v);
+		adj[u].push_back(e);
+		adj[v].push_back(e);
 	}
 
-	struct Manager {
-		const Vec<Z>&A, B, C;
-
-		struct Result {
-			Z top;
-			Z s;
-			Z c;
-		};
-		using S = Result;
-
-		S make(int v) { return S{A[v], A[v], 1}; }
-		S op(const S& a, const S& b) {
-			assert(a.top == b.top);
-			return S{a.top, a.s + b.s - a.top, a.c + b.c - 1};
-		}
-		S up(const S& a, const E& e) {
-			return S{A[e.dest], A[e.dest] + a.s * B[e.idx] + a.c * C[e.idx],
-					 a.c + 1};
-		}
+	using S = array<Z, 2>;	// [0]: sum; [1]: count
+	auto make = [&](int v) -> S { return S{A[v], 1}; };
+	auto rake = [&](const S& a, const S& b, int) -> S {
+		return S{a[0] + b[0], a[1] + b[1]};
 	};
+	auto compress = [&](const S& a, int e, int) -> S {
+		return S{a[0] * B[e] + a[1] * C[e], a[1]};
+	};
+	auto tdp = TreeDP<S>::solve(adj, make, rake, compress);
 
-	auto tdp = TreeDP(Manager{.A = A, .B = B, .C = C}, adj);
-	for (int i = 0; i < N; i++) {
-		cout << tdp[i].s.v << '\n';
+	for (int v = 0; v < N; v++) {
+		Z res = tdp.get_vertex(v)[0];
+		cout << res.v << '\n';
 	}
 
 	return 0;
