@@ -1,7 +1,7 @@
-#include <contest/base.hpp>
-#include <algebra/modint.hpp>
-#include <util/random.hpp>
 #include <gtest/gtest.h>
+#include <algebra/modint.hpp>
+#include <contest/base.hpp>
+#include <util/random.hpp>
 
 TEST(ModIntTest, MultiplicationAndInversion) {
 	auto rng = Random(114514);
@@ -10,7 +10,7 @@ TEST(ModIntTest, MultiplicationAndInversion) {
 	using Z = ModInt<mod>;
 
 	for (int z = 0; z < 200; z++) {
-		Z a = rng.uniform<u32>(1, mod-1);
+		Z a = rng.uniform<u32>(1, mod - 1);
 		Z ia = Z(1) / a;
 		Z ia2 = inv(a);
 		EXPECT_EQ(ia, ia2);

@@ -1,6 +1,6 @@
+#include <gtest/gtest.h>
 #include <ad-hoc/floor-ceil-range.hpp>
 #include <util/random.hpp>
-#include <gtest/gtest.h>
 
 TEST(FloorCeilRangeTest, FloorRanges) {
 	using T = tuple<i64, i64, i64>;
@@ -45,7 +45,7 @@ TEST(FloorCeilRangeTest, CeilRanges) {
 	auto get_ranges_slow = [&](i64 N) -> Vec<T> {
 		Vec<Vec<i64>> buf(N + 1);
 		for (i64 x = 1; x <= N; x++) {
-			buf[(N-1) / x + 1].push_back(x);
+			buf[(N - 1) / x + 1].push_back(x);
 		}
 		Vec<T> res;
 		for (i64 x = 1; x <= N; x++) {
