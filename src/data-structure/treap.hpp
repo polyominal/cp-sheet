@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Description: Randomized Treap with split/merge support.
@@ -11,8 +13,6 @@
  * - https://judge.yosupo.jp/problem/dynamic_sequence_range_affine_range_sum
  * Time: O(\log N) per operation
  */
-
-#pragma once
 
 #include "contest/base.hpp"
 
@@ -29,7 +29,7 @@ template <class M, bool persistent = false> struct TreapManager {
 		}
 
 		for (int z = 0; z < 2; z++) {
-			states[z] = uint32_t(mt());
+			states[z] = u32(mt());
 		}
 	}
 
@@ -37,11 +37,11 @@ template <class M, bool persistent = false> struct TreapManager {
 
 	Tree make_empty() { return Tree(null); }
 
-	Tree make_single(S s) { /// start-hash
+	Tree make_single(S s) {	 /// start-hash
 		int i = int(nodes.size());
 		nodes.push_back(Node{null, null, 1, false, false, s, s, m.id()});
 		return i;
-	} /// end-hash
+	}  /// end-hash
 
 	Tree make_copy(Tree o) { return _make_copy(o); }
 
@@ -50,31 +50,31 @@ template <class M, bool persistent = false> struct TreapManager {
 	int apply(Tree t, F f) { return _apply(t, f); }
 	S prod(const Tree& t) { return _prod(t); }
 
-	Tree split_k(Tree& t, int k) { /// start-hash
+	Tree split_k(Tree& t, int k) {	/// start-hash
 		Tree o;
 		tie(t, o) = _split_k(t, k);
 		return o;
-	} /// end-hash
+	}  /// end-hash
 
 	Tree merge(Tree a, Tree b) { return _merge(a, b); }
 
-	Tree build(const Vec<S>& a) { /// start-hash
+	Tree build(const Vec<S>& a) {  /// start-hash
 		if (a.empty()) return make_empty();
 		return _build(a, 0, int(a.size()));
-	} /// end-hash
+	}  /// end-hash
 
-	Vec<S> to_array(const Tree& t) { /// start-hash
+	Vec<S> to_array(const Tree& t) {  /// start-hash
 		Vec<S> buf;
 		buf.reserve(size(t));
 		_to_array(t, buf);
 		return buf;
-	} /// end-hash
+	}  /// end-hash
 
 private:
 	static constexpr int null = -42;
 	M m;
 
-	struct Node { /// start-hash
+	struct Node {  /// start-hash
 		int li, ri, sz;
 		bool rev, app;
 		S a, s;
@@ -82,9 +82,9 @@ private:
 	};
 	Vec<Node> nodes;
 	Node& node(int i) { return nodes[i]; }
-	int _size(int i) { return i == null ? 0 : node(i).sz; } /// end-hash
+	int _size(int i) { return i == null ? 0 : node(i).sz; }	 /// end-hash
 
-	int _make_copy(int o) { /// start-hash
+	int _make_copy(int o) {	 /// start-hash
 		if constexpr (!persistent) return o;
 
 		if (o == null) return null;
@@ -92,34 +92,34 @@ private:
 		int i = int(nodes.size());
 		nodes.push_back(node(o));
 		return i;
-	} /// end-hash
+	}  /// end-hash
 
-	int _build(const Vec<S>& a, int l, int r) { /// start-hash
+	int _build(const Vec<S>& a, int l, int r) {	 /// start-hash
 		if (r - l == 1) {
 			return make_single(a[l]);
 		}
 		int md = (l + r) / 2;
 		return _merge(_build(a, l, md), _build(a, md, r));
-	} /// end-hash
+	}  /// end-hash
 
-	void _update(int i) { /// start-hash
+	void _update(int i) {  /// start-hash
 		auto& n = node(i);
 		n.s = m.op(_prod(n.li), m.op(n.a, _prod(n.ri)));
 		n.sz = size(n.li) + size(n.ri) + 1;
-	} /// end-hash
+	}  /// end-hash
 
-	int _reverse(int i) { /// start-hash
+	int _reverse(int i) {  /// start-hash
 		if (i == null) return i;
 		i = _make_copy(i);
 		auto& n = node(i);
 		n.rev = !n.rev;
 		swap(n.li, n.ri);
 		return i;
-	} /// end-hash
+	}  /// end-hash
 
 	S _prod(int i) { return i == null ? m.e() : node(i).s; }
 
-	int _apply(int i, F f) { /// start-hash
+	int _apply(int i, F f) {  /// start-hash
 		if (i == null) return i;
 		i = _make_copy(i);
 		auto& n = node(i);
@@ -128,9 +128,9 @@ private:
 		n.f = m.composition(f, n.f);
 		n.app = true;
 		return i;
-	} /// end-hash
+	}  /// end-hash
 
-	int downdate(int i) { /// start-hash
+	int downdate(int i) {  /// start-hash
 		assert(i != null);
 		i = _make_copy(i);
 		auto& n = node(i);
@@ -146,10 +146,9 @@ private:
 			n.app = false;
 		}
 		return i;
-	} /// end-hash
+	}  /// end-hash
 
-
-	template <class F> pair<int, int> _split(int i, F go_left) { /// start-hash
+	template <class F> pair<int, int> _split(int i, F go_left) {  /// start-hash
 		if (i == null) return {null, null};
 		i = downdate(i);
 		auto& n = node(i);
@@ -164,9 +163,9 @@ private:
 		}
 		_update(i);
 		return {x, y};
-	} /// end-hash
+	}  /// end-hash
 
-	pair<int, int> _split_k(int i, int k) { /// start-hash
+	pair<int, int> _split_k(int i, int k) {	 /// start-hash
 		return _split(i, [&](int li, int) -> bool {
 			int lsz = size(li);
 			if (k <= lsz) {
@@ -176,29 +175,29 @@ private:
 				return false;
 			}
 		});
-	} /// end-hash
+	}  /// end-hash
 
 	// Use std::mt19937_64 if performance is not an issue
 	// https://prng.di.unimi.it/xoroshiro64star.c
-	inline uint32_t rotl(const uint32_t x, int k) { /// start-hash
+	inline u32 rotl(const u32 x, int k) {  /// start-hash
 		return (x << k) | (x >> (32 - k));
 	}
-	uint32_t states[2];
-	uint32_t rng() {
-		const uint32_t s0 = states[0];
-		uint32_t s1 = states[1];
-		const uint32_t res = s0 * 0x9E3779BB;
+	u32 states[2];
+	u32 rng() {
+		const u32 s0 = states[0];
+		u32 s1 = states[1];
+		const u32 res = s0 * 0x9E3779BB;
 		s1 ^= s0;
 		states[0] = rotl(s0, 26) ^ s1 ^ (s1 << 9);
 		states[1] = rotl(s1, 13);
 		return res;
-	} /// end-hash
+	}  /// end-hash
 
-	int _merge(int a, int b) { /// start-hash
+	int _merge(int a, int b) {	/// start-hash
 		if (a == null) return b;
 		if (b == null) return a;
 		int r;
-		uint32_t sa = size(a), sb = size(b);
+		u32 sa = size(a), sb = size(b);
 		if (rng() % (sa + sb) < sa) {
 			r = downdate(a);
 			node(r).ri = _merge(node(r).ri, b);
@@ -208,14 +207,14 @@ private:
 		}
 		_update(r);
 		return r;
-	} /// end-hash
+	}  /// end-hash
 
-	void _to_array(int i, Vec<S>& buf) { /// start-hash
+	void _to_array(int i, Vec<S>& buf) {  /// start-hash
 		if (i == null) return;
 		downdate(i);
 		auto& n = node(i);
 		_to_array(n.li, buf);
 		buf.push_back(n.a);
 		_to_array(n.ri, buf);
-	} /// end-hash
+	}  /// end-hash
 };

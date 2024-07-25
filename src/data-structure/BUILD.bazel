@@ -40,3 +40,17 @@ my_cc_test(
         "//src/data-structure:assignment-segtree",
     ],
 )
+
+my_cc_library(
+    name = "treap",
+    hdrs = ["treap.hpp"],
+)
+
+my_cc_test(
+    name = "treap-test",
+    srcs = ["treap-test.cpp"],
+    deps = [
+        "//src/algebra:modint",
+        "//src/data-structure:treap",
+    ],
+)
