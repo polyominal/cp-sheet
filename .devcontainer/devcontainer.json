@@ -1,7 +1,11 @@
 {
 	"image": "mcr.microsoft.com/vscode/devcontainers/base:ubuntu-22.04",
 	"features": {
-		"ghcr.io/devcontainers/features/common-utils:2": {}
+		"ghcr.io/devcontainers/features/common-utils:2": {},
+		"ghcr.io/devcontainers/features/python:1": {},
+		"ghcr.io/devcontainers-community/features/llvm:3": {
+			"version": 18
+		}
 	},
 	"updateContentCommand": "./.devcontainer/extra.sh",
 	"customizations": {
@@ -31,11 +35,11 @@
 					}
 				},
 				"[cpp]": {
-					"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
+					"editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd"
 				},
-				"[starlark]": {
-					"editor.formatOnSave": true
-				}
+				"editor.formatOnPaste": true,
+				"editor.formatOnSave": true,
+				"files.trimTrailingWhitespace": true
 			},
 			"extensions": [
 				"llvm-vs-code-extensions.vscode-clangd",
@@ -44,7 +48,7 @@
 		}
 	},
 	"containerEnv": {
-		"BAZELISK_VERSION": "latest",
-		"BUILDIFIER_VERSION": "latest"
+		"BAZEL_VERSION": "7.2.1",
+		"BUILDIFIER_VERSION": "v7.1.2"
 	}
 }

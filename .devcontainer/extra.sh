@@ -24,25 +24,9 @@ Darwin) PLATFORM=darwin ;;
     ;;
 esac
 
-github_download() {
-    repo=$1
-    version=$2
-    artifact=$3
-    output=$4
-    if [ "${version}" = "latest" ]; then
-        URL="https://github.com/${repo}/releases/latest/download/${artifact}"
-    else
-        URL="https://github.com/${repo}/releases/download/${version}/${artifact}"
-    fi
-    curl -fSsL "${URL}" -o "${output}"
-}
-
-echo "Installing essential tools..."
-
-sudo apt-get update
-
-sudo apt-get install -y clangd cmake python3-pip
-pip install online-judge-tools online-judge-verify-helper
+pip install pipx
+pipx ensurepath
+pipx install online-judge-tools online-judge-verify-helper
 
 echo "Configuring Git..."
 
@@ -51,11 +35,24 @@ git config --global --add safe.directory $(pwd)
 
 echo "Setting up Bazel..."
 
-github_download "bazelbuild/bazelisk" "${BAZELISK_VERSION}" "bazelisk-${PLATFORM}-${ARCHITECTURE}" "./bazelisk"
-chmod +x "./bazelisk"
-sudo mv ./bazelisk "${LOCAL_BIN}/bazelisk"
-sudo ln -s "${LOCAL_BIN}/bazelisk" "${LOCAL_BIN}/bazel"
+bazel_url() {
+    # Example: https://github.com/bazelbuild/bazel/releases/download/7.2.1/bazel-7.2.1-linux-x86_64
+    ARCH_NAME=${ARCHITECTURE}
+    if [ "${ARCHITECTURE}" = "amd64" ]; then
+        ARCH_NAME="x86_64"
+    fi
+    echo "https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-${PLATFORM}-${ARCH_NAME}"
+}
 
-github_download "bazelbuild/buildtools" "${BUILDIFIER_VERSION}" "buildifier-${PLATFORM}-${ARCHITECTURE}" "./buildifier"
+buildifier_url() {
+    # Example: https://github.com/bazelbuild/buildtools/releases/download/7.1.2/buildifier-7.1.2-linux-amd64
+    echo "https://github.com/bazelbuild/buildtools/releases/download/${BUILDIFIER_VERSION}/buildifier-${PLATFORM}-${ARCHITECTURE}"
+}
+
+curl -fSsL "$(bazel_url)" -o "./bazel"
+chmod +x "./bazel"
+sudo mv ./bazel "${LOCAL_BIN}/bazel"
+
+curl -fSsL "$(buildifier_url)" -o "./buildifier"
 chmod +x "./buildifier"
 sudo mv ./buildifier "${LOCAL_BIN}/buildifier"
