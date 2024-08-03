@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Date: 2024-01-03
@@ -10,8 +12,6 @@
  * - https://judge.yosupo.jp/problem/enumerate_palindromes
  * - https://ac.nowcoder.com/acm/contest/57357/G
  */
-
-#pragma once
 
 #include "contest/base.hpp"
 
@@ -26,18 +26,18 @@
  * In particular, res[2*i+1] = -1 states that [i, i] is not palindromic.
  */
 template <class E> Vec<int> manacher(int n, E e) {
-	Vec<int> res(2*n+1);
+	auto res = Vec<int>(2 * n + 1);
 	int i = 0, a = 0, b = 0;
-	while (i <= 2*n) {
+	while (i <= 2 * n) {
 		while (0 < a && b < n) {
-			if (i-2*a >= -1 && !e(a-1, b)) break;
+			if (i - 2 * a >= -1 && !e(a - 1, b)) break;
 			a--, b++;
 		}
-		int j = b-a;
+		int j = b - a;
 		res[i] = j;
 		int k = 1;
-		while (k < j && k + res[i-k] < j) {
-			res[i+k] = res[i-k];
+		while (k < j && k + res[i - k] < j) {
+			res[i + k] = res[i - k];
 			k++;
 		}
 		i += k, a += k;

@@ -21,3 +21,14 @@ my_cc_test(
     srcs = ["suffix-array-test.cpp"],
     deps = ["//src/string:suffix-array"],
 )
+
+my_cc_library(
+    name = "manacher",
+    hdrs = ["manacher.hpp"],
+)
+
+my_cc_test(
+    name = "manacher-test",
+    srcs = ["manacher-test.cpp"],
+    deps = ["//src/string:manacher"],
+)
