@@ -54,3 +54,17 @@ my_cc_test(
         "//src/data-structure:treap",
     ],
 )
+
+my_cc_library(
+    name = "lazy-segtree",
+    hdrs = ["lazy-segtree.hpp"],
+)
+
+my_cc_test(
+    name = "lazy-segtree-test",
+    srcs = ["lazy-segtree-test.cpp"],
+    deps = [
+        "//src/algebra:modint",
+        "//src/data-structure:lazy-segtree",
+    ],
+)
