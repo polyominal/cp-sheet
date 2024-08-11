@@ -3,7 +3,7 @@
 /**
  * Author: Hanfei Chen
  * Date: 2024-07-22
- * Description: ``All-direction tree DP`` solver
+ * Description: All-direction tree DP blackbox
  * Status: Tested with
  * - https://judge.yosupo.jp/problem/tree_path_composite_sum
  * - https://cses.fi/problemset/task/1133
@@ -56,22 +56,20 @@ template <class S> struct TreeDP {
 			}
 
 			high.resize(n);
-			bool empty = true;
+			auto f = Opt<S>();
 			for (int v : bfs) {
-				S f;
-				if (v != 0) {
+				if (v != 0) [[likely]] {
 					f = compress(high[v], par[v], v);
 				}
 				for (int e : g[v] | reverse) {
 					if (par[v] == e) continue;
 					int w = v ^ edges[e];
-					if (!empty) {
-						high[w] = rake(pref[w], f, v);
-						f = rake(up[w], f, v);
+					if (f.has_value()) [[likely]] {
+						high[w] = rake(pref[w], *f, v);
+						f = rake(up[w], *f, v);
 					} else {
 						high[w] = pref[w];
 						f = up[w];
-						empty = false;
 					}
 				}
 			}
