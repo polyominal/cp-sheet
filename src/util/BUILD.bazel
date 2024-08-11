@@ -1,7 +1,13 @@
-load("//:rules.bzl", "my_cc_library")
+load("//:rules.bzl", "my_cc_library", "my_cc_test")
 
 my_cc_library(
     name = "random",
     hdrs = ["random.hpp"],
     deps = [],
+)
+
+my_cc_test(
+    name = "random-test",
+    srcs = ["random-test.cpp"],
+    # Dependency on the random library is automatic
 )
