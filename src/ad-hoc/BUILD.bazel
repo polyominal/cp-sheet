@@ -24,3 +24,24 @@ my_cc_test(
         "//src/algebra:modint",
     ],
 )
+
+my_cc_library(
+    name = "monotone-minima",
+    hdrs = ["monotone-minima.hpp"],
+)
+
+my_cc_library(
+    name = "min-plus-convex",
+    hdrs = ["min-plus-convex.hpp"],
+    deps = [
+        "//src/ad-hoc:monotone-minima",
+    ],
+)
+
+my_cc_test(
+    name = "min-plus-convex-test",
+    srcs = ["min-plus-convex-test.cpp"],
+    deps = [
+        "//src/ad-hoc:min-plus-convex",
+    ],
+)
