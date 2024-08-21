@@ -68,3 +68,16 @@ my_cc_test(
         "//src/data-structure:lazy-segtree",
     ],
 )
+
+my_cc_library(
+    name = "meldable-heap",
+    hdrs = ["meldable-heap.hpp"],
+)
+
+my_cc_test(
+    name = "meldable-heap-test",
+    srcs = ["meldable-heap-test.cpp"],
+    deps = [
+        "//src/data-structure:meldable-heap",
+    ],
+)
