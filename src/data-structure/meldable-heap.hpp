@@ -2,12 +2,10 @@
 
 #include "contest/base.hpp"
 
-// Comp: (a: T, b: T) -> whether a should be on the top
-template <class T, class Comp> struct HeapManager {
+// Smaller elements are prioritized
+template <class T> struct HeapManager {
 	using Heap = int;
 	static constexpr Heap null = -42;
-	const Comp comp;
-	HeapManager(const Comp comp_ = Comp()) : comp(comp_) {}
 
 	Heap make_empty() { return null; }
 	Heap make_copy(Heap h) {
@@ -24,7 +22,7 @@ template <class T, class Comp> struct HeapManager {
 	Heap meld(Heap a, Heap b) {
 		if (a == null) return b;
 		if (b == null) return a;
-		if (!comp(nodes[a].val, nodes[b].val)) {
+		if (nodes[a].val > nodes[b].val) {
 			swap(a, b);
 		}
 		a = make_copy(a);

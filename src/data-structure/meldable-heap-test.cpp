@@ -2,7 +2,7 @@
 #include <data-structure/meldable-heap.hpp>
 
 TEST(TestMeldableHeap, Example) {
-	auto hm = HeapManager<int, std::less<int>>();
+	auto hm = HeapManager<int>();
 	auto a = hm.make_empty();
 	EXPECT_FALSE(hm.top(a).has_value());
 
