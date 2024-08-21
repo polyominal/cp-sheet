@@ -15,34 +15,36 @@ template <class T> struct HeapManager {
 	}
 	Heap make_single(const T& val) {
 		int i = int(size(nodes));
-		nodes.push_back(Node{{null, null}, val});
+		nodes.push_back(Node{null, null, val});
 		return i;
 	}
 
 	Heap meld(Heap a, Heap b) {
 		if (a == null) return b;
 		if (b == null) return a;
-		if (nodes[a].val > nodes[b].val) {
+		if (nodes[a].v > nodes[b].v) {
 			swap(a, b);
 		}
 		a = make_copy(a);
-		nodes[a].ch[1] = meld(nodes[a].ch[1], b);
-		swap(nodes[a].ch[0], nodes[a].ch[1]);
+		nodes[a].ri = meld(nodes[a].ri, b);
+		swap(nodes[a].li, nodes[a].ri);
 		return a;
 	}
-	Heap insert(Heap h, const T& x) { return meld(h, make_single(x)); }
-	Heap pop(Heap h) { return meld(nodes[h].ch[0], nodes[h].ch[1]); }
+	Heap push(Heap h, const T& x) { return meld(h, make_single(x)); }
+	// Undefined if h is null
+	Heap pop(Heap h) { return meld(nodes[h].li, nodes[h].ri); }
+
 	Opt<T> top(Heap h) {
 		if (h != null) {
-			return nodes[h].val;
+			return nodes[h].v;
 		} else {
 			return std::nullopt;
 		}
 	}
 
 	struct Node {
-		int ch[2];
-		T val;
+		Heap li, ri;
+		T v;
 	};
 	Vec<Node> nodes;
 };

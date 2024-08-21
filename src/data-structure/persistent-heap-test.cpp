@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <data-structure/meldable-heap.hpp>
+#include <data-structure/persistent-heap.hpp>
 
 TEST(TestMeldableHeap, Example) {
 	auto hm = HeapManager<int>();
@@ -11,7 +11,7 @@ TEST(TestMeldableHeap, Example) {
 	b = hm.meld(a, b);
 	EXPECT_EQ(hm.top(b).value(), 1);
 
-	auto c = hm.insert(b, 0);
+	auto c = hm.push(b, 0);
 	EXPECT_EQ(hm.top(c).value(), 0);
 	EXPECT_EQ(hm.top(b), 1);
 
