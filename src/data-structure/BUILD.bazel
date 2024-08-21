@@ -81,3 +81,16 @@ my_cc_test(
         "//src/data-structure:persistent-heap",
     ],
 )
+
+my_cc_library(
+    name = "unionfind",
+    hdrs = ["unionfind.hpp"],
+)
+
+my_cc_test(
+    name = "unionfind-test",
+    srcs = ["unionfind-test.cpp"],
+    deps = [
+        "//src/data-structure:unionfind",
+    ],
+)
