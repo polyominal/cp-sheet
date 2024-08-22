@@ -13,56 +13,58 @@ namespace fast_input {
 
 struct Scanner {
 	FILE* f;
-	Scanner(FILE* f_) : f(f_) {}
+	Scanner(FILE* f_ = stdin) : f(f_) {}
 
-	void read() {}	/// start-hash
-	template <class H, class... T> void read(H& h, T&... t) {
-		read_single(h);
-		read(t...);
-	}  /// end-hash
-
-	char buf[1 << 16];	/// start-hash
-	size_t s = 0, e = 0;
-	char get() {
+	char get() {  /// start-hash
+		static array<char, 1 << 16> buf;
+		static size_t s = 0, e = 0;
 		if (s >= e) {
 			buf[0] = 0;
 			s = 0;
-			e = fread(buf, 1, sizeof(buf), f);
+			e = fread(data(buf), 1, sizeof(buf), f);
 		}
 		return buf[s++];
 	}  /// end-hash
 
-	template <class T> void read_single(T& r) {	 /// start-hash
+	using Self = Scanner;
+
+	char skip_whitespaces() {
 		char c;
 		while ((c = get()) <= ' ') {
 		}
+		return c;
+	}
+
+	template <class T> Self& operator>>(T& x) {
+		char c = skip_whitespaces();
 		bool neg = false;
 		if (c == '-') {
 			neg = true;
 			c = get();
 		}
-		r = 0;
+		x = 0;
 		do {
-			r = 10 * r + (c & 15);
+			x = 10 * x + (c & 15);
 		} while ((c = get()) >= '0');
-		if (neg) r = -r;
-	}  /// end-hash
+		if (neg) x = -x;
+		return *this;
+	}
 
-	void read_single(string& r) {  /// start-hash
-		char c;
-		while ((c = get()) <= ' ') {
-		}
-		r = {};
+	Self& operator>>(string& x) {
+		char c = skip_whitespaces();
+		x = {};
 		do {
-			r += c;
+			x += c;
 		} while ((c = get()) > ' ');
-	}  /// end-hash
+		return *this;
+	}
 
-	void read_single(double& r) {  /// start-hash
+	Self& operator>>(double& x) {
 		string z;
-		read_single(z);
-		r = stod(z);
-	}  /// end-hash
+		*this >> z;
+		x = stod(z);
+		return *this;
+	}
 };
 
 }  // namespace fast_input

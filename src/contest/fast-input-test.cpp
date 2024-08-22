@@ -1,10 +1,29 @@
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 #include <contest/base.hpp>
 #include <contest/fast-input.hpp>
 #include <util/random.hpp>
 
-#include <gtest/gtest.h>
-
 using namespace fast_input;
+
+TEST(FastInputTest, ThreeIntegers) {
+	auto rng = Random(20240822);
+
+	auto tmpf = tmpfile();
+	auto A = Vec<int>();
+	for (int z = 0; z < 3; z++) {
+		int a = rng.uniform<int>(-1234, +1234);
+		A.push_back(a);
+		auto t = std::to_string(a) + "\n";
+		fputs(t.c_str(), tmpf);
+	}
+	rewind(tmpf);
+
+	Scanner sc(tmpf);
+	int x, y, z;
+	sc >> x >> y >> z;
+	EXPECT_THAT(A, testing::ElementsAre(x, y, z));
+}
 
 TEST(FastInputTest, Integers) {
 	auto rng = Random(20240115);
@@ -27,7 +46,7 @@ TEST(FastInputTest, Integers) {
 	auto sc = Scanner(tmpf);
 	for (T a : A) {
 		T v;
-		sc.read(v);
+		sc >> v;
 		EXPECT_EQ(a, v);
 	}
 }
@@ -64,7 +83,7 @@ TEST(FastInputTest, AlphabeticStrings) {
 	auto sc = Scanner(tmpf);
 	for (T a : A) {
 		T v;
-		sc.read(v);
+		sc >> v;
 		EXPECT_EQ(a, v);
 	}
 }
@@ -76,7 +95,7 @@ TEST(FastInputTest, FloatStrings) {
 
 	Scanner sc(tmpf);
 	string r;
-	sc.read(r);
+	sc >> r;
 	EXPECT_EQ(r, "12345.678");
 }
 
@@ -87,6 +106,6 @@ TEST(FastInputTest, Doubles) {
 
 	Scanner sc(tmpf);
 	double r;
-	sc.read(r);
+	sc >> r;
 	EXPECT_TRUE(std::abs(r - 12345.678) < double(1e-9));
 }
