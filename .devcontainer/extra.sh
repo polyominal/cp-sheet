@@ -24,9 +24,7 @@ Darwin) PLATFORM=darwin ;;
     ;;
 esac
 
-pip install pipx
-pipx ensurepath
-pipx install online-judge-tools online-judge-verify-helper
+pip install online-judge-tools online-judge-verify-helper
 
 echo "Configuring Git..."
 
