@@ -2,8 +2,13 @@
 #include <contest/base.hpp>
 #include <geometry/closest-pair.hpp>
 
+namespace testing {
+
 TEST(ClosestPairTest, Sample) {
-	using P = pair<i64, i64>;
+	using geometry::closest_pair;
+	using geometry::Point;
+
+	using P = Point<i64>;
 
 	{
 		auto pts = Vec<P>{
@@ -11,7 +16,10 @@ TEST(ClosestPairTest, Sample) {
 		};
 
 		// P[1] and P[4]: 0^2 + 2^2 = 5
-		auto best = closest_pair_impl::closest_pair(pts);
-		EXPECT_EQ(get<0>(best), 5);
+		i64 best = 1e18;
+		closest_pair(pts, [&](P a, P b) { best = dist2(a - b); });
+		EXPECT_EQ(best, 5);
 	}
 }
+
+}  // namespace testing

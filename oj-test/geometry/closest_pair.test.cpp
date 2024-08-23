@@ -2,19 +2,23 @@
 
 #include "contest/base.hpp"
 #include "contest/fast-input.hpp"
+#include "geometry/base.hpp"
 #include "geometry/closest-pair.hpp"
 
-using P = pair<i64, i64>;
+using geometry::closest_pair;
+using geometry::Point;
+
+using P = Point<i64>;
 
 pair<int, int> solve(const Vec<P>& pts) {
-	auto best = closest_pair_impl::closest_pair(pts);
-	const auto p0 = get<1>(best);
-	const auto p1 = get<2>(best);
+	auto p0 = pts[0];
+	auto p1 = pts[1];
+	closest_pair(pts, [&](P a, P b) { p0 = a, p1 = b; });
 	if (p0 != p1) {
 		auto get_idx = [&](const P& p) -> int {
 			return int(std::find(begin(pts), end(pts), p) - begin(pts));
 		};
-		return {get_idx(get<1>(best)), get_idx(get<2>(best))};
+		return {get_idx(p0), get_idx(p1)};
 	} else {
 		// must find two different indices
 		auto it0 = std::find(begin(pts), end(pts), p0);

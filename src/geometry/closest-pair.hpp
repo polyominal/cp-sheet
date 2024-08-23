@@ -7,40 +7,36 @@
  */
 
 #include "contest/base.hpp"
+#include "geometry/base.hpp"
 
-namespace closest_pair_impl {
+namespace geometry {
 
-template <class T> using P = pair<T, T>;
+template <class T> using P = Point<T>;
 
 // PRECONDITION: There are at least 2 points
-template <class T> inline tuple<T, P<T>, P<T>> closest_pair(Vec<P<T>> pts) {
+template <class T, class F> inline void closest_pair(Vec<P<T>> pts, F f) {
 	int n = int(size(pts));
 	using PT = P<T>;
-	std::ranges::sort(pts,
-					  [](PT a, PT b) -> bool { return a.first < b.first; });
-	auto sq = [&](T a) -> T { return a * a; };
-	auto dist2 = [&](PT a, PT b) -> T {
-		return sq(a.first - b.first) + sq(a.second - b.second);
-	};
-
+	std::ranges::sort(pts, [](PT a, PT b) -> bool { return a.x < b.x; });
 	T d = std::numeric_limits<T>::max();
-	PT pa, pb;
+
+	auto st = multiset<PT, decltype([](PT a, PT b) { return a.y < b.y; })>();
+	auto its = Vec<typename decltype(st)::const_iterator>(size(pts));
+
 	auto update = [&](PT a, PT b) {
-		auto nd = dist2(a, b);
-		if (nd < d) {
-			d = nd, pa = a, pb = b;
+		T d2 = dist2(a - b);
+		if (d2 < d) {
+			d = d2;
+			f(a, b);
 		}
 	};
 
-	auto st =
-		multiset<PT,
-				 decltype([](PT a, PT b) { return a.second < b.second; })>();
-	auto its = Vec<typename decltype(st)::const_iterator>(size(pts));
-
-	for (int i = 0, f = 0; i < n; i++) {
+	for (int i = 0, j = 0; i < n; i++) {
 		PT p = pts[i];
-		while (f < i && sq(p.first - pts[f].first) >= d) {
-			st.erase(its[f++]);
+
+		auto sq = [](T x) { return x * x; };
+		while (j < i && sq(p.x - pts[j].x) >= d) {
+			st.erase(its[j++]);
 		}
 		auto u = st.upper_bound(p);
 		{
@@ -49,22 +45,20 @@ template <class T> inline tuple<T, P<T>, P<T>> closest_pair(Vec<P<T>> pts) {
 				if (t == begin(st)) break;
 				t = prev(t);
 				update(*t, p);
-				if (sq(p.second - t->second) >= d) break;
+				if (sq(p.y - t->y) >= d) break;
 			}
 		}
 		{
 			auto t = u;
 			while (true) {
 				if (t == end(st)) break;
-				if (sq(p.second - t->second) >= d) break;
+				if (sq(p.y - t->y) >= d) break;
 				update(*t, p);
 				t = next(t);
 			}
 		}
 		its[i] = st.emplace_hint(u, p);
 	}
-
-	return {d, pa, pb};
 }
 
-}  // namespace closest_pair_impl
+}  // namespace geometry
