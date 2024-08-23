@@ -111,16 +111,16 @@ struct HLD {
 		}
 	}  /// end-hash
 
-	Vec<array<int, 2>> extract(int s, int t) {	/// start-hash
-		static Vec<array<int, 2>> res;
+	Vec<pair<int, int>> extract(int s, int t) {	 /// start-hash
+		static Vec<pair<int, int>> res;
 		res.clear();
 		s = iord[s], t = iord[t];
 		while (true) {
 			if (t > s - path[s].second) {
-				res.push_back({s, t + 1});
+				res.emplace_back(s, t + 1);
 				break;
 			}
-			res.push_back({s, s - path[s].second + 1});
+			res.emplace_back(s, s - path[s].second + 1);
 			s = path[s].first;
 		}
 		return res;
@@ -141,7 +141,6 @@ struct HLD {
 		}
 	}  /// end-hash
 
-	// NOT TESTED
 	template <class F> int get_lowest(int a, F f) const {  /// start-hash
 		a = iord[a];
 		while (a != -1) {
@@ -163,20 +162,21 @@ struct HLD {
 		return -1;
 	}  /// end-hash
 
-	Vec<int> inds;	/// start-hash
-	pair<Vec<int>, Vec<int>> compress(Vec<int> vs) {
+	Vec<int> inds;
+	pair<Vec<int>, Vec<int>> compress(Vec<int> vs) {  /// start-hash
 		inds.resize(n, -1);
-		auto cmp = [&](int a, int b) -> bool { return iord[a] < iord[b]; };
-		sort(vs.begin(), vs.end(), cmp);
-		vs.erase(unique(vs.begin(), vs.end()), vs.end());
-		int num = int(vs.size());
+		auto cmp = [&](int a, int b) { return iord[a] < iord[b]; };
+		std::ranges::sort(vs, cmp);
+		vs.erase(unique(begin(vs), end(vs)), end(vs));
+		int num = int(size(vs));
 		assert(num >= 1);
 		for (int z = 1; z < num; z++) {
 			vs.push_back(lca(vs[z - 1], vs[z]));
 		}
-		sort(vs.begin(), vs.end(), cmp);
-		vs.erase(unique(vs.begin(), vs.end()), vs.end());
-		num = int(vs.size());
+
+		std::ranges::sort(vs, cmp);
+		vs.erase(unique(begin(vs), end(vs)), end(vs));
+		num = int(size(vs));
 		for (int z = 0; z < num; z++) inds[vs[z]] = z;
 		Vec<int> par(num, -1);
 		for (int z = 1; z < num; z++) {

@@ -2,7 +2,7 @@
 
 #include "contest/base.hpp"
 #include "contest/fast-input.hpp"
-#include "graph/hld.hpp"
+#include "tree/hld.hpp"
 
 int main() {
 	std::ios_base::sync_with_stdio(false);
