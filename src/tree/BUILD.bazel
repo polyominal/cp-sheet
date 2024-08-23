@@ -1,0 +1,13 @@
+load("//:rules.bzl", "my_cc_library", "my_cc_test")
+
+my_cc_library(
+    name = "hld",
+    hdrs = ["hld.hpp"],
+    deps = ["//src/data-structure:flatten-vector"],
+)
+
+my_cc_test(
+    name = "hld-test",
+    srcs = ["hld-test.cpp"],
+    deps = ["//src/tree:hld"],
+)
