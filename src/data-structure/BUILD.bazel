@@ -28,6 +28,14 @@ my_cc_library(
     hdrs = ["fast-set.hpp"],
 )
 
+my_cc_test(
+    name = "fast-set-test",
+    srcs = ["fast-set-test.cpp"],
+    deps = [
+        "//src/data-structure:fast-set",
+    ],
+)
+
 my_cc_library(
     name = "assignment-segtree",
     hdrs = ["assignment-segtree.hpp"],

@@ -10,37 +10,39 @@
 #include "contest/base.hpp"
 
 struct FastSet {
-	using U = uint64_t;	 /// start-hash
+	static constexpr int B = 64;
+
 	int n, h;
-	Vec<Vec<U>> x;
+	Vec<Vec<u64>> x;
 	FastSet(int n_ = 0) : n(n_) {
 		int m = (n ? n : 1);
 		do {
-			x.push_back(Vec<U>((m + 63) >> 6));
-			m = (m + 63) >> 6;
+			x.push_back(Vec<u64>((m + B - 1) / B));
+			m = (m + B - 1) / B;
 		} while (m > 1);
-		h = int(x.size());
+		h = int(size(x));
 	}  /// end-hash
 
 	bool empty() const {  /// start-hash
 		return !x[h - 1][0];
 	}
 	bool operator[](int i) const {
-		return (x[0][i >> 6] >> (i & 63)) & 1;
+		return (x[0][i / B] >> (i % B) & 1) != 0;
 	}  /// end-hash
 
 	void set(int i) {  /// start-hash
 		for (int d = 0; d < h; d++) {
-			int q = i >> 6, r = i & 63;
-			x[d][q] |= U(1) << r;
+			int q = i / B, r = i % B;
+			x[d][q] |= u64(1) << r;
 			i = q;
 		}
 	}  /// end-hash
 
 	void reset(int i) {	 /// start-hash
 		for (int d = 0; d < h; d++) {
-			int q = i >> 6, r = i & 63;
-			if ((x[d][q] &= ~(U(1) << r))) break;
+			int q = i / B, r = i % B;
+			x[d][q] &= ~(u64(1) << r);
+			if (x[d][q]) break;
 			i = q;
 		}
 	}  /// end-hash
@@ -50,13 +52,13 @@ struct FastSet {
 		if (i >= n) return n;
 		i = max(i, 0);
 		for (int d = 0; d < h; d++) {
-			int q = i >> 6, r = i & 63;
-			if (q >= int(x[d].size())) break;
-			U up = x[d][q] >> r;
+			int q = i / B, r = i % B;
+			if (q >= int(size(x[d]))) break;
+			u64 up = x[d][q] >> r;
 			if (up) {
-				i += __builtin_ctzll(up);
+				i += std::countr_zero(up);
 				for (int e = d - 1; e >= 0; e--) {
-					i = i << 6 | __builtin_ctzll(x[e][i]);
+					i = i * B + std::countr_zero(x[e][i]);
 				}
 				return i;
 			}
@@ -71,12 +73,12 @@ struct FastSet {
 		i = min(i, n - 1);
 		for (int d = 0; d < h; d++) {
 			if (i < 0) break;
-			int q = i >> 6, r = i & 63;
-			U lo = x[d][q] << (63 - r);
+			int q = i / B, r = i % B;
+			u64 lo = x[d][q] << (B - 1 - r);
 			if (lo) {
-				i -= __builtin_clzll(lo);
+				i -= std::countl_zero(lo);
 				for (int e = d - 1; e >= 0; e--) {
-					i = i << 6 | (63 - __builtin_clzll(x[e][i]));
+					i = i * B + B - 1 - std::countl_zero(x[e][i]);
 				}
 				return i;
 			}
