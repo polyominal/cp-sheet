@@ -1,6 +1,19 @@
 load("//:rules.bzl", "my_cc_library", "my_cc_test")
 
 my_cc_library(
+    name = "flatten-vector",
+    hdrs = ["flatten-vector.hpp"],
+)
+
+my_cc_test(
+    name = "flatten-vector-test",
+    srcs = ["flatten-vector-test.cpp"],
+    deps = [
+        "//src/data-structure:flatten-vector",
+    ],
+)
+
+my_cc_library(
     name = "binary-indexed-tree",
     hdrs = ["binary-indexed-tree.hpp"],
 )
