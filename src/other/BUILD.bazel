@@ -1,0 +1,15 @@
+load("//:rules.bzl", "my_cc_library", "my_cc_test")
+
+my_cc_library(
+    name = "two-sat",
+    hdrs = ["two-sat.hpp"],
+    deps = ["//src/data-structure:flatten-vector"],
+)
+
+my_cc_test(
+    name = "two-sat-test",
+    srcs = ["two-sat-test.cpp"],
+    deps = [
+        "//src/other:two-sat",
+    ],
+)

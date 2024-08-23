@@ -1,7 +1,7 @@
 // verification-helper: PROBLEM https://judge.yosupo.jp/problem/two_sat
 
 #include "contest/fast-input.hpp"
-#include "graph/two-sat.hpp"
+#include "other/two-sat.hpp"
 
 int main() {
 	std::ios_base::sync_with_stdio(false);
