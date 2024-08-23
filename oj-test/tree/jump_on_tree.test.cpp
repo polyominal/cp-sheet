@@ -10,32 +10,19 @@ int main() {
 	auto sc = fast_input::Scanner(stdin);
 
 	int N, Q;
-	sc.read(N, Q);
+	sc >> N >> Q;
 
-	auto adj = Vec<Vec<int>>(N);
+	auto hld = HLD(N);
 	for (int e = 0; e < N - 1; e++) {
 		int a, b;
-		sc.read(a, b);
-		adj[a].push_back(b);
-		adj[b].push_back(a);
+		sc >> a >> b;
+		hld.add_edge(a, b);
 	}
-
-	auto par = Vec<int>(N);
-	auto dfs = [&](auto self, int v, int p) -> void {
-		par[v] = p;
-		for (int w : adj[v]) {
-			if (w != p) {
-				self(self, w, v);
-			}
-		}
-	};
-	dfs(dfs, 0, -1);
-
-	auto hld = HLD(par);
+	hld.build();
 
 	for (int q = 0; q < Q; q++) {
 		int s, t, i;
-		sc.read(s, t, i);
+		sc >> s >> t >> i;
 
 		if (auto v = hld.jump(s, t, i); v.has_value()) {
 			std::cout << v.value() << '\n';

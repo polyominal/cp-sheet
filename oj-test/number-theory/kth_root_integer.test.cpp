@@ -10,10 +10,10 @@ int main() {
 	auto sc = fast_input::Scanner(stdin);
 
 	int T;
-	sc.read(T);
+	sc >> T;
 	while (T--) {
 		u64 a, k;
-		sc.read(a, k);
+		sc >> a >> k;
 		std::cout << int_kth_root(a, k) << '\n';
 	}
 

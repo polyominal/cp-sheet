@@ -12,18 +12,20 @@ int main() {
 	auto sc = Scanner(stdin);
 
 	int N;
-	sc.read(N);
+	sc >> N;
 
 	using Z = ModInt<998244353>;
 	auto A = Vec<Z>(N);
-	for (auto& a : A) sc.read(a.v);
+	for (auto& a : A) {
+		sc >> a.v;
+	}
 
 	auto adj = Vec<Vec<int>>(N);
 	auto B = Vec<Z>(N - 1);
 	auto C = Vec<Z>(N - 1);
 	for (int e = 0; e < N - 1; e++) {
 		int u, v;
-		sc.read(u, v, B[e].v, C[e].v);
+		sc >> u >> v >> B[e].v >> C[e].v;
 		adj[u].push_back(e);
 		adj[v].push_back(e);
 	}

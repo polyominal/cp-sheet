@@ -11,12 +11,12 @@ int main() {
 	auto sc = Scanner(stdin);
 
 	int N, Q;
-	sc.read(N, Q);
+	sc >> N >> Q;
 
 	auto uf = UnionFind(N);
 	while (Q--) {
 		int t, u, v;
-		sc.read(t, u, v);
+		sc >> t >> u >> v;
 		if (t == 0) {
 			uf.unite(u, v);
 		} else {

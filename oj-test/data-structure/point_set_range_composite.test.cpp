@@ -11,7 +11,7 @@ int main() {
 	auto sc = fast_input::Scanner(stdin);
 
 	int N, Q;
-	sc.read(N, Q);
+	sc >> N >> Q;
 
 	using Z = ModInt<998244353>;
 	struct Monoid {
@@ -27,23 +27,23 @@ int main() {
 		N,
 		[&](int) -> Monoid::S {
 			u32 a, b;
-			sc.read(a, b);
+			sc >> a >> b;
 			return Monoid::S{a, b};
 		},
 		Monoid());
 
 	for (int q = 0; q < Q; q++) {
 		int t;
-		sc.read(t);
+		sc >> t;
 		if (t == 0) {
 			int p;
 			u32 c, d;
-			sc.read(p, c, d);
+			sc >> p >> c >> d;
 			segtree.set(p, Monoid::S{c, d});
 		} else if (t == 1) {
 			int l, r;
 			Z x;
-			sc.read(l, r, x.v);
+			sc >> l >> r >> x.v;
 			auto f = segtree.prod(l, r);
 			Z res = f.first * x + f.second;
 			std::cout << res.v << '\n';

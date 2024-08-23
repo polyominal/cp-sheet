@@ -9,7 +9,7 @@ int main() {
 	auto sc = Scanner(stdin);
 
 	auto S = std::string();
-	sc.read(S);
+	sc >> S;
 
 	auto man =
 		manacher(int(size(S)), [&](int i, int j) { return S[i] == S[j]; });

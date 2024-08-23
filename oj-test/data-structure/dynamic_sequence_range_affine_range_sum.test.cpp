@@ -12,7 +12,7 @@ int main() {
 	auto sc = Scanner(stdin);
 
 	int N, Q;
-	sc.read(N, Q);
+	sc >> N >> Q;
 
 	constexpr u32 MOD = 998244353;
 	using Z = ModInt<MOD>;
@@ -34,31 +34,31 @@ int main() {
 
 	auto A = Vec<Z>(N);
 	for (auto& a : A) {
-		sc.read(a.v);
+		sc >> a.v;
 	}
 	auto tr = tm.build(A);
 
 	for (int q = 0; q < Q; q++) {
 		int t;
-		sc.read(t);
+		sc >> t;
 
 		if (t == 0) {
 			int i;
 			Z x;
-			sc.read(i, x.v);
+			sc >> i >> x.v;
 
 			auto tr2 = tm.split_k(tr, i);
 			tr = tm.merge(tr, tm.merge(tm.make_single(x), tr2));
 		} else if (t == 1) {
 			int i;
-			sc.read(i);
+			sc >> i;
 
 			auto tr2 = tm.split_k(tr, i);
 			auto tr3 = tm.split_k(tr2, 1);
 			tr = tm.merge(tr, tr3);
 		} else if (t == 2) {
 			int l, r;
-			sc.read(l, r);
+			sc >> l >> r;
 
 			auto tr2 = tm.split_k(tr, l);
 			auto tr3 = tm.split_k(tr2, r - l);
@@ -67,7 +67,7 @@ int main() {
 		} else if (t == 3) {
 			int l, r;
 			Data::F f;
-			sc.read(l, r, f.first.v, f.second.v);
+			sc >> l >> r >> f.first.v >> f.second.v;
 
 			auto tr2 = tm.split_k(tr, l);
 			auto tr3 = tm.split_k(tr2, r - l);
@@ -75,7 +75,7 @@ int main() {
 			tr = tm.merge(tr, tm.merge(tr2, tr3));
 		} else if (t == 4) {
 			int l, r;
-			sc.read(l, r);
+			sc >> l >> r;
 
 			auto tr2 = tm.split_k(tr, l);
 			auto tr3 = tm.split_k(tr2, r - l);

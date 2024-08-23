@@ -12,10 +12,10 @@ int main() {
 	auto sc = Scanner(stdin);
 
 	int N, M;
-	sc.read(N, M);
+	sc >> N >> M;
 	auto A = Vec<i64>(N), B = Vec<i64>(M);
-	for (i64& a : A) sc.read(a);
-	for (i64& b : B) sc.read(b);
+	for (i64& a : A) sc >> a;
+	for (i64& b : B) sc >> b;
 
 	auto result = min_plus_convex(A, B);
 	int len = int(size(result));

@@ -12,7 +12,7 @@ int main() {
 	std::ios_base::sync_with_stdio(false);
 
 	int N, Q;
-	sc.read(N, Q);
+	sc >> N >> Q;
 
 	constexpr u32 MOD = 998244353;
 	using Z = ModInt<MOD>;
@@ -37,17 +37,17 @@ int main() {
 		N,
 		[&](int) -> RangeAffineMonoid::S {
 			Z a;
-			sc.read(a.v);
+			sc >> a.v;
 			return {a, 1};
 		},
 		m);
 
 	for (int q = 0; q < Q; q++) {
 		int t, l, r;
-		sc.read(t, l, r);
+		sc >> t >> l >> r;
 		if (t == 0) {
 			Z b, c;
-			sc.read(b.v, c.v);
+			sc >> b.v >> c.v;
 			st.apply(l, r, {b, c});
 		} else if (t == 1) {
 			Z tot = 0;

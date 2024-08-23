@@ -1,8 +1,8 @@
 // verification-helper: PROBLEM https://judge.yosupo.jp/problem/closest_pair
 
-#include "geometry/closest-pair.hpp"
 #include "contest/base.hpp"
 #include "contest/fast-input.hpp"
+#include "geometry/closest-pair.hpp"
 
 using P = pair<i64, i64>;
 
@@ -29,13 +29,13 @@ int main() {
 	auto sc = fast_input::Scanner(stdin);
 
 	int T;
-	sc.read(T);
+	sc >> T;
 	while (T--) {
 		int N;
-		sc.read(N);
+		sc >> N;
 		auto pts = Vec<P>(N);
 		for (auto& [x, y] : pts) {
-			sc.read(x, y);
+			sc >> x >> y;
 		}
 
 		auto res = solve(pts);

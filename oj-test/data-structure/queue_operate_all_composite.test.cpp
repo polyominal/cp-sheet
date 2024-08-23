@@ -11,7 +11,7 @@ int main() {
 	auto sc = fast_input::Scanner(stdin);
 
 	int Q;
-	sc.read(Q);
+	sc >> Q;
 
 	using Z = ModInt<998244353>;
 	using F = pair<Z, Z>;
@@ -24,17 +24,17 @@ int main() {
 
 	for (int q = 0; q < Q; q++) {
 		int t;
-		sc.read(t);
+		sc >> t;
 
 		if (t == 0) {
 			F f;
-			sc.read(f.first.v, f.second.v);
+			sc >> f.first.v >> f.second.v;
 			qa.push(f);
 		} else if (t == 1) {
 			qa.pop();
 		} else if (t == 2) {
 			Z x;
-			sc.read(x.v);
+			sc >> x.v;
 			F prod = qa.prod();
 			std::cout << (prod.first * x + prod.second).v << '\n';
 		} else

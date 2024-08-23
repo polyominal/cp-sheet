@@ -12,7 +12,7 @@ int main() {
 	auto sc = fast_input::Scanner(stdin);
 
 	int Q;
-	sc.read(Q);
+	sc >> Q;
 
 	using Key = u64;
 	using Value = u64;
@@ -21,10 +21,10 @@ int main() {
 	for (int q = 0; q < Q; q++) {
 		int t;
 		Key k;
-		sc.read(t, k);
+		sc >> t >> k;
 		if (t == 0) {
 			Value v;
-			sc.read(v);
+			sc >> v;
 			table[k] = v;
 		} else if (t == 1) {
 			auto it = table.find(k);

@@ -10,7 +10,7 @@ int main() {
 	auto sc = fast_input::Scanner(stdin);
 
 	string S;
-	sc.read(S);
+	sc >> S;
 	const int N = int(size(S));
 
 	auto z = z_algo(S);

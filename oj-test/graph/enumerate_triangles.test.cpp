@@ -11,18 +11,18 @@ int main() {
 	auto sc = fast_input::Scanner(stdin);
 
 	int N, M;
-	sc.read(N, M);
+	sc >> N >> M;
 
 	using Z = ModInt<998244353>;
 
 	auto X = Vec<Z>(N);
 	for (auto& x : X) {
-		sc.read(x.v);
+		sc >> x.v;
 	}
 
 	auto edges = Vec<pair<int, int>>(M);
 	for (auto& [a, b] : edges) {
-		sc.read(a, b);
+		sc >> a >> b;
 	}
 
 	auto tot = Z(0);

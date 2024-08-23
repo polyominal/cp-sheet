@@ -13,10 +13,10 @@ int main() {
 	auto sc = Scanner(stdin);
 
 	int T;
-	sc.read(T);
+	sc >> T;
 	while (T--) {
 		u64 n;
-		sc.read(n);
+		sc >> n;
 		auto factors = factorize(n);
 		std::ranges::sort(factors);
 		std::cout << size(factors);
