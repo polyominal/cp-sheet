@@ -11,3 +11,14 @@ my_cc_test(
     srcs = ["hld-test.cpp"],
     deps = ["//src/tree:hld"],
 )
+
+my_cc_library(
+    name = "cartesian-tree",
+    hdrs = ["cartesian-tree.hpp"],
+)
+
+my_cc_test(
+    name = "cartesian-tree-test",
+    srcs = ["cartesian-tree-test.cpp"],
+    deps = ["//src/tree:cartesian-tree"],
+)
