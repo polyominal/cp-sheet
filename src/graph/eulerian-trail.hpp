@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Date: 2024-01-18
@@ -14,32 +16,29 @@
  * - https://uoj.ac/problem/117 (go)
  */
 
-#pragma once
-
 #include "contest/base.hpp"
 
 namespace eulerian_trail {
 
 // (vertex, edge)
-// For the returned list,
-// edge is the preceding edge of that vertex
+// For the returned list, edge is the preceding edge of that vertex
 using E = pair<int, int>;
 template <bool cyc_only = false>
 Opt<Vec<E>> go(int nv, const Vec<Vec<E>>& g, int ne, int src = 0) {
-	assert(nv == int(g.size()));
+	assert(nv == int(size(g)));
 	assert(0 <= src && src < nv);
 
-	Vec<Vec<E>::const_iterator> its(nv); /// start-hash
-	for (int i = 0; i < nv; i++) its[i] = g[i].begin();
+	Vec<Vec<E>::const_iterator> its(nv);  /// start-hash
+	for (int i = 0; i < nv; i++) its[i] = begin(g[i]);
 	Vec<int> state(nv);
 	if constexpr (!cyc_only) state[src]++;
 	Vec<bool> seen(ne);
-	Vec<E> res, stk = {E(src, -1)}; /// end-hash
+	Vec<E> res, stk = {E(src, -1)};	 /// end-hash
 
-	while (!stk.empty()) { /// start-hash
+	while (!stk.empty()) {	/// start-hash
 		auto [i, p] = stk.back();
 		auto& it = its[i];
-		if (it == g[i].end()) {
+		if (it == end(g[i])) {
 			res.emplace_back(i, p);
 			stk.pop_back();
 			continue;
@@ -51,9 +50,13 @@ Opt<Vec<E>> go(int nv, const Vec<Vec<E>>& g, int ne, int src = 0) {
 			seen[e] = true;
 		}
 	}
-	if (int(res.size()) != ne+1) return {};
-	for (int s : state) if (s < 0) return {};
-	return Vec<E>{res.rbegin(), res.rend()}; /// end-hash
+	if (int(size(res)) != ne + 1) {
+		return {};
+	}
+	for (int s : state) {
+		if (s < 0) return {};
+	}
+	return Vec<E>(rbegin(res), rend(res));	/// end-hash
 }
 
 template <bool cyc_only = false>
@@ -68,14 +71,14 @@ Opt<Vec<E>> trail_undirected(int nv, const Vec<pair<int, int>>& edges) {
 		e++;
 	}
 
-	int src = 0; /// start-hash
+	int src = 0;  /// start-hash
 	for (int i = 0; i < nv; i++) {
 		if (!g[i].empty()) src = i;
 	}
 	for (int i = 0; i < nv; i++) {
-		if (g[i].size() % 2 == 1) src = i;
-	} /// end-hash
-	return go<cyc_only>(nv, g, int(edges.size()), src);
+		if (size(g[i]) % 2 == 1) src = i;
+	}  /// end-hash
+	return go<cyc_only>(nv, g, int(size(edges)), src);
 }
 
 template <bool cyc_only = false>
@@ -91,14 +94,14 @@ Opt<Vec<E>> trail_directed(int nv, const Vec<pair<int, int>>& edges) {
 		e++;
 	}
 
-	int src = 0; /// start-hash
+	int src = 0;  /// start-hash
 	for (int i = 0; i < nv; i++) {
 		if (!g[i].empty()) src = i;
 	}
 	for (int i = 0; i < nv; i++) {
-		if (indeg[i] < int(g[i].size())) src = i;
-	} /// end-hash
-	return go<cyc_only>(nv, g, int(edges.size()), src);
+		if (indeg[i] < int(size(g[i]))) src = i;
+	}  /// end-hash
+	return go<cyc_only>(nv, g, int(size(edges)), src);
 }
 
-} // namespace eulerian_trail
+}  // namespace eulerian_trail

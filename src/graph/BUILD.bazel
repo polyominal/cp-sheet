@@ -10,3 +10,14 @@ my_cc_test(
     srcs = ["enumerate-triangles-test.cpp"],
     deps = ["//src/graph:enumerate-triangles"],
 )
+
+my_cc_library(
+    name = "eulerian-trail",
+    hdrs = ["eulerian-trail.hpp"],
+)
+
+my_cc_test(
+    name = "eulerian-trail-test",
+    srcs = ["eulerian-trail-test.cpp"],
+    deps = ["//src/graph:eulerian-trail"],
+)
