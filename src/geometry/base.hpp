@@ -80,6 +80,11 @@ template <class T> struct Point {
 
 	static P polar(double m, double a) { return P(m * cos(a), m * sin(a)); }
 };
+
+template <class T> std::istream& operator>>(std::istream& is, Point<T>& p) {
+	return is >> p.x >> p.y;
+}
+
 template <class T>
 int sgncrs(const Point<T>& a, const Point<T>& b) {	/// start-hash
 	T cr = crs(a, b);
