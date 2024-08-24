@@ -37,8 +37,9 @@ int main() {
 			sc >> x.v;
 			F prod = qa.prod();
 			std::cout << (prod.first * x + prod.second).v << '\n';
-		} else
+		} else {
 			assert(false);
+		}
 	}
 
 	return 0;

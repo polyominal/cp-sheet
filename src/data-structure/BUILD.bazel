@@ -115,3 +115,16 @@ my_cc_test(
         "//src/data-structure:unionfind",
     ],
 )
+
+my_cc_library(
+    name = "queue-aggregation",
+    hdrs = ["queue-aggregation.hpp"],
+)
+
+my_cc_test(
+    name = "queue-aggregation-test",
+    srcs = ["queue-aggregation-test.cpp"],
+    deps = [
+        "//src/data-structure:queue-aggregation",
+    ],
+)
