@@ -10,3 +10,17 @@ my_cc_test(
     srcs = ["modint-test.cpp"],
     deps = ["//src/algebra:modint"],
 )
+
+my_cc_library(
+    name = "nft",
+    hdrs = ["nft.hpp"],
+)
+
+my_cc_test(
+    name = "nft-test",
+    srcs = ["nft-test.cpp"],
+    deps = [
+        "//src/algebra:modint",
+        "//src/algebra:nft",
+    ],
+)
