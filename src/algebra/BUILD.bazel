@@ -24,3 +24,16 @@ my_cc_test(
         "//src/algebra:nft",
     ],
 )
+
+my_cc_library(
+    name = "barrett",
+    hdrs = ["barrett.hpp"],
+)
+
+my_cc_test(
+    name = "barrett-test",
+    srcs = ["barrett-test.cpp"],
+    deps = [
+        "//src/algebra:barrett",
+    ],
+)

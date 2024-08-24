@@ -1,7 +1,5 @@
 #pragma once
 
-// WIP
-
 #include "contest/base.hpp"
 
 struct Barrett {
