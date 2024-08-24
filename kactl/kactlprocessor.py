@@ -48,8 +48,8 @@ def ordoescape(inp, esc=True):
         if bracketcount == 0:
             return r"%s\bigo{%s}%s" % (
                 inp[:start],
-                inp[start + 2 : end],
-                ordoescape(inp[end + 1 :], False),
+                inp[start + 2: end],
+                ordoescape(inp[end + 1:], False),
             )
     return inp
 
@@ -122,7 +122,7 @@ def processwithcomments(caption, instream, outstream, listingslang=None):
             cur_hash.append(line)
 
         if had_comment and tail == "end-hash":
-            cur_hash = "\n".join(cur_hash)
+            cur_hash = "\n".join(cur_hash) if cur_hash else ""
             p = subprocess.Popen(
                 ["sh", "../src/contest/%s.sh" % hash_script],
                 stdin=subprocess.PIPE,
@@ -132,7 +132,8 @@ def processwithcomments(caption, instream, outstream, listingslang=None):
             hsh = hsh.split(None, 1)[0]
             if line:
                 line += " "
-            line += "// %s-%d = %s" % (hash_script, hash_num, hsh.decode("utf-8"))
+            line += "// %s-%d = %s" % (hash_script,
+                                       hash_num, hsh.decode("utf-8"))
             cur_hash = None
 
         nlines.append(line)
@@ -164,7 +165,7 @@ def processwithcomments(caption, instream, outstream, listingslang=None):
         if end < start:
             error = "Invalid /** */ comments."
             break
-        comment = source[start + 3 : end].strip()
+        comment = source[start + 3: end].strip()
         end = end + 2
         start = source.find("/**", end)
 
@@ -184,7 +185,7 @@ def processwithcomments(caption, instream, outstream, listingslang=None):
                         error = error + "Unknown command: " + command + ". "
                     commands[command] = value.lstrip()
                 command = cline[:ind]
-                value = cline[ind + 1 :].strip()
+                value = cline[ind + 1:].strip()
             else:
                 value = value + "\n" + cline
         if command:
@@ -206,7 +207,8 @@ def processwithcomments(caption, instream, outstream, listingslang=None):
     else:
         addref(caption, outstream)
         if commands.get("Description"):
-            out.append(r"\defdescription{%s}" % escape(commands["Description"]))
+            out.append(r"\defdescription{%s}" %
+                       escape(commands["Description"]))
         if commands.get("Usage"):
             out.append(r"\defusage{%s}" % codeescape(commands["Usage"]))
         if commands.get("Time"):
@@ -219,12 +221,14 @@ def processwithcomments(caption, instream, outstream, listingslang=None):
             include for include in includelist if include.find("contest/base.hpp") == -1
         )
         if includelist:
-            out.append(r"\leftcaption{%s}" % pathescape(", ".join(includelist)))
+            out.append(r"\leftcaption{%s}" %
+                       pathescape(", ".join(includelist)))
         if nsource:
             out.append(r"\rightcaption{%d lines}" % len(nsource.split("\n")))
         langstr = ", language=" + listingslang if listingslang else ""
         out.append(
-            r"\begin{lstlisting}[caption={%s}%s]" % (pathescape(caption), langstr)
+            r"\begin{lstlisting}[caption={%s}%s]" % (
+                pathescape(caption), langstr)
         )
         out.append(nsource)
         out.append(r"\end{lstlisting}")
@@ -237,7 +241,8 @@ def processraw(caption, instream, outstream, listingslang="raw"):
     try:
         source = instream.read().strip()
         addref(caption, outstream)
-        print(r"\rightcaption{%d lines}" % len(source.split("\n")), file=outstream)
+        print(r"\rightcaption{%d lines}" %
+              len(source.split("\n")), file=outstream)
         print(
             r"\begin{lstlisting}[language=%s,caption={%s}]"
             % (listingslang, pathescape(caption)),

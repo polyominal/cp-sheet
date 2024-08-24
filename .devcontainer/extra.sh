@@ -54,3 +54,8 @@ sudo mv ./bazel "${LOCAL_BIN}/bazel"
 curl -fSsL "$(buildifier_url)" -o "./buildifier"
 chmod +x "./buildifier"
 sudo mv ./buildifier "${LOCAL_BIN}/buildifier"
+
+echo "Setting up TexLive..."
+
+sudo apt-get update
+sudo apt-get install -y texlive-latex-base texlive-latex-recommended texlive-latex-extra

@@ -39,25 +39,24 @@ template <class T> bool insSL(const L<T>& s, const L<T>& l) {
 	return (a % 2 == 0 || b % 2 == 0 || a != b);  /// end-hash
 }
 
-template <class T> bool insSS(const L<T>& s, const L<T>& t) {  /// start-hash
-	int a = ccw(s, t.s), b = ccw(s, t.t), c = ccw(t, s.s), d = ccw(t, s.t);
-	return (a * b <= 0 && c * d <= 0);
-}  /// end-hash
+template <class T> bool insSS(const L<T>& s, const L<T>& t) {
+	int a = ccw(s, t.s), b = ccw(s, t.t), c = ccw(t, s.s),
+		d = ccw(t, s.t);				/// start-hash
+	return (a * b <= 0 && c * d <= 0);	/// end-hash
+}
 
-template <class T>
-double distLP(const L<T>& l, const Point<T>& p) {  /// start-hash
+template <class T> double distLP(const L<T>& l, const Point<T>& p) {
 	return abs(crs(vec(l), p - l.s)) / dist(l);
 }  /// end-hash
 
-template <class T>
-double distSP(const L<T>& s, const Point<T>& p) {  /// start-hash
-	Point<T> q = project(s, p);
+template <class T> double distSP(const L<T>& s, const Point<T>& p) {
+	Point<T> q = project(s, p);	 /// start-hash
 	if (ccw(s, q) == 0) {
 		return dist(p - q);
 	} else {
 		return min(dist(s.s - p), dist(s.t - p));
-	}
-}  /// end-hash
+	}  /// end-hash
+}
 
 template <class T> double distSS(const L<T>& s, const L<T>& t) {
 	if (insSS(s, t)) return 0;	/// start-hash
@@ -79,9 +78,8 @@ template <class T> int crossLL(const L<T>& l, const L<T>& m, Point<T>& r) {
 }
 
 // TODO usage
-template <class T>
-int crossSS(const L<T>& l, const L<T>& m, Point<T>& r) {  /// start-hash
-	int u = crossLL(l, m, r);
+template <class T> int crossSS(const L<T>& l, const L<T>& m, Point<T>& r) {
+	int u = crossLL(l, m, r);  /// start-hash
 	if (u == 0) return 0;
 	if (u == -1) {
 		r = max(min(l.s, l.t), min(m.s, m.t));
@@ -89,7 +87,7 @@ int crossSS(const L<T>& l, const L<T>& m, Point<T>& r) {  /// start-hash
 		return (q < r) ? 0 : (q == r ? 1 : -1);
 	}
 	if (ccw(l, r) == 0 && ccw(m, r) == 0) return 1;
-	return 0;
-}  /// end-hash
+	return 0;  /// end-hash
+}
 
 }  // namespace geometry

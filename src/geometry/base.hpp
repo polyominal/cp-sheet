@@ -19,14 +19,14 @@ template <class T> inline int sgn(T a, T b) { return sgn(a - b); }
 const double PI = acos(-1.);
 
 template <class T> struct Point {
-	using P = Point;  /// start-hash
+	using P = Point;
 	T x, y;
-	Point(T x_ = T(), T y_ = T()) : x(x_), y(y_) {}	 /// end-hash
+	Point(T x_ = T(), T y_ = T()) : x(x_), y(y_) {}
 
-	P& operator+=(const P& p) {
+	P& operator+=(const P& p) {	 /// start-hash
 		x += p.x, y += p.y;
 		return *this;
-	}  /// start-hash
+	}
 	P& operator-=(const P& p) {
 		x -= p.x, y -= p.y;
 		return *this;
@@ -36,10 +36,10 @@ template <class T> struct Point {
 		return P(a) -= b;
 	}  /// end-hash
 
-	P& operator*=(const T& t) {
+	P& operator*=(const T& t) {	 /// start-hash
 		x *= t, y *= t;
 		return *this;
-	}  /// start-hash
+	}
 	P& operator/=(const T& t) {
 		x /= t, y /= t;
 		return *this;

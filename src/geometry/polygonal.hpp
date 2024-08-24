@@ -16,21 +16,21 @@
 
 namespace geometry {
 
-template <class T> T area2(const Vec<Point<T>>& pol) {	/// start-hash
-	if (pol.empty()) return 0;
+template <class T> T area2(const Vec<Point<T>>& pol) {
+	if (pol.empty()) return 0;	/// start-hash
 	T res = 0;
 	auto a = pol.back();
 	for (auto b : pol) {
 		res += crs(a, b);
 		a = b;
 	}
-	return res;
-}  /// end-hash
+	return res;	 /// end-hash
+}
 
 // (1:left) | (2: right) is inside between v[i] -- v[i + 1]
 template <class T>
 Vec<pair<Point<T>, int>> insPolL(const Vec<Point<T>>& pol, const L<T>& l) {
-	using Pi = pair<Point<T>, int>;
+	using Pi = pair<Point<T>, int>;	 /// start-hash
 	Vec<Pi> v;
 	Point<T> a, b = pol.back();
 	for (auto c : pol) {
@@ -54,14 +54,12 @@ Vec<pair<Point<T>, int>> insPolL(const Vec<Point<T>>& pol, const L<T>& l) {
 		if (!res.empty() && res.back().first == v[i].first) res.pop_back();
 		res.push_back(v[i]);
 	}
-	return res;
+	return res;	 /// end-hash
 }
 
 // 0: outside, 1: on line, 2: inside
-template <class T>
-int contains(const Vec<Point<T>>& pol,
-			 const Point<T>& p) {  /// start-hash
-	if (pol.empty()) return 0;
+template <class T> int contains(const Vec<Point<T>>& pol, const Point<T>& p) {
+	if (pol.empty()) return 0;	/// start-hash
 	int in = -1;
 	Point<T> a_, b_ = pol.back();
 	for (auto c : pol) {
@@ -72,13 +70,12 @@ int contains(const Vec<Point<T>>& pol,
 		if (!(a.y <= p.y && p.y < b.y)) continue;
 		if (sgn(a.y, p.y) ? (crs(a - p, b - p) > 0) : (a.x > p.x)) in *= -1;
 	}
-	return in + 1;
-}  /// end-hash
+	return in + 1;	/// end-hash
+}
 
 // pol: sorted and distinct
-template <class T>
-Vec<Point<T>> convex_lower(const Vec<Point<T>>& pts) {	/// start-hash
-	assert(size(pts) >= 2);
+template <class T> Vec<Point<T>> convex_lower(const Vec<Point<T>>& pts) {
+	assert(size(pts) >= 2);	 /// start-hash
 	Vec<Point<T>> res;
 	for (auto d : pts) {
 		while (size(res) > 1) {
@@ -88,24 +85,23 @@ Vec<Point<T>> convex_lower(const Vec<Point<T>>& pts) {	/// start-hash
 		}
 		res.push_back(d);
 	}
-	return res;
-}  /// end-hash
+	return res;	 /// end-hash
+}
 
-template <class T> Vec<Point<T>> convex(Vec<Point<T>> pts) {  /// start-hash
-	sort(begin(pts), end(pts));
+template <class T> Vec<Point<T>> convex(Vec<Point<T>> pts) {
+	sort(begin(pts), end(pts));	 /// start-hash
 	pts.erase(unique(begin(pts), end(pts)), end(pts));
 	if (size(pts) <= 1) return pts;
 	Vec<Point<T>> lo = convex_lower(pts);
 	reverse(begin(pts), end(pts));
 	Vec<Point<T>> up = convex_lower(pts);
 	lo.insert(begin(lo), begin(up) + 1, end(up) - 1);
-	return lo;
-}  /// end-hash
+	return lo;	/// end-hash
+}
 
 template <class T>
-Vec<Point<T>> convex_cut(const Vec<Point<T>>& pol,
-						 const L<T>& l) {  /// start-hash
-	if (pol.empty()) return {};
+Vec<Point<T>> convex_cut(const Vec<Point<T>>& pol, const L<T>& l) {
+	if (pol.empty()) return {};	 /// start-hash
 	Vec<Point<T>> q;
 	Point<T> a, b = pol.back();
 	for (auto c : pol) {
@@ -117,13 +113,12 @@ Vec<Point<T>> convex_cut(const Vec<Point<T>>& pol,
 		}
 		if (ccw(l, b) != -1) q.push_back(b);
 	}
-	return q;
-}  /// end-hash
+	return q;  /// end-hash
+}
 
 // pol: convex; this calls f(a, b) for each candidate (a, b)
-template <class T, class F>
-void diameter(const Vec<Point<T>> pol, F f) {  /// start-hash
-	int n = int(size(pol));
+template <class T, class F> void diameter(const Vec<Point<T>> pol, F f) {
+	int n = int(size(pol));	 /// start-hash
 	if (n == 2) {
 		f(pol[0], pol[1]);
 		return;
@@ -142,7 +137,7 @@ void diameter(const Vec<Point<T>> pol, F f) {  /// start-hash
 		} else {
 			y = ny;
 		}
-	}
-}  /// end-hash
+	}  /// end-hash
+}
 
 }  // namespace geometry
