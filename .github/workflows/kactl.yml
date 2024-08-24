@@ -12,10 +12,12 @@ jobs:
     timeout-minutes: 20
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup pdflatex
-      run: sudo apt-get install texlive-latex-base texlive-latex-recommended texlive-latex-extra
-    - name: Build
-      run: |
-        cd kactl
-        make kactl
+      - uses: actions/checkout@v4
+
+      - name: Setup pdflatex
+        run: sudo apt-get install texlive-latex-base texlive-latex-recommended texlive-latex-extra
+
+      - name: Build
+        run: |
+          cd kactl
+          make kactl
