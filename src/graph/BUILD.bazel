@@ -21,3 +21,14 @@ my_cc_test(
     srcs = ["eulerian-trail-test.cpp"],
     deps = ["//src/graph:eulerian-trail"],
 )
+
+my_cc_library(
+    name = "bipartite",
+    hdrs = ["bipartite.hpp"],
+)
+
+my_cc_test(
+    name = "bipartite-test",
+    srcs = ["bipartite-test.cpp"],
+    deps = ["//src/graph:bipartite"],
+)

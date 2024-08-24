@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Date: 2023-12-08
@@ -12,8 +14,6 @@
  * - https://atcoder.jp/contests/abc274/tasks/abc274_g (vertex covering)
  */
 
-#pragma once
-
 #include "contest/base.hpp"
 
 struct Bipartite {
@@ -21,15 +21,22 @@ struct Bipartite {
 	Vec<Vec<int>> g;
 	Vec<int> mtl, mtr, lvl;
 	Vec<bool> seen;
-	Bipartite(int nl_, int nr_, const Vec<pair<int, int>>& edges)
-		: nl(nl_), nr(nr_),
-		g(nl), mtl(nl, -1), mtr(nr, -1), lvl(nl), seen(nr) {
-		for (auto [i, j] : edges) {
-			g[i].push_back(j);
-		}
-		Vec<int> q; q.reserve(nl);
+	Bipartite(int nl_, int nr_)
+		: nl(nl_),
+		  nr(nr_),
+		  g(nl),
+		  mtl(nl, -1),
+		  mtr(nr, -1),
+		  lvl(nl),
+		  seen(nr) {}
+
+	void add_edge(int a, int b) { g[a].push_back(b); }
+
+	void run() {
+		Vec<int> q;
+		q.reserve(nl);
 		while (true) {
-			q.clear(); /// start-hash
+			q.clear();	/// start-hash
 			for (int i = 0; i < nl; i++) {
 				if (mtl[i] == -1) {
 					lvl[i] = 0;
@@ -54,41 +61,44 @@ struct Bipartite {
 				}
 			}
 			if (!f) {
-				for (int i : q) for (int j : g[i]) seen[j] = true;
+				for (int i : q) {
+					for (int j : g[i]) seen[j] = true;
+				}
 				break;
-			} /// end-hash
+			}  /// end-hash
 
-
-			Vec<bool> done(nl); /// start-hash
+			Vec<bool> done(nl);	 /// start-hash
 			for (int s = 0; s < nl; s++) {
 				if (mtl[s] != -1) continue;
 
-				yc([&](auto self, int i) -> bool {
+				auto dfs = [&](auto self, int i) -> bool {
 					if (done[i]) return false;
 					done[i] = true;
 					for (int j : g[i]) {
 						int o = mtr[j];
-						if (o == -1 || (lvl[i]+1 == lvl[o] && self(o))) {
+						if (o == -1 ||
+							(lvl[i] + 1 == lvl[o] && self(self, o))) {
 							mtl[i] = j, mtr[j] = i;
 							return true;
 						}
 					}
 					return false;
-				})(s);
-			} /// end-hash
+				};
+				dfs(dfs, s);
+			}  /// end-hash
 		}
 	}
 
-	Vec<pair<int, int>> matching() { /// start-hash
+	Vec<pair<int, int>> matching() {  /// start-hash
 		Vec<pair<int, int>> res;
 		for (int i = 0; i < nl; i++) {
 			int j = mtl[i];
 			if (j != -1) res.emplace_back(i, j);
 		}
 		return res;
-	} /// end-hash
+	}  /// end-hash
 
-	pair<Vec<int>, Vec<int>> vertex_cover() { /// start-hash
+	pair<Vec<int>, Vec<int>> vertex_cover() {  /// start-hash
 		Vec<int> lvs, rvs;
 		for (int i = 0; i < nl; i++) {
 			if (lvl[i] == -1) lvs.push_back(i);
@@ -97,5 +107,5 @@ struct Bipartite {
 			if (seen[j]) rvs.push_back(j);
 		}
 		return {lvs, rvs};
-	} /// end-hash
+	}  /// end-hash
 };
