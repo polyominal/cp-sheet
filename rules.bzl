@@ -1,4 +1,4 @@
-load("@rules_cc//cc:defs.bzl", "cc_library", "cc_test")
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
 
 def my_cc_test(name, srcs, deps = [], size = "small", **kwargs):
     cc_test(
@@ -20,6 +20,15 @@ def my_cc_library(name, hdrs, deps = [], **kwargs):
         visibility = ["//visibility:public"],
         name = name,
         hdrs = hdrs,
+        copts = ["-Isrc"],
+        deps = deps + ["//src/contest:base"],
+        **kwargs
+    )
+
+def my_cc_binary(name, srcs, deps = [], **kwargs):
+    cc_binary(
+        name = name,
+        srcs = srcs,
         copts = ["-Isrc"],
         deps = deps + ["//src/contest:base"],
         **kwargs
