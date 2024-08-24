@@ -9,12 +9,13 @@ The KACTL build system
 (<https://github.com/kth-competitive-programming/kactl>)
 is adapted to generate our team's ICPC team reference document.
 
+It is recommended to use the provided Docker container
+(<https://code.visualstudio.com/docs/devcontainers/containers>)
+for development.
+
 ## Build and Test
 
-We use Bazel as the build system.
-
-Inside the developer container (<https://code.visualstudio.com/docs/devcontainers/containers>)
-provided by this repository, you can build and run tests with
+We use Bazel as the build system. Build and run tests with
 
 ```sh
 bazel test //...
@@ -33,9 +34,6 @@ which are based on Libray Checker's
 (<https://judge.yosupo.jp/>) test cases.
 
 ## KACTL Document Generation
-
-Precondition: You have a *properly configured* (TODO: specify this) LaTeX environment,
-which is not provided in our container for how space-hungry it is.
 
 Navigate to `kactl/` and build with
 
