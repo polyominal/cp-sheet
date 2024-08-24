@@ -128,3 +128,16 @@ my_cc_test(
         "//src/data-structure:queue-aggregation",
     ],
 )
+
+my_cc_library(
+    name = "line-container",
+    hdrs = ["line-container.hpp"],
+)
+
+my_cc_test(
+    name = "line-container-test",
+    srcs = ["line-container-test.cpp"],
+    deps = [
+        "//src/data-structure:line-container",
+    ],
+)
