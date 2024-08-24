@@ -21,3 +21,9 @@ jobs:
         run: |
           cd kactl
           make kactl
+
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: kactl
+          path: kactl/kactl.pdf
