@@ -1,0 +1,23 @@
+load("//:rules.bzl", "my_cc_binary")
+
+my_cc_binary(
+    name = "CGL_1_A",
+    srcs = ["CGL_1_A.test.cpp"],
+    deps = [
+        "//src/geometry:linear",
+    ],
+)
+
+my_cc_binary(
+    name = "CGL_1_B",
+    srcs = ["CGL_1_B.test.cpp"],
+    deps = [
+        "//src/geometry:linear",
+    ],
+)
+
+my_cc_binary(
+    name = "CGL_2_A",
+    srcs = ["CGL_2_A.test.cpp"],
+    deps = [],
+)
