@@ -32,7 +32,7 @@ struct ComplementGraph {
 				for (int w : g.at(v)) {
 					skip[w] = 1;
 				}
-				for (size_t i = 0; i < size(pending); i++) {
+				for (ssize_t i = ssize(pending) - 1; i >= 0; i--) {
 					int w = pending[i];
 					if (!skip[w]) {
 						bfs.push_back(w);
