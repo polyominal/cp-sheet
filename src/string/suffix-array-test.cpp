@@ -1,11 +1,16 @@
+#include <gmock/gmock.h>
+#include <gtest/gtest.h>
 #include <contest/base.hpp>
 #include <string/suffix-array.hpp>
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
+
+namespace testing {
 
 TEST(SuffixArrayTest, Sample) {
 	{
 		auto sa = SuffixArray::construct(string("abcbcba"));
-		EXPECT_THAT(sa.sa, testing::ElementsAre(7, 6, 0, 5, 3, 1, 4, 2));
+		EXPECT_THAT(sa.sa, ElementsAre(6, 0, 5, 3, 1, 4, 2));
+		EXPECT_THAT(sa.lcp, ElementsAre(1, 0, 1, 3, 0, 2));
 	}
 }
+
+}  // namespace testing

@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Date: 2024-01-19
@@ -9,8 +11,6 @@
  * Status: Tested with
  * - https://judge.yosupo.jp/problem/suffixarray
  */
-
-#pragma once
 
 #include "contest/base.hpp"
 
@@ -24,8 +24,8 @@ struct SuffixArray {
 	SuffixArray(int n_) : n(n_) {}
 
 	template <class S> static SuffixArray construct(const S& s) {
-		int n = int(s.size());
-		SuffixArray sa(n);
+		int n = int(size(s));
+		auto sa = SuffixArray(n);
 
 		sa.build_sa_fast(s);
 
@@ -35,99 +35,97 @@ struct SuffixArray {
 		return sa;
 	}
 
-	template <class S> void build_sa_fast(S s) {
-		sa.resize(n+1);
-		// kinda weird
-		int sigma = 0;
-		for (auto v : s) {
-			sigma = max(sigma, int(v));
-			assert(int(v) > 0);
+	template <class S> void build_sa_fast(const S& s) {
+		auto a = Vec<int>(n);
+		int s_min = int(*std::ranges::min_element(s));
+		for (int i = 0; i < n; i++) {
+			a[i] = int(s[i]) - s_min;
 		}
-		++sigma;
-		s.push_back(0);
-		// what exactly should be these sizes?
-		Vec<int> freq(2 * max(n+1, sigma)), lms(2 * (n+1));
-		Vec<char> type(2 * (n+1));
-		sais(n, s.data(), sa.data(), sigma, freq.data(), lms.data(), type.data());
+		sa = sais(a);
 	}
 
-	template <class S> static void sais(int n, S* s, int* sa, int sigma,
-										int* freq, int* lms, char* which) {
-		int n2 = -1; /// start-hash
-		which[n] = 1;
-		for (int i = n-1; i >= 0; i--) {
-			which[i] = (s[i] == s[i+1] ? which[i+1] : s[i] < s[i+1]);
-			if (which[i] == 0 && which[i+1] == 1) {
-				which[i+1] = 2;
-				lms[++n2] = i+1;
-			}
+	static Vec<int> sais(Vec<int> a) {
+		int n = int(size(a));
+		int m = *std::ranges::max_element(a) + 1;
+		auto pos = Vec<int>(m + 1);
+		for (auto c : a) pos[c + 1]++;
+		std::partial_sum(begin(pos), end(pos), begin(pos));
+		auto s = Vec<i8>(n);
+		for (int i = n - 2; i >= 0; i--) {
+			s[i] = (a[i] != a[i + 1] ? a[i] < a[i + 1] : s[i + 1]);
 		}
-		std::reverse(lms, lms + (n2+1));
-		std::fill(freq, freq + sigma, 0);
-		for (int i = 0; i <= n; i++) ++freq[int(s[i])];
-		std::partial_sum(freq, freq + sigma, freq); /// end-hash
 
-		auto induce = [&](int* v) { /// start-hash
-			std::fill(sa, sa + n+1, 0);
-			int* cur = freq + sigma;
-			auto pushS = [&](int i) { sa[--cur[int(s[i])]] = i; };
-			auto pushL = [&](int i) { sa[cur[int(s[i])]++] = i; };
-			std::copy(freq, freq + sigma, cur);
-			for (int i = n2; i >= 0; i--) pushS(v[i]);
-			std::copy(freq, freq + sigma-1, cur + 1);
-			for (int i = 0; i <= n; i++) {
-				int j = sa[i]-1;
-				if (j >= 0 && which[j] == 0) pushL(j);
+		auto x = Vec<int>(m);
+		auto sa = Vec<int>(n);
+		auto induce = [&](const Vec<int>& lms) {
+			std::fill(begin(sa), end(sa), -1);
+			auto push_L = [&](int i) {
+				if (i >= 0 && !s[i]) sa[x[a[i]]++] = i;
+			};
+			auto push_S = [&](int i) {
+				if (i >= 0 && s[i]) sa[--x[a[i]]] = i;
+			};
+			std::copy(begin(pos) + 1, end(pos), begin(x));
+			for (int i = int(size(lms)) - 1; i >= 0; i--) {
+				push_S(lms[i]);
 			}
-			std::copy(freq, freq + sigma, cur);
-			for (int i = n; i >= 0; i--) {
-				int j = sa[i]-1;
-				if (j >= 0 && which[j]) pushS(j);
+			std::copy(begin(pos), end(pos) - 1, begin(x));
+			push_L(n - 1);
+			for (int i = 0; i < n; i++) {
+				push_L(sa[i] - 1);
 			}
-		}; /// end-hash
+			std::copy(begin(pos) + 1, end(pos), begin(x));
+			for (int i = n - 1; i >= 0; i--) {
+				push_S(sa[i] - 1);
+			}
+		};
 
-		auto eq = [&](int i, int j) { /// start-hash
-			if (s[i] == s[j]) {
-				while (s[++i] == s[++j]) {
-					if (which[i] == 2) return true;
+		auto ok = [&](int i) { return i == n || (!s[i - 1] && s[i]); };
+		auto eq = [&](int i, int j) {
+			do {
+				if (a[i++] != a[j++]) return false;
+			} while (!ok(i) && !ok(j));
+			return ok(i) && ok(j);
+		};
+		auto lms = Vec<int>();
+		for (int i = 1; i < n; i++) {
+			if (ok(i)) lms.push_back(i);
+		}
+		induce(lms);
+
+		if (!lms.empty()) {
+			int p = -1, w = 0;
+			auto mp = Vec<int>(n);
+			for (auto v : sa)
+				if (v && ok(v)) {
+					if (p != -1 && eq(p, v)) w--;
+					mp[p = v] = w++;
 				}
-			}
-			return false;
-		}; /// end-hash
+			auto b = lms;
+			for (auto& v : b) v = mp[v];
+			b = sais(b);
+			for (auto& v : b) v = lms[v];
+			induce(b);
+		}
 
-		induce(lms); /// start-hash
-		int sigma2 = -1;
-		int* s2 = std::remove_if(sa, sa + n, [&](int i) { return which[i] != 2; });
-		for (int i = 0; i <= n2; i++) {
-			if (sigma2 <= 0 || !eq(sa[i], sa[i-1])) sigma2++;
-			s2[sa[i]>>1] = sigma2;
-		}
-		for (int i = 0; i <= n2; i++) s2[i] = s2[lms[i]>>1];
-		++sigma2;
-		if (sigma2 <= n2) {
-			sais(n2, s2, sa, sigma2,
-				 freq + sigma, lms + (n2+1), which + (n+1));
-		} else {
-			for (int i = 0; i <= n2; i++) sa[s2[i]] = i;
-		}
-		auto buf = lms + (n2+1);
-		for (int i = 0; i <= n2; i++) buf[i] = lms[sa[i]];
-		induce(buf); /// end-hash
+		return sa;
 	}
 
-	void build_isa() { /// start-hash
-		isa.resize(n+1);
-		for (int i = 0; i <= n; i++) isa[sa[i]] = i;
-	} /// end-hash
+	void build_isa() {	/// start-hash
+		isa.resize(n);
+		for (int i = 0; i < n; i++) isa[sa[i]] = i;
+	}  /// end-hash
 
 	template <class S> void build_lcp(const S& s) {
-		assert(n == int(s.size()));
-		lcp.resize(n+1); /// start-hash
-		for (int i = 0, k = 0; i < n-1; i++) {
-			int r = isa[i]-1, j = sa[r];
-			while (k < n - max(i, j) && s[i+k] == s[j+k]) k++;
-			lcp[r] = k;
+		lcp.resize(n - 1);
+		int k = 0;
+		for (int i : isa) {
 			if (k) k--;
-		} /// end-hash
+			if (i + 1 < n) {
+				int l = sa[i], r = sa[i + 1];
+				while (l + k < n && r + k < n && s[l + k] == s[r + k]) k++;
+				lcp[i] = k;
+			}
+		}
 	}
 };
