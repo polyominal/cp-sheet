@@ -3,7 +3,7 @@
 /**
  * Author: Hanfei Chen
  * Date: 2023-10-03
- * Description: Given $a_0, \ldots, a_{N-1}$ and $a_0, \ldots, a_{M-1}$
+ * Description: Given $a_0, \ldots, a_{N-1}$ and $b_0, \ldots, b_{M-1}$
  * such that $a_{i+1} - a_i \le a_{i+2} - a_{i+1}$, returns $c_0, \ldots, c_{(N-1) + (M-1)}$
  * such that $c_k = \min_{i+j=k} a_i + b_j$
  * Status: Tested with https://judge.yosupo.jp/problem/min_plus_convolution_convex_arbitrary
