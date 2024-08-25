@@ -32,3 +32,15 @@ my_cc_test(
     srcs = ["bipartite-test.cpp"],
     deps = ["//src/graph:bipartite"],
 )
+
+my_cc_library(
+    name = "complement-graph",
+    hdrs = ["complement-graph.hpp"],
+    deps = ["//src/data-structure:flatten-vector"],
+)
+
+my_cc_test(
+    name = "complement-graph-test",
+    srcs = ["complement-graph-test.cpp"],
+    deps = ["//src/graph:complement-graph"],
+)
