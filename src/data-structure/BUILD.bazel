@@ -141,3 +141,16 @@ my_cc_test(
         "//src/data-structure:line-container",
     ],
 )
+
+my_cc_library(
+    name = "hash-map",
+    hdrs = ["hash-map.hpp"],
+)
+
+my_cc_test(
+    name = "hash-map-test",
+    srcs = ["hash-map-test.cpp"],
+    deps = [
+        "//src/data-structure:hash-map",
+    ],
+)
