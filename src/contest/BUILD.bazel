@@ -16,3 +16,14 @@ my_cc_test(
     srcs = ["fast-input-test.cpp"],
     deps = ["//src/contest:fast-input"],
 )
+
+cc_library(
+    name = "yc",
+    hdrs = ["yc.hpp"],
+)
+
+my_cc_test(
+    name = "yc-test",
+    srcs = ["yc-test.cpp"],
+    deps = ["//src/contest:yc"],
+)
