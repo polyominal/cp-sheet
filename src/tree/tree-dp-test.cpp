@@ -1,19 +1,22 @@
 #include <gtest/gtest.h>
-#include <ad-hoc/tree-dp.hpp>
 #include <algebra/modint.hpp>
+#include <data-structure/flatten-vector.hpp>
+#include <tree/tree-dp.hpp>
 #include <util/random.hpp>
 
 TEST(TreeDPTest, TreePathCompositeSum) {
 	auto rng = Random(20240725);
 	for (int N : {1, 2, 3, 5, 8, 13, 21, 34, 55, 89}) {
-		auto tr = Vec<Vec<int>>(N);
-		auto edges = Vec<int>(N - 1);
+		// auto tr = Vec<Vec<int>>(N);
+		auto edge_ends = Vec<int>(N - 1);
+		auto edges = Vec<pair<int, int>>();
+		edges.reserve(2 * (N - 1));
 		for (int v = 1; v < N; v++) {
 			int w = rng.uniform(0, v - 1);
 			int e = v - 1;
-			tr[v].push_back(e);
-			tr[w].push_back(e);
-			edges[e] = v ^ w;
+			edges.emplace_back(v, e);
+			edges.emplace_back(w, e);
+			edge_ends[e] = v ^ w;
 		}
 
 		constexpr u32 MOD = 998244353;
@@ -38,6 +41,7 @@ TEST(TreeDPTest, TreePathCompositeSum) {
 			return S{a[0] * B[e] + a[1] * C[e], a[1]};
 		};
 
+		auto tr = FlattenVector<int>(N, edges);
 		auto tdp = TreeDP<S>::solve(tr, make, rake, compress);
 
 		for (int root = 0; root < N; root++) {
@@ -46,7 +50,7 @@ TEST(TreeDPTest, TreePathCompositeSum) {
 				for (int e : tr[v]) {
 					// Skip the parent edge
 					if (e == p) continue;
-					int w = v ^ edges[e];
+					int w = v ^ edge_ends[e];
 					S w_res = self(self, w, e);
 					res[0] += w_res[0] * B[e] + w_res[1] * C[e];
 					res[1] += w_res[1];

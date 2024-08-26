@@ -57,7 +57,7 @@ struct TwoSat {
 			r[s / 2] = !(s % 2);
 			for (size_t z = 0; z < size(q); z++) {
 				int v = q[z];
-				for (int w : g.at(v)) {
+				for (int w : g[v]) {
 					if (r[w / 2] == -1) {
 						r[w / 2] = !(w % 2);
 						q.push_back(w);

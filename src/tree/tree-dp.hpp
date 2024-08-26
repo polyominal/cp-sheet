@@ -14,14 +14,14 @@
 using std::views::reverse;
 
 template <class S> struct TreeDP {
-	template <class RF, class CF> struct Inner {
+	template <class G, class RF, class CF> struct Inner {
 		Vec<S> low, high;
 		Vec<int> edges, par;
 		const RF rake;
 		const CF compress;
-		Inner(const Vec<Vec<int>>& g, auto make, RF rake_, CF compress_)
+		Inner(const G& g, auto make, RF rake_, CF compress_)
 			: rake(rake_), compress(compress_) {
-			int n = int(size(g));
+			int n = int(g.size());
 			auto single = Vec<S>(n);
 			edges.resize(n - 1);
 			for (int v = 0; v < n; v++) {
@@ -81,8 +81,8 @@ template <class S> struct TreeDP {
 		}
 	};
 
-	template <class RF, class CF>
-	static auto solve(const Vec<Vec<int>>& g, auto make, RF rake, CF compress) {
+	template <class G, class RF, class CF>
+	static auto solve(const G& g, auto make, RF rake, CF compress) {
 		return Inner(g, make, rake, compress);
 	}
 };

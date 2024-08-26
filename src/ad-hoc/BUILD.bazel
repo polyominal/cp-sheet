@@ -12,20 +12,6 @@ my_cc_test(
 )
 
 my_cc_library(
-    name = "tree-dp",
-    hdrs = ["tree-dp.hpp"],
-)
-
-my_cc_test(
-    name = "tree-dp-test",
-    srcs = ["tree-dp-test.cpp"],
-    deps = [
-        "//src/ad-hoc:tree-dp",
-        "//src/algebra:modint",
-    ],
-)
-
-my_cc_library(
     name = "monotone-minima",
     hdrs = ["monotone-minima.hpp"],
 )

@@ -1,11 +1,12 @@
 // verification-helper: PROBLEM https://judge.yosupo.jp/problem/tree_path_composite_sum
 
-#include "ad-hoc/tree-dp.hpp"
 #include "algebra/modint.hpp"
 #include "contest/base.hpp"
 #include "contest/fast-input.hpp"
+#include "data-structure/flatten-vector.hpp"
+#include "tree/tree-dp.hpp"
 
-using std::cin, std::cout;
+using std::cout;
 
 int main() {
 	using fast_input::Scanner;
@@ -20,15 +21,17 @@ int main() {
 		sc >> a.v;
 	}
 
-	auto adj = Vec<Vec<int>>(N);
 	auto B = Vec<Z>(N - 1);
 	auto C = Vec<Z>(N - 1);
+	auto edges = Vec<pair<int, int>>();
+	edges.reserve(2 * (N - 1));
 	for (int e = 0; e < N - 1; e++) {
 		int u, v;
 		sc >> u >> v >> B[e].v >> C[e].v;
-		adj[u].push_back(e);
-		adj[v].push_back(e);
+		edges.emplace_back(u, e);
+		edges.emplace_back(v, e);
 	}
+	auto adj = FlattenVector<int>(N, edges);
 
 	using S = array<Z, 2>;	// [0]: sum; [1]: count
 	auto make = [&](int v) -> S { return S{A[v], 1}; };

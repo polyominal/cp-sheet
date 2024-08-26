@@ -29,7 +29,7 @@ struct ComplementGraph {
 			pending.pop_back();
 			for (size_t z = 0; z < size(bfs); z++) {
 				int v = bfs[z];
-				for (int w : g.at(v)) {
+				for (int w : g[v]) {
 					skip[w] = 1;
 				}
 				for (ssize_t i = ssize(pending) - 1; i >= 0; i--) {
@@ -40,7 +40,7 @@ struct ComplementGraph {
 						pending.pop_back();
 					}
 				}
-				for (int w : g.at(v)) {
+				for (int w : g[v]) {
 					skip[w] = 0;
 				}
 			}

@@ -24,7 +24,7 @@ struct HLD {
 		topo.reserve(n);
 		for (int z = 0; z < n; z++) {
 			int v = topo[z];
-			for (int w : tr.at(v)) {
+			for (int w : tr[v]) {
 				if (w == par[v]) continue;
 				par[w] = v;
 				depth[w] = depth[v] + 1;
@@ -55,7 +55,7 @@ struct HLD {
 				path[i] = {path[i - 1].first, path[i - 1].second + 1};
 			}
 			if (max_ch[v] == -1) continue;
-			for (int w : tr.at(v)) {
+			for (int w : tr[v]) {
 				if (w == par[v] || w == max_ch[v]) continue;
 				stk.emplace_back(w, true);
 			}
