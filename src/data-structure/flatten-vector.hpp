@@ -21,4 +21,7 @@ template <class T> struct FlattenVector {
 	auto at(int i) const {
 		return v | std::views::take(off[i + 1]) | std::views::drop(off[i]);
 	}
+	auto operator[](int i) const { return at(i); }
+
+	int size() const { return int(off.size()) - 1; }
 };
