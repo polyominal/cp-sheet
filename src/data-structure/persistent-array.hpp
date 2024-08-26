@@ -9,7 +9,7 @@
 #include "contest/base.hpp"
 
 template <class D> struct PersistentArray {
-	union N { /// start-hash
+	union N {  /// start-hash
 		D v;
 		array<int, 2> c;
 		N(const D& a) : v(a) {}
@@ -18,10 +18,10 @@ template <class D> struct PersistentArray {
 	Vec<N> x;
 	int s, h;
 	// Modify this so that it can reserve memory for x
-	PersistentArray() {} /// end-hash
+	PersistentArray() {}  /// end-hash
 
 	// All arrays share the same layout (length)
-	int build(int n) { /// start-hash
+	int build(int n) {	/// start-hash
 		x.clear();
 		s = 1, h = 0;
 		while (s < n) {
@@ -33,41 +33,41 @@ template <class D> struct PersistentArray {
 			rt = make_node(rt, rt);
 		}
 		return rt;
-	} /// end-hash
+	}  /// end-hash
 
-	int make_leaf(const D& a) { /// start-hash
+	int make_leaf(const D& a) {	 /// start-hash
 		x.emplace_back(a);
-		return int(x.size())-1;
+		return int(x.size()) - 1;
 	}
 	int make_node(int a, int b) {
 		x.emplace_back(a, b);
-		return int(x.size())-1;
-	} /// end-hash
+		return int(x.size()) - 1;
+	}  /// end-hash
 
-	int set(int rt, int i, const D& a) { /// start-hash
+	int set(int rt, int i, const D& a) {  /// start-hash
 		static int buf[40];
 		for (int l = 0; l < h; l++) {
 			buf[l] = rt;
-			if ((i >> (h-1-l)) & 1) {
+			if ((i >> (h - 1 - l)) & 1) {
 				rt = x[rt].c[1];
 			} else {
 				rt = x[rt].c[0];
 			}
 		}
 		int res = make_leaf(a);
-		for (int l = h-1; l >= 0; l--) {
+		for (int l = h - 1; l >= 0; l--) {
 			int j = buf[l];
-			if ((i >> (h-1-l)) & 1) {
+			if ((i >> (h - 1 - l)) & 1) {
 				res = make_node(x[j].c[0], res);
 			} else {
 				res = make_node(res, x[j].c[1]);
 			}
 		}
 		return res;
-	} /// end-hash
+	}  /// end-hash
 
-	D get(int rt, int i) { /// start-hash
-		for (int l = h-1; l >= 0; l--) {
+	D get(int rt, int i) {	/// start-hash
+		for (int l = h - 1; l >= 0; l--) {
 			if (i & (1 << l)) {
 				rt = x[rt].c[1];
 			} else {
@@ -75,5 +75,5 @@ template <class D> struct PersistentArray {
 			}
 		}
 		return x[rt].v;
-	} /// end-hash
+	}  /// end-hash
 };

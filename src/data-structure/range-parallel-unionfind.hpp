@@ -5,7 +5,8 @@
 template <class F> struct RangeParallelUnionFind {
 	Vec<UnionFind> uf;
 	const F f;
-	RangeParallelUnionFind(int n, F f_) : uf(std::bit_width<u32>(n), n), f(f_) {}
+	RangeParallelUnionFind(int n, F f_)
+		: uf(std::bit_width<u32>(n), n), f(f_) {}
 	void inner(int a, int b, int k) {
 		if (auto result = uf[k].unite(a, b); result.has_value()) {
 			auto [p, v] = result.value();

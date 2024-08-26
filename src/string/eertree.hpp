@@ -13,19 +13,20 @@
 
 // 0, ..., K-1
 template <int sigma> struct Eertree {
-	struct Node { /// start-hash
+	struct Node {  /// start-hash
 		array<int, sigma> ch;
 		int par, fail;
-		int l, r; // location of the first ocurrence
-		Node(int p_, int f_, int l_, int r_) : ch{}, par(p_), fail(f_), l(l_), r(r_) {}
-		int len() const { return r-l; }
+		int l, r;  // location of the first ocurrence
+		Node(int p_, int f_, int l_, int r_)
+			: ch{}, par(p_), fail(f_), l(l_), r(r_) {}
+		int len() const { return r - l; }
 	};
 	Vec<Node> x;
 	Vec<int> buf;
-	int cur; /// end-hash
+	int cur;  /// end-hash
 	Eertree(int alloc = 0) {
 		if (alloc) {
-			x.reserve(alloc+2);
+			x.reserve(alloc + 2);
 			buf.reserve(alloc);
 		}
 		x.emplace_back(-1, -1, 1, 0);
@@ -38,18 +39,20 @@ template <int sigma> struct Eertree {
 		buf.clear();
 	}
 
-	int append(int a) { /// start-hash
+	int append(int a) {	 /// start-hash
 		int i = int(buf.size());
 		buf.push_back(a);
 		auto works = [&](int v) -> bool {
 			int l = i - x[v].len();
-			return l > 0 && buf[l-1] == a;
+			return l > 0 && buf[l - 1] == a;
 		};
-		for (; !works(cur); cur = x[cur].fail) {}
+		for (; !works(cur); cur = x[cur].fail) {
+		}
 		if (!x[cur].ch[a]) {
 			int f = x[cur].fail;
 			if (f != -1) {
-				for (; !works(f); f = x[f].fail) {}
+				for (; !works(f); f = x[f].fail) {
+				}
 			}
 			int nf = (f == -1 ? 1 : x[f].ch[a]);
 			x[cur].ch[a] = int(x.size());
@@ -57,12 +60,8 @@ template <int sigma> struct Eertree {
 		}
 		cur = x[cur].ch[a];
 		return cur;
-	} /// end-hash
+	}  /// end-hash
 
-	int size() const {
-		return int(x.size());
-	}
-	const Node& operator [](int i) const {
-		return x[i];
-	}
+	int size() const { return int(x.size()); }
+	const Node& operator[](int i) const { return x[i]; }
 };

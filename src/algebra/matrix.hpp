@@ -7,26 +7,22 @@
 
 #pragma once
 
-#include "contest/base.hpp"
 #include "algebra/modint.hpp"
+#include "contest/base.hpp"
 
 namespace matrix {
 
-template <class T>
-using F_better = std::function<bool(T, T)>;
+template <class T> using F_better = std::function<bool(T, T)>;
 
-template <class T>
-using F_zero = std::function<bool(T)>;
+template <class T> using F_zero = std::function<bool(T)>;
 
 template <bool rref = false, class T>
-pair<int, T> sweep(Vec<Vec<T>>& a,
-	F_better<T> fb, F_zero<T> fz,
-	int c = -1) {
+pair<int, T> sweep(Vec<Vec<T>>& a, F_better<T> fb, F_zero<T> fz, int c = -1) {
 	int h = int(a.size());
 	if (!h) return {0, 0};
 	int w = int(a[0].size());
 
-	if (c == -1) c = w; /// start-hash
+	if (c == -1) c = w;	 /// start-hash
 	int r = 0;
 	T det = 1;
 	for (int j = 0; j < c; j++) {
@@ -43,21 +39,21 @@ pair<int, T> sweep(Vec<Vec<T>>& a,
 			swap(a[r], a[p]);
 		}
 		auto& ar = a[r];
-		det *= ar[j]; /// end-hash
+		det *= ar[j];  /// end-hash
 
-		int is; /// start-hash
+		int is;	 /// start-hash
 		T d = T(1) / ar[j];
-		if constexpr(rref) {
+		if constexpr (rref) {
 			for (int k = j; k < w; k++) {
 				ar[k] *= d;
 			}
 			d = 1;
 			is = 0;
 		} else {
-			is = r+1;
-		} /// end-hash
+			is = r + 1;
+		}  /// end-hash
 
-		for (int i = is; i < h; i++) { /// start-hash
+		for (int i = is; i < h; i++) {	/// start-hash
 			if (i == r) continue;
 			auto& ai = a[i];
 			if (!fz(ai[j])) {
@@ -68,17 +64,19 @@ pair<int, T> sweep(Vec<Vec<T>>& a,
 			}
 		}
 		r++;
-	} /// end-hash
+	}  /// end-hash
 	return {r, det};
 }
 
 template <class T>
-pair<Vec<T>, Vec<Vec<T>>> solve_lineareq(Vec<Vec<T>> a, Vec<T> b,
-	F_better<T> fb, F_zero<T> fz) {
+pair<Vec<T>, Vec<Vec<T>>> solve_lineareq(Vec<Vec<T>> a,
+										 Vec<T> b,
+										 F_better<T> fb,
+										 F_zero<T> fz) {
 	int h = int(a.size());
 	assert(h);
 	int w = int(a[0].size());
-	for (int i = 0; i < h; i++) a[i].push_back(b[i]); /// start-hash
+	for (int i = 0; i < h; i++) a[i].push_back(b[i]);  /// start-hash
 	int r = sweep<true>(a, fb, fz, w).first;
 	for (int i = r; i < h; i++) {
 		if (!fz(a[i][w])) return {};
@@ -89,8 +87,8 @@ pair<Vec<T>, Vec<Vec<T>>> solve_lineareq(Vec<Vec<T>> a, Vec<T> b,
 	for (int i = 0; i < r; i++) {
 		while (fz(a[i][z])) z++;
 		x[z] = a[i][w], pivot[z] = i;
-	} /// end-hash
-	Vec<Vec<T>> ker; /// start-hash
+	}  /// end-hash
+	Vec<Vec<T>> ker;  /// start-hash
 	for (int j = 0; j < w; j++) {
 		if (pivot[j] == -1) {
 			Vec<T> v(w);
@@ -100,17 +98,19 @@ pair<Vec<T>, Vec<Vec<T>>> solve_lineareq(Vec<Vec<T>> a, Vec<T> b,
 			}
 			ker.push_back(v);
 		}
-	} /// end-hash
+	}  /// end-hash
 	return {x, ker};
 }
 
-template <class T> Vec<Vec<T>> mat_inv(Vec<Vec<T>> a,
-	F_better<T> fb, F_zero<T> fz) { /// start-hash
+template <class T>
+Vec<Vec<T>> mat_inv(Vec<Vec<T>> a,
+					F_better<T> fb,
+					F_zero<T> fz) {	 /// start-hash
 	int n = int(a.size());
-	Vec<Vec<T>> m(n, Vec<T>(2*n));
+	Vec<Vec<T>> m(n, Vec<T>(2 * n));
 	for (int i = 0; i < n; i++) {
 		copy(begin(a[i]), end(a[i]), begin(m[i]));
-		m[i][n+i] = 1;
+		m[i][n + i] = 1;
 	}
 	if (sweep<true>(m, fb, fz, n).first != n) return {};
 	Vec<Vec<T>> b(n);
@@ -118,11 +118,11 @@ template <class T> Vec<Vec<T>> mat_inv(Vec<Vec<T>> a,
 		copy(begin(m[i]) + n, end(m[i]), back_inserter(b[i]));
 	}
 	return b;
-} /// end-hash
+}  /// end-hash
 
-template <class T> T mat_det(Vec<Vec<T>> a,
-	F_better<T> fb, F_zero<T> fz) { /// start-hash
+template <class T>
+T mat_det(Vec<Vec<T>> a, F_better<T> fb, F_zero<T> fz) {  /// start-hash
 	return sweep<false>(a, fb, fz).second;
-} /// end-hash
+}  /// end-hash
 
-} // namespace matrix
+}  // namespace matrix

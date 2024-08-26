@@ -1,4 +1,4 @@
-BasedOnStyle: 'Chromium'
+BasedOnStyle: "Chromium"
 
 UseTab: Always
 IndentWidth: 4
@@ -10,3 +10,5 @@ AllowShortFunctionsOnASingleLine: All
 AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: true
 AlwaysBreakTemplateDeclarations: false
+
+ColumnLimit: 80

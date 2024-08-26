@@ -19,42 +19,42 @@ template <class T> struct BIT {
 	BIT(int n) { build(n); }
 	BIT(const Vec<T>& a) { build(a); }
 
-	void build(int n) { /// start-hash
+	void build(int n) {	 /// start-hash
 		x.clear();
 		x.resize(s = n);
-		w = std::bit_width<u32>(s)-1;
-	} /// end-hash
+		w = std::bit_width<u32>(s) - 1;
+	}  /// end-hash
 
-	void build(const Vec<T>& a) { /// start-hash
+	void build(const Vec<T>& a) {  /// start-hash
 		build(int(a.size()));
 		copy(a.begin(), a.end(), x.begin());
 		for (int i = 0; i < s; i++) {
-			int j = i | (i+1);
+			int j = i | (i + 1);
 			if (j < s) x[j] += x[i];
 		}
-	} /// end-hash
+	}  /// end-hash
 
-	void add(int i, T v) { /// start-hash
-		for (; i < s; i |= i+1) x[i] += v;
+	void add(int i, T v) {	/// start-hash
+		for (; i < s; i |= i + 1) x[i] += v;
 	}
 	T sum(int i) {
 		T res = 0;
-		for (; i; i &= i-1) res += x[i-1];
+		for (; i; i &= i - 1) res += x[i - 1];
 		return res;
-	} /// end-hash
+	}  /// end-hash
 
 	// Slightly tested; requires s >= 1
-	int kth(T k) { /// start-hash
+	int kth(T k) {	/// start-hash
 		int cur = 0;
 		for (int i = w; i >= 0; i--) {
 			int nxt = cur + (1 << i);
-			if (nxt <= s && x[nxt-1] <= k) {
-				k -= x[nxt-1];
+			if (nxt <= s && x[nxt - 1] <= k) {
+				k -= x[nxt - 1];
 				cur = nxt;
 			}
 		}
 		return cur;
-	} /// end-hash
+	}  /// end-hash
 
 	int kth_helper(T k, int i = 0) { return kth(k + sum(i)); }
 };

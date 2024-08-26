@@ -20,7 +20,7 @@ inline Vec<int> prime_enumerate(int n) {
 			 q < qe; q += r = s - r) {
 			sieve[q] = false;
 		}
-	}							/// end-hash
+	}  /// end-hash
 	auto res = Vec<int>{2, 3};	/// start-hash
 	for (int p = 5, d = 4, i = 1; p <= n; p += d = 6 - d, i++) {
 		if (sieve[i]) res.push_back(p);
