@@ -1,7 +1,7 @@
 // verification-helper: PROBLEM https://judge.yosupo.jp/problem/static_range_sum
 
-#include "data-structure/static-range.hpp"
 #include "contest/base.hpp"
+#include "data-structure/static-range.hpp"
 
 using std::cin, std::cout;
 
@@ -19,8 +19,7 @@ int main() {
 		cin >> a;
 	}
 
-	auto sr = StaticRange(
-		A, [](T a, T b) -> T { return a + b; }, T(0));
+	auto sr = StaticRange(A, [](T a, T b) -> T { return a + b; }, T(0));
 
 	for (int q = 0; q < Q; q++) {
 		int l, r;

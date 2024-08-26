@@ -1,7 +1,7 @@
 // verification-helper: PROBLEM https://judge.yosupo.jp/problem/range_parallel_unionfind
 
-#include "data-structure/range-parallel-unionfind.hpp"
 #include "contest/base.hpp"
+#include "data-structure/range-parallel-unionfind.hpp"
 #include "data-structure/unionfind.hpp"
 
 using std::cin, std::cout;
