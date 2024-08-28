@@ -9,8 +9,8 @@ template <class F> struct RangeParallelUnionFind {
 		: uf(std::bit_width<u32>(n), n), f(f_) {}
 	void inner(int a, int b, int k) {
 		if (auto result = uf[k].unite(a, b); result.has_value()) {
-			auto [p, v] = result.value();
 			if (k == 0) {
+				auto [p, v] = result.value();
 				f(p, v);
 			} else {
 				k--;
