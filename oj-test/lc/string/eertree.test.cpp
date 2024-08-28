@@ -13,16 +13,21 @@ int main() {
 	sc >> s;
 	const int n = int(s.size());
 
-	auto et = Eertree<26>(n);
+	auto et = Eertree(n);
 	auto locs = Vec<int>{};
 	locs.reserve(n);
 	for (char c : s) {
-		int x = int(c - 'a');
-		int v = et.append(x);
+		int v = et.append(u8(c));
 		locs.push_back(v);
 	}
 
-	auto map_index = [](int v) -> int { return v - 1; };
+	auto map_index = [](int v) -> int {
+		if (v <= 1) {
+			return -v;
+		} else {
+			return v - 1;
+		}
+	};
 
 	cout << et.size() - 2 << '\n';
 	for (int v = 2; v < et.size(); v++) {

@@ -11,25 +11,26 @@
 #include "contest/base.hpp"
 
 // 0, ..., K-1
-template <int sigma> struct Eertree {
+struct Eertree {
 	struct Node {  /// start-hash
-		array<int, sigma> ch;
+		std::forward_list<u32> ch;
 		int par, fail;
 		int l, r;  // location of the first ocurrence
 		int len() const { return r - l; }
 		Node(int par_, int fail_, int l_, int r_)
-			: ch{}, par(par_), fail(fail_), l(l_), r(r_) {}
+			: par(par_), fail(fail_), l(l_), r(r_) {}
 	};
 	Vec<Node> nodes;
-	Vec<int> buf;
+	Vec<u8> buf;
 	int cur;  /// end-hash
 	Eertree(int alloc = 0) {
 		if (alloc) {
 			nodes.reserve(alloc + 2);
 			buf.reserve(alloc);
 		}
-		nodes.emplace_back(-1, -1, 1, 0);
-		nodes.emplace_back(0, 0, 0, 0);
+		// 0: EVEN; 1: ODD
+		nodes.emplace_back(0, 1, 0, 0);
+		nodes.emplace_back(0, 0, 0, -1);
 		reset();
 	}
 
@@ -38,26 +39,33 @@ template <int sigma> struct Eertree {
 		buf.clear();
 	}
 
-	int append(int a) {	 /// start-hash
-		int i = int(buf.size());
+	int get_ch(int v, u8 x) const {
+		for (u32 cw : nodes[v].ch) {
+			u8 c = u8(cw);
+			if (c == x) return int(cw >> 8);
+		}
+		return 0;
+	}
+
+	int get_fail(int v) const {
+		while (buf.back() != buf.end()[-(nodes[v].len() + 2)]) {
+			v = nodes[v].fail;
+		}
+		return v;
+	}
+
+	int append(u8 a) {	/// start-hash
 		buf.push_back(a);
-		auto works = [&](int v) {
-			int l = i - nodes[v].len();
-			return l > 0 && buf[l - 1] == a;
-		};
-		for (; !works(cur); cur = nodes[cur].fail) {
+		cur = get_fail(cur);
+		int nxt = get_ch(cur, a);
+		if (!nxt) {
+			int nf = get_ch(get_fail(nodes[cur].fail), a);
+			nxt = int(nodes.size());
+			nodes[cur].ch.push_front(a | (nxt << 8));
+			nodes.emplace_back(cur, nf, int(buf.size()) - nodes[cur].len() - 2,
+							   int(buf.size()));
 		}
-		if (!nodes[cur].ch[a]) {
-			int f = nodes[cur].fail;
-			if (f != -1) {
-				for (; !works(f); f = nodes[f].fail) {
-				}
-			}
-			int nf = (f == -1 ? 1 : nodes[f].ch[a]);
-			nodes[cur].ch[a] = int(nodes.size());
-			nodes.emplace_back(cur, nf, i - nodes[cur].len() - 1, i + 1);
-		}
-		cur = nodes[cur].ch[a];
+		cur = nxt;
 		return cur;
 	}  /// end-hash
 
