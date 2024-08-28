@@ -37,6 +37,8 @@ struct Eertree {
 	void reset() {
 		cur = 1;
 		buf.clear();
+		// sentinel character; this implies that you should not use u8(-1) in your input
+		buf.push_back(u8(-1));
 	}
 
 	int get_ch(int v, u8 x) const {
@@ -62,8 +64,8 @@ struct Eertree {
 			int nf = get_ch(get_fail(nodes[cur].fail), a);
 			nxt = int(nodes.size());
 			nodes[cur].ch.push_front(a | (nxt << 8));
-			nodes.emplace_back(cur, nf, int(buf.size()) - nodes[cur].len() - 2,
-							   int(buf.size()));
+			int i = int(buf.size()) - 2;
+			nodes.emplace_back(cur, nf, i - nodes[cur].len() - 1, i + 1);
 		}
 		cur = nxt;
 		return cur;
