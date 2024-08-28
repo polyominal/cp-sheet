@@ -51,3 +51,14 @@ my_cc_test(
         "//src/string:hashint",
     ],
 )
+
+my_cc_library(
+    name = "eertree",
+    hdrs = ["eertree.hpp"],
+)
+
+my_cc_test(
+    name = "eertree-test",
+    srcs = ["eertree-test.cpp"],
+    deps = ["//src/string:eertree"],
+)
