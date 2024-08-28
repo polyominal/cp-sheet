@@ -57,5 +57,9 @@ sudo mv ./buildifier "${LOCAL_BIN}/buildifier"
 
 echo "Setting up TexLive..."
 
-sudo apt-get update
-sudo apt-get install -y texlive-latex-base texlive-latex-recommended texlive-latex-extra
+# sudo apt-get update
+# sudo apt-get install -y texlive-latex-base texlive-latex-recommended texlive-latex-extra
+
+echo "Setting up additional CLI tools..."
+
+# cargo install fd-find ripgrep eza bat

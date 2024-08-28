@@ -7,6 +7,6 @@ build --copt -Wconversion
 build --copt -Wno-sign-conversion
 build --copt -Werror
 
-build:asan --linkopt -ldl
-build:asan --copt -fsanitize=address,undefined
-build:asan --linkopt -fsanitize=address,undefined
+# build:asan --linkopt -ldl
+build:asan --copt -fsanitize=address
+build:asan --linkopt -fsanitize=address
