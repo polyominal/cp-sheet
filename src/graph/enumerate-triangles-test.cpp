@@ -1,7 +1,7 @@
+#include <gtest/gtest.h>
 #include <contest/base.hpp>
 #include <graph/enumerate-triangles.hpp>
 #include <util/random.hpp>
-#include <gtest/gtest.h>
 
 TEST(EnumerateTrianglesTest, Random) {
 	auto rng = Random(1145141);
@@ -10,7 +10,7 @@ TEST(EnumerateTrianglesTest, Random) {
 		auto adj = Vec<Vec<bool>>(N, Vec<bool>(N));
 		auto edges = Vec<pair<int, int>>();
 		for (int a = 0; a < N; a++) {
-			for (int b = a+1; b < N; b++) {
+			for (int b = a + 1; b < N; b++) {
 				if (rng.uniform(0, 9) < 7) {
 					adj[a][b] = adj[b][a] = true;
 					edges.emplace_back(a, b);
@@ -29,8 +29,8 @@ TEST(EnumerateTrianglesTest, Random) {
 
 		auto res_naive = Vec<tuple<int, int, int>>();
 		for (int x = 0; x < N; x++) {
-			for (int y = x+1; y < N; y++) {
-				for (int z = y+1; z < N; z++) {
+			for (int y = x + 1; y < N; y++) {
+				for (int z = y + 1; z < N; z++) {
 					if (adj[x][y] && adj[y][z] && adj[z][x]) {
 						res_naive.emplace_back(x, y, z);
 					}

@@ -1,7 +1,7 @@
+#include <gtest/gtest.h>
 #include <contest/base.hpp>
 #include <data-structure/binary-indexed-tree.hpp>
 #include <util/random.hpp>
-#include <gtest/gtest.h>
 
 TEST(BinaryIndexedTreeTest, PointAddRangeSum) {
 	auto rng = Random(1145141);
@@ -12,7 +12,7 @@ TEST(BinaryIndexedTreeTest, PointAddRangeSum) {
 
 		auto A = Vec<T>(N);
 		for (T& a : A) {
-			a = rng.uniform(-INF/2, INF/2);
+			a = rng.uniform(-INF / 2, INF / 2);
 		}
 
 		auto ft = BIT<T>(A);
@@ -21,7 +21,7 @@ TEST(BinaryIndexedTreeTest, PointAddRangeSum) {
 			int num_updates = rng.uniform(0, 4);
 
 			for (int z = 0; z < num_updates; z++) {
-				int p = rng.uniform(0, N-1);
+				int p = rng.uniform(0, N - 1);
 				T x = rng.uniform<T>(-1e12, 1e12);
 				A[p] += x;
 				ft.add(p, x);
@@ -48,7 +48,7 @@ TEST(BinaryIndexedTreeTest, KthSearch) {
 		for (int sz = 1; sz <= N; sz++) {
 			auto samp = set<int>();
 			while (int(size(samp)) < sz) {
-				int x = rng.uniform(0, N-1);
+				int x = rng.uniform(0, N - 1);
 				samp.insert(x);
 			}
 			EXPECT_EQ(int(size(samp)), sz);
@@ -63,8 +63,8 @@ TEST(BinaryIndexedTreeTest, KthSearch) {
 				EXPECT_EQ(bit.kth_helper(k), x);
 				k++;
 			}
-			for (int i = sz; i <= N+5; i++) {
-				EXPECT_EQ(bit.kth_helper(k+1), N);
+			for (int i = sz; i <= N + 5; i++) {
+				EXPECT_EQ(bit.kth_helper(k + 1), N);
 			}
 		}
 	}
