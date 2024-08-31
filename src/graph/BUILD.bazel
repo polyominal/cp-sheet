@@ -3,6 +3,7 @@ load("//:rules.bzl", "my_cc_library", "my_cc_test")
 my_cc_library(
     name = "enumerate-triangles",
     hdrs = ["enumerate-triangles.hpp"],
+    deps = ["//src/data-structure:flatten-vector"],
 )
 
 my_cc_test(

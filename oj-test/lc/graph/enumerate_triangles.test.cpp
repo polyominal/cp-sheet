@@ -1,6 +1,5 @@
 // verification-helper: PROBLEM https://judge.yosupo.jp/problem/enumerate_triangles
 
-#include "algebra/modint.hpp"
 #include "contest/base.hpp"
 #include "contest/fast-input.hpp"
 #include "graph/enumerate-triangles.hpp"
@@ -13,11 +12,9 @@ int main() {
 	int N, M;
 	sc >> N >> M;
 
-	using Z = ModInt<998244353>;
-
-	auto X = Vec<Z>(N);
+	auto X = Vec<u32>(N);
 	for (auto& x : X) {
-		sc >> x.v;
+		sc >> x;
 	}
 
 	auto edges = Vec<pair<int, int>>(M);
@@ -25,11 +22,13 @@ int main() {
 		sc >> a >> b;
 	}
 
-	auto tot = Z(0);
-	triangles(N, edges,
-			  [&](int x, int y, int z) -> void { tot += X[x] * X[y] * X[z]; });
-
-	std::cout << tot.v << '\n';
+	auto tot = u128(0);
+	triangles(N, edges, [&](int x, int y, int z) -> void {
+		tot += u128(X[x]) * X[y] * X[z];
+	});
+	constexpr u32 MOD = 998244353;
+	tot %= MOD;
+	std::cout << u32(tot) << '\n';
 
 	return 0;
 }

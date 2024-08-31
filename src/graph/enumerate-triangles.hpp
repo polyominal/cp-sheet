@@ -1,3 +1,5 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Date: 2024-01-03
@@ -6,23 +8,23 @@
  * Status: Tested with https://judge.yosupo.jp/problem/enumerate_triangles
  */
 
-#pragma once
-
 #include "contest/base.hpp"
+#include "data-structure/flatten-vector.hpp"
 
-template <class F>
-void triangles(int n, const Vec<pair<int, int>>& edges, F f) {
-	Vec<int> deg(n);  /// start-hash
+template <class F> void triangles(int n, Vec<pair<int, int>> edges, F f) {
+	auto deg = Vec<int>(n);
 	for (auto [a, b] : edges) {
-		deg[a]++, deg[b]++;
+		deg[a]++;
+		deg[b]++;
 	}
-	Vec<Vec<int>> adj(n);
-	for (auto [a, b] : edges) {
-		if (tie(deg[a], a) > tie(deg[b], b)) swap(a, b);
-		adj[a].push_back(b);
-	}  /// end-hash
+	for (auto& [a, b] : edges) {
+		if (tie(deg[a], a) > tie(deg[b], b)) {
+			swap(a, b);
+		}
+	}
+	auto adj = FlattenVector<int>(n, edges);
 
-	Vec<int> ind(n);  /// start-hash
+	Vec<int> ind(n);
 	int i = 0;
 	for (int x = 0; x < n; x++) {
 		++i;
@@ -34,5 +36,5 @@ void triangles(int n, const Vec<pair<int, int>>& edges, F f) {
 				}
 			}
 		}
-	}  /// end-hash
+	}
 }
