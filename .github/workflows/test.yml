@@ -28,4 +28,4 @@ jobs:
 
       - name: Test
         run: |
-          "${GITHUB_WORKSPACE}/bin/bazel" test //src/... --config=asan
+          "${GITHUB_WORKSPACE}/bin/bazel" test //src/... --config=pedantic
