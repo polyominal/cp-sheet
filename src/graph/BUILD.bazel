@@ -44,3 +44,38 @@ my_cc_test(
     srcs = ["complement-graph-test.cpp"],
     deps = ["//src/graph:complement-graph"],
 )
+
+my_cc_library(
+    name = "dfs-tree",
+    hdrs = ["dfs-tree.hpp"],
+)
+
+my_cc_library(
+    name = "block-cut",
+    hdrs = ["block-cut.hpp"],
+    deps = ["//src/graph:dfs-tree"],
+)
+
+my_cc_test(
+    name = "block-cut-test",
+    srcs = ["block-cut-test.cpp"],
+    deps = [
+        "//src/data-structure:flatten-vector",
+        "//src/graph:block-cut",
+    ],
+)
+
+my_cc_library(
+    name = "two-edge-cc",
+    hdrs = ["two-edge-cc.hpp"],
+    deps = ["//src/graph:dfs-tree"],
+)
+
+my_cc_test(
+    name = "two-edge-cc-test",
+    srcs = ["two-edge-cc-test.cpp"],
+    deps = [
+        "//src/data-structure:flatten-vector",
+        "//src/graph:two-edge-cc",
+    ],
+)
