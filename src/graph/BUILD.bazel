@@ -79,3 +79,17 @@ my_cc_test(
         "//src/graph:two-edge-cc",
     ],
 )
+
+my_cc_library(
+    name = "mst-kruskal",
+    hdrs = ["mst-kruskal.hpp"],
+    deps = ["//src/data-structure:unionfind"],
+)
+
+my_cc_test(
+    name = "mst-kruskal-test",
+    srcs = ["mst-kruskal-test.cpp"],
+    deps = [
+        "//src/graph:mst-kruskal",
+    ],
+)
