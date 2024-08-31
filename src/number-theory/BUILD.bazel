@@ -32,3 +32,14 @@ my_cc_test(
     srcs = ["int-kth-root-test.cpp"],
     deps = ["//src/number-theory:int-kth-root"],
 )
+
+my_cc_library(
+    name = "multiplicative-eval",
+    hdrs = ["multiplicative-eval.hpp"],
+)
+
+my_cc_test(
+    name = "multiplicative-eval-test",
+    srcs = ["multiplicative-eval-test.cpp"],
+    deps = ["//src/number-theory:multiplicative-eval"],
+)
