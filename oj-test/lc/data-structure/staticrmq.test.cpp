@@ -24,7 +24,7 @@ int main() {
 	for (int q = 0; q < Q; q++) {
 		int l, r;
 		cin >> l >> r;
-		cout << sr(l, r) << '\n';
+		cout << sr.prod(l, r) << '\n';
 	}
 
 	return 0;

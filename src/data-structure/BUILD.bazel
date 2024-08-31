@@ -154,3 +154,17 @@ my_cc_test(
         "//src/data-structure:hash-map",
     ],
 )
+
+my_cc_library(
+    name = "static-range",
+    hdrs = ["static-range.hpp"],
+)
+
+my_cc_test(
+    name = "static-range-test",
+    srcs = ["static-range-test.cpp"],
+    deps = [
+        "//src/algebra:modint",
+        "//src/data-structure:static-range",
+    ],
+)

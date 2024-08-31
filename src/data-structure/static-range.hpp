@@ -37,7 +37,7 @@ template <class T, class F> struct StaticRange {
 		}
 	}  /// end-hash
 
-	T operator()(int l, int r) const {	/// start-hash
+	T prod(int l, int r) const {  /// start-hash
 		if (l >= r) return e;
 		r--;
 		if (l == r) return d[0][l];
