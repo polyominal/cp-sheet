@@ -7,6 +7,7 @@ build --copt -Wconversion
 build --copt -Wno-sign-conversion
 build --copt -Werror
 
-# build:asan --linkopt -ldl
-build:asan --copt -fsanitize=address
-build:asan --linkopt -fsanitize=address
+build:pedantic --copt -D_GLIBCXX_DEBUG
+build:pedantic --copt -D_GLIBCXX_DEBUG_PEDANTIC
+build:pedantic --copt -fsanitize=address,undefined
+build:pedantic --linkopt -fsanitize=address,undefined
