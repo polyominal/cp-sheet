@@ -51,4 +51,31 @@ TEST(TestHashedString, StringEquality) {
 	}
 }
 
+TEST(TestHashedString, StringConcatenation) {
+	const HashInt base = rand_base();
+	auto hm = HashedManager(base);
+
+	auto rng = Random(20240902);
+
+	for (int n : {0, 1, 2, 3, 5, 8, 13, 21, 34}) {
+		auto s = string();
+		for (int i = 0; i < n; i++) {
+			s += char('a' + rng.uniform(0, 25));
+		}
+		auto hs = hm.make(s);
+
+		for (int l = 0; l <= n; l++) {
+			for (int m = l; m <= n; m++) {
+				for (int r = m; r <= n; r++) {
+					auto a = hm.get(hs, l, m);
+					auto b = hm.get(hs, m, r);
+					auto c = hm.concat(a, b);
+					auto d = hm.get(hs, l, r);
+					EXPECT_EQ(c, d);
+				}
+			}
+		}
+	}
+}
+
 }  // namespace testing

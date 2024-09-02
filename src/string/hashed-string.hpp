@@ -20,7 +20,12 @@ template <class H> struct HashedManager {
 		}
 		return hs;
 	}
-	H get(const Hashed& hs, int l, int r) const {
-		return hs[r] - hs[l] * pows[r - l];
+
+	using Str = pair<H, int>;
+	Str get(const Hashed& hs, int l, int r) const {
+		return Str(hs[r] - hs[l] * pows[r - l], r - l);
+	}
+	Str concat(const Str& a, const Str& b) const {
+		return Str(a.first * pows[b.second] + b.first, a.second + b.second);
 	}
 };
