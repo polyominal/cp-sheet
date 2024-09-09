@@ -13,8 +13,8 @@ namespace geometry {
 using std::fmod;
 
 const double EPS = 1e-9;
-template <class T> inline int sgn(T a) { return (a > EPS) - (a < -EPS); }
-template <class T> inline int sgn(T a, T b) { return sgn(a - b); }
+template <class T> int sgn(T a) { return (a > EPS) - (a < -EPS); }
+template <class T> int sgn(T a, T b) { return sgn(a - b); }
 
 const double PI = acos(-1.);
 

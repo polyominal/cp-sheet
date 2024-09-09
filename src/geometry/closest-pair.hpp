@@ -14,7 +14,7 @@ namespace geometry {
 template <class T> using P = Point<T>;
 
 // PRECONDITION: There are at least 2 points
-template <class T, class F> inline void closest_pair(Vec<P<T>> pts, F f) {
+template <class T, class F> void closest_pair(Vec<P<T>> pts, F f) {
 	int n = int(size(pts));
 	using PT = P<T>;
 	std::ranges::sort(pts, [](PT a, PT b) -> bool { return a.x < b.x; });

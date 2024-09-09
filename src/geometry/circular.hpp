@@ -28,7 +28,7 @@ template <class T = double> struct C {
 
 // NOT TESTED
 // 0: outside; 1: on; 2: inside
-template <class T> inline int contains(const C<T>& c, const Point<T>& p) {
+template <class T> int contains(const C<T>& c, const Point<T>& p) {
 	return sgn(c.r - dist(p - c.c)) + 1;
 }
 
@@ -36,7 +36,7 @@ template <class T> inline int contains(const C<T>& c, const Point<T>& p) {
 // 2-a<b; 3-a<=b;
 // 4-a>b; 5-a>=b;
 // 6-a touches b; 7-a cross b
-template <class T> inline int insCC(const C<T>& a, const C<T>& b) {
+template <class T> int insCC(const C<T>& a, const C<T>& b) {
 	T c = dist(a.c - b.c);	/// start-hash
 	if (sgn(c) == 0 && sgn(a.r, b.r) == 0) return 1;
 	int d = sgn(c + a.r - b.r);
@@ -49,7 +49,7 @@ template <class T> inline int insCC(const C<T>& a, const C<T>& b) {
 }
 
 template <class T>
-inline C<T> incircle(const Point<T>& a, const Point<T>& b, const Point<T>& c) {
+C<T> incircle(const Point<T>& a, const Point<T>& b, const Point<T>& c) {
 	T da = dist(b - c);	 /// start-hash
 	T db = dist(a - c);
 	T dc = dist(a - b);
@@ -58,8 +58,7 @@ inline C<T> incircle(const Point<T>& a, const Point<T>& b, const Point<T>& c) {
 			 abs(crs(b - a, c - a)) / s);  /// end-hash
 }
 
-template <class T>
-inline C<T> outcircle(const Point<T>& a, Point<T> b, Point<T> c) {
+template <class T> C<T> outcircle(const Point<T>& a, Point<T> b, Point<T> c) {
 	b -= a, c -= a;	 /// start-hash
 	T bb = dist2(b) / 2;
 	T cc = dist2(c) / 2;
@@ -72,7 +71,7 @@ inline C<T> outcircle(const Point<T>& a, Point<T> b, Point<T> c) {
 }
 
 template <class T>
-inline int crossCL(const C<T>& c, const L<T>& l, array<Point<T>, 2>& res) {
+int crossCL(const C<T>& c, const L<T>& l, array<Point<T>, 2>& res) {
 	T u = distLP(l, c.c);  /// start-hash
 	int t = sgn(u, c.r);
 	if (t == 1) return 0;
@@ -85,8 +84,7 @@ inline int crossCL(const C<T>& c, const L<T>& l, array<Point<T>, 2>& res) {
 
 // args of two intersections r, l seen by a.c,
 // assuming two circles cross
-template <class T>
-inline pair<T, T> crossCC_args(const C<T>& a, const C<T>& b) {
+template <class T> pair<T, T> crossCC_args(const C<T>& a, const C<T>& b) {
 	Point<T> diff = b.c - a.c;	/// start-hash
 	T c = arg(diff);
 	T d = arg(a.r, dist(diff), b.r);
@@ -94,7 +92,7 @@ inline pair<T, T> crossCC_args(const C<T>& a, const C<T>& b) {
 }
 
 template <class T>
-inline int crossCC(const C<T>& a, const C<T>& b, array<Point<T>, 2>& res) {
+int crossCC(const C<T>& a, const C<T>& b, array<Point<T>, 2>& res) {
 	int t = insCC(a, b);  /// start-hash
 	if (t == 0 || t == 1 || t == 2 || t == 4) return 0;
 	auto [l, r] = crossCC_args(a, b);
@@ -103,7 +101,7 @@ inline int crossCC(const C<T>& a, const C<T>& b, array<Point<T>, 2>& res) {
 }
 
 template <class T>
-inline int tangent(const C<T>& c, const Point<T>& p, array<Point<T>, 2>& res) {
+int tangent(const C<T>& c, const Point<T>& p, array<Point<T>, 2>& res) {
 	Point<T> diff = p - c.c;  /// start-hash
 	T dd = dist(diff);
 	int t = sgn(c.r, dd);
