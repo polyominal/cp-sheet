@@ -37,3 +37,17 @@ my_cc_test(
         "//src/algebra:barrett",
     ],
 )
+
+my_cc_library(
+    name = "matrix",
+    hdrs = ["matrix.hpp"],
+)
+
+my_cc_test(
+    name = "matrix-test",
+    srcs = ["matrix-test.cpp"],
+    deps = [
+        "//src/algebra:matrix",
+        "//src/algebra:modint",
+    ],
+)
