@@ -70,20 +70,20 @@ pair<int, T> sweep(Vec<Vec<T>>& a, int c = -1) {
 }
 
 template <class T>
-pair<Vec<T>, Vec<Vec<T>>> solve_lineareq(Vec<Vec<T>> a, Vec<T> b) {
+Opt<pair<Vec<T>, Vec<Vec<T>>>> solve_lineareq(Vec<Vec<T>> a, Vec<T> b) {
 	int h = int(a.size());
 	assert(h);
 	int w = int(a[0].size());
 	for (int i = 0; i < h; i++) a[i].push_back(b[i]);  /// start-hash
 	int r = sweep<true>(a, w).first;
 	for (int i = r; i < h; i++) {
-		if (a[i][w] == T(0)) return {};
+		if (a[i][w] != T(0)) return std::nullopt;
 	}
 	Vec<T> x(w);
 	Vec<int> pivot(w, -1);
 	int z = 0;
 	for (int i = 0; i < r; i++) {
-		if (a[i][z] == T(0)) z++;
+		while (a[i][z] == T(0)) z++;
 		x[z] = a[i][w], pivot[z] = i;
 	}  /// end-hash
 	Vec<Vec<T>> ker;  /// start-hash
@@ -97,7 +97,7 @@ pair<Vec<T>, Vec<Vec<T>>> solve_lineareq(Vec<Vec<T>> a, Vec<T> b) {
 			ker.push_back(v);
 		}
 	}  /// end-hash
-	return {x, ker};
+	return make_pair(x, ker);
 }
 
 template <class T> Vec<Vec<T>> mat_inv(Vec<Vec<T>> a) {
