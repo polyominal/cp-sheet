@@ -1,11 +1,5 @@
 #pragma once
 
-/**
- * Author: Hanfei Chen
- * Description: NTT; mostly the same with fft.hpp?
- * Status: Tested with https://judge.yosupo.jp/problem/convolution_mod
- */
-
 #include "contest/base.hpp"
 
 template <class T> void nft(Vec<T>& a, int n) {
