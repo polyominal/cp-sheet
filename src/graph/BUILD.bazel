@@ -135,3 +135,8 @@ my_cc_test(
         "//src/graph:scc",
     ],
 )
+
+my_cc_library(
+    name = "maxflow",
+    hdrs = ["maxflow.hpp"],
+)
