@@ -43,3 +43,14 @@ my_cc_test(
     srcs = ["multiplicative-eval-test.cpp"],
     deps = ["//src/number-theory:multiplicative-eval"],
 )
+
+my_cc_library(
+    name = "extgcd",
+    hdrs = ["extgcd.hpp"],
+)
+
+my_cc_test(
+    name = "extgcd-test",
+    srcs = ["extgcd-test.cpp"],
+    deps = ["//src/number-theory:extgcd"],
+)
