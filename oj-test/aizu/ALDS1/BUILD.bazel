@@ -1,0 +1,10 @@
+load("//:rules.bzl", "my_cc_binary")
+
+my_cc_binary(
+    name = "ALDS1_14_C",
+    srcs = ["ALDS1_14_C.test.cpp"],
+    deps = [
+        "//src/string:hashed-string-2d",
+        "//src/string:hashint",
+    ],
+)

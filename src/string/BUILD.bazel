@@ -62,3 +62,8 @@ my_cc_test(
     srcs = ["eertree-test.cpp"],
     deps = ["//src/string:eertree"],
 )
+
+my_cc_library(
+    name = "hashed-string-2d",
+    hdrs = ["hashed-string-2d.hpp"],
+)
