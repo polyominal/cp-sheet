@@ -1,10 +1,10 @@
+#pragma once
+
 /**
  * Author: Hanfei Chen
  * Description: Persistent array based on persistent segtrees
  * Status: Tested with https://judge.yosupo.jp/problem/persistent_unionfind
  */
-
-#pragma once
 
 #include "contest/base.hpp"
 
