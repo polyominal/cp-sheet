@@ -1,0 +1,9 @@
+load("//:rules.bzl", "my_cc_binary")
+
+my_cc_binary(
+    name = "dynamic_graph_vertex_add_component_sum",
+    srcs = ["dynamic_graph_vertex_add_component_sum.test.cpp"],
+    deps = [
+        "//src/ad-hoc:offline-query",
+    ],
+)

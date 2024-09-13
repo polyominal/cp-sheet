@@ -42,3 +42,8 @@ my_cc_test(
     srcs = ["scary-product-test.cpp"],
     deps = ["//src/ad-hoc:scary-product"],
 )
+
+my_cc_library(
+    name = "offline-query",
+    hdrs = ["offline-query.hpp"],
+)
