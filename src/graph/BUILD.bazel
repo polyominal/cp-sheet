@@ -121,3 +121,17 @@ my_cc_test(
         "//src/graph:dominator",
     ],
 )
+
+my_cc_library(
+    name = "scc",
+    hdrs = ["scc.hpp"],
+)
+
+my_cc_test(
+    name = "scc-test",
+    srcs = ["scc-test.cpp"],
+    deps = [
+        "//src/data-structure:flatten-vector",
+        "//src/graph:scc",
+    ],
+)
