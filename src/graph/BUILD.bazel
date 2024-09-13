@@ -140,3 +140,8 @@ my_cc_library(
     name = "maxflow",
     hdrs = ["maxflow.hpp"],
 )
+
+my_cc_library(
+    name = "mcmf",
+    hdrs = ["mcmf.hpp"],
+)
