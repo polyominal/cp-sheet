@@ -107,3 +107,17 @@ my_cc_test(
         "//src/graph:matching",
     ],
 )
+
+my_cc_library(
+    name = "dominator",
+    hdrs = ["dominator.hpp"],
+)
+
+my_cc_test(
+    name = "dominator-test",
+    srcs = ["dominator-test.cpp"],
+    deps = [
+        "//src/data-structure:flatten-vector",
+        "//src/graph:dominator",
+    ],
+)
