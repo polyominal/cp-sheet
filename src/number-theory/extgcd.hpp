@@ -66,7 +66,6 @@ template <class T> Opt<tuple<T, T, T>> find_any(T a, T b, T c) {  /// start-hash
 
 // # of (x, y) s.t. ax + by = c and
 // xmin <= x and x <= xmax and ymin <= y and y <= ymax
-/// start-hash
 template <class T>
 T count_sols(T a, T b, T c, T xl, T xr, T yl, T yr) {  /// start-hash
 	if (c < 0) {

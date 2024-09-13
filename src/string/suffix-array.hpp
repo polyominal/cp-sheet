@@ -45,7 +45,7 @@ struct SuffixArray {
 	}
 
 	static Vec<int> sais(Vec<int> a) {
-		int n = int(size(a));
+		int n = int(size(a));  /// start-hash
 		int m = *std::ranges::max_element(a) + 1;
 		auto pos = Vec<int>(m + 1);
 		for (auto c : a) pos[c + 1]++;
@@ -53,9 +53,9 @@ struct SuffixArray {
 		auto s = Vec<i8>(n);
 		for (int i = n - 2; i >= 0; i--) {
 			s[i] = (a[i] != a[i + 1] ? a[i] < a[i + 1] : s[i + 1]);
-		}
+		}  /// end-hash
 
-		auto x = Vec<int>(m);
+		auto x = Vec<int>(m);  /// start-hash
 		auto sa = Vec<int>(n);
 		auto induce = [&](const Vec<int>& lms) {
 			std::fill(begin(sa), end(sa), -1);
@@ -78,9 +78,11 @@ struct SuffixArray {
 			for (int i = n - 1; i >= 0; i--) {
 				push_S(sa[i] - 1);
 			}
-		};
+		};	/// end-hash
 
-		auto ok = [&](int i) { return i == n || (!s[i - 1] && s[i]); };
+		auto ok = [&](int i) {
+			return i == n || (!s[i - 1] && s[i]);
+		};	/// start-hash
 		auto eq = [&](int i, int j) {
 			do {
 				if (a[i++] != a[j++]) return false;
@@ -91,9 +93,9 @@ struct SuffixArray {
 		for (int i = 1; i < n; i++) {
 			if (ok(i)) lms.push_back(i);
 		}
-		induce(lms);
+		induce(lms);  /// end-hash
 
-		if (!lms.empty()) {
+		if (!lms.empty()) {	 /// start-hash
 			int p = -1, w = 0;
 			auto mp = Vec<int>(n);
 			for (auto v : sa)
@@ -106,7 +108,7 @@ struct SuffixArray {
 			b = sais(b);
 			for (auto& v : b) v = lms[v];
 			induce(b);
-		}
+		}  /// end-hash
 
 		return sa;
 	}
