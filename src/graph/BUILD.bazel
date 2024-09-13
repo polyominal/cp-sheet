@@ -94,3 +94,16 @@ my_cc_test(
         "//src/graph:mst-kruskal",
     ],
 )
+
+my_cc_library(
+    name = "matching",
+    hdrs = ["matching.hpp"],
+)
+
+my_cc_test(
+    name = "matching-test",
+    srcs = ["matching-test.cpp"],
+    deps = [
+        "//src/graph:matching",
+    ],
+)
