@@ -86,3 +86,12 @@ template <class S> struct TreeDP {
 		return Inner(g, make, rake, compress);
 	}
 };
+
+// using S = array<Z, 2>;	// [0]: sum; [1]: count
+// auto make = [&](int v) -> S { return S{A[v], 1}; };
+// auto rake = [&](const S& a, const S& b, int) -> S {
+// 	return S{a[0] + b[0], a[1] + b[1]};
+// };
+// auto compress = [&](const S& a, int e, int) -> S {
+// 	return S{a[0] * B[e] + a[1] * C[e], a[1]};
+// };
