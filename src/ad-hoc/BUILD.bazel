@@ -47,3 +47,8 @@ my_cc_library(
     name = "offline-query",
     hdrs = ["offline-query.hpp"],
 )
+
+my_cc_library(
+    name = "segbeats",
+    hdrs = ["segbeats.hpp"],
+)
