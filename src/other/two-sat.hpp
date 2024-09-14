@@ -46,7 +46,6 @@ struct TwoSat {
 		}
 		either(cur, ~vs[1]);
 	}
-
 	Opt<Vec<i8>> solve() {
 		auto r = Vec<i8>(n, -1);
 		auto g = FlattenVector<int>(2 * n, std::move(edges));
@@ -69,15 +68,9 @@ struct TwoSat {
 			return true;
 		};
 		for (int i = 0; i < n; i++) {
-			if (r[i] != -1 || bfs(2 * i + 1)) {
-				continue;
-			}
-			for (int v : q) {
-				r[v / 2] = -1;
-			}
-			if (!bfs(2 * i)) {
-				return std::nullopt;
-			}
+			if (r[i] != -1 || bfs(2 * i + 1)) continue;
+			for (int v : q) r[v / 2] = -1;
+			if (!bfs(2 * i)) return std::nullopt;
 		}
 		return r;
 	}

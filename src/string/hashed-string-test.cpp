@@ -63,6 +63,7 @@ TEST(TestHashedString, StringConcatenation) {
 			s += char('a' + rng.uniform(0, 25));
 		}
 		auto hs = hm.make(s);
+		EXPECT_EQ(hm.get(hs, 0, n), hm.get(s));
 
 		for (int l = 0; l <= n; l++) {
 			for (int m = l; m <= n; m++) {

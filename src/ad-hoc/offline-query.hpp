@@ -24,12 +24,10 @@ template <class P, class V, class F, class G> struct PQ2S {
 	~PQ2S() {
 		for (int i = 0; i < d; i++) undo();
 	}
-
 	void push(P p, V v) {
 		x.push_back({p, v, false});
 		if (always) prep();
 	}
-
 	void imerge(int i, int j, int k) {
 		if (i == j || j == k) return;  /// start-hash
 		static Vec<T> y;
@@ -38,7 +36,6 @@ template <class P, class V, class F, class G> struct PQ2S {
 			  y.begin());
 		for (int a = i; a < k; a++) x[a] = y[a - i];  /// end-hash
 	}
-
 	void pop() {
 		int t = r ? (r & -r) : INF;	 /// start-hash
 		int m = int(x.size()) - 1;
@@ -77,12 +74,10 @@ template <class P, class V, class F, class G> struct PQ2S {
 		}
 		if (always) prep();	 /// end-hash
 	}
-
 	void prep() {
 		while (d < int(x.size())) upd(x[d++].v);
 	}
 };
-
 template <class P, class V, class F, class G>
 PQ2S<P, V, F, G> pq2sgen(F f, G g, bool a = true) {
 	return PQ2S<P, V, F, G>(f, g, a);
@@ -93,7 +88,6 @@ template <class Q, class A> struct OfflineQuery {
 	Vec<int> x, d;
 	Vec<Q> qs;
 	Vec<A> as;
-
 	int add(Q q) {
 		int i = int(qs.size());
 		x.push_back(i);
@@ -101,18 +95,15 @@ template <class Q, class A> struct OfflineQuery {
 		qs.push_back(q);
 		return i;
 	}
-
 	void del(int i) {
 		d[i] = int(x.size());
 		x.push_back(-1);
 	}
-
 	void ask(A a) {
 		int i = int(as.size());
 		x.push_back(-2 - i);
 		as.push_back(a);
 	}
-
 	template <class F, class G, class H> void exec(F upd, G undo, H ask) {
 		auto solver = pq2sgen<int, Q>(upd, undo, false);  /// start-hash
 		for (auto i : x) {

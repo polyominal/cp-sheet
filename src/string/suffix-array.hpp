@@ -14,8 +14,6 @@
 
 #include "contest/base.hpp"
 
-// Work in progress
-
 struct SuffixArray {
 	int n;
 	Vec<int> sa;
@@ -26,12 +24,9 @@ struct SuffixArray {
 	template <class S> static SuffixArray construct(const S& s) {
 		int n = int(size(s));
 		auto sa = SuffixArray(n);
-
 		sa.build_sa_fast(s);
-
 		sa.build_isa();
 		sa.build_lcp(s);
-
 		return sa;
 	}
 
@@ -109,7 +104,6 @@ struct SuffixArray {
 			for (auto& v : b) v = lms[v];
 			induce(b);
 		}  /// end-hash
-
 		return sa;
 	}
 

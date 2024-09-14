@@ -52,3 +52,31 @@ my_cc_library(
     name = "segbeats",
     hdrs = ["segbeats.hpp"],
 )
+
+my_cc_library(
+    name = "li-chao-tree",
+    hdrs = ["li-chao-tree.hpp"],
+)
+
+my_cc_library(
+    name = "monge-shortest-path",
+    hdrs = ["monge-shortest-path.hpp"],
+)
+
+my_cc_library(
+    name = "concave-shortest-path",
+    hdrs = ["concave-shortest-path.hpp"],
+)
+
+my_cc_library(
+    name = "palindromic-decomp-dp",
+    hdrs = ["palindromic-decomp-dp.hpp"],
+    deps = [
+        "//src/string:eertree",
+    ],
+)
+
+my_cc_library(
+    name = "golden-section-search",
+    hdrs = ["golden-section-search.hpp"],
+)

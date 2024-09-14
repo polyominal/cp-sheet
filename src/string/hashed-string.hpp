@@ -28,4 +28,11 @@ template <class H> struct HashedManager {
 	Str concat(const Str& a, const Str& b) const {
 		return Str(a.first * pows[b.second] + b.first, a.second + b.second);
 	}
+	template <class S> Str get(const S& s) {
+		auto v = H(0);
+		for (auto c : s) {
+			v = v * base + H(c);
+		}
+		return {v, int(size(s))};
+	}
 };

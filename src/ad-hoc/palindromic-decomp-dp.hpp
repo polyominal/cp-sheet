@@ -14,18 +14,17 @@
 #include "string/eertree.hpp"
 
 // dp[j] := sum_{i s.t. [i, j) is palindromic} {dp[i] * x}
-template <class S, int sigma, bool even = false>
-Vec<S> palindromic_decomp_dp(const Vec<int>& a,
+template <class S, bool even = false>
+Vec<S> palindromic_decomp_dp(const Vec<u8>& a,
 							 auto add,
 							 S add_e,
 							 auto mul_x,
 							 S mul_e) {
 	int n = int(a.size());	/// start-hash
 	Vec<int> locs(n);
-	Eertree<sigma> et(n);
+	Eertree et(n);
 	for (int i = 0; i < n; i++) {
-		assert(0 <= a[i] && a[i] < sigma);
-		locs[i] = et.append(a[i]);
+		locs[i] = et.append(u8(a[i]));
 	}  /// end-hash
 
 	int nnodes = et.size();

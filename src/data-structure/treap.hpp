@@ -63,13 +63,6 @@ template <class M, bool persistent = false> struct TreapManager {
 		return _build(a, 0, int(a.size()));
 	}  /// end-hash
 
-	Vec<S> to_array(const Tree& t) {  /// start-hash
-		Vec<S> buf;
-		buf.reserve(size(t));
-		_to_array(t, buf);
-		return buf;
-	}  /// end-hash
-
 private:
 	static constexpr int null = -42;
 	M m;
@@ -207,14 +200,5 @@ private:
 		}
 		_update(r);
 		return r;
-	}  /// end-hash
-
-	void _to_array(int i, Vec<S>& buf) {  /// start-hash
-		if (i == null) return;
-		downdate(i);
-		auto& n = node(i);
-		_to_array(n.li, buf);
-		buf.push_back(n.a);
-		_to_array(n.ri, buf);
 	}  /// end-hash
 };

@@ -10,9 +10,8 @@
 #include "contest/base.hpp"
 
 template <class I = u64> I int_kth_root(I a, I k) {
-	if (k == 1) return a;
+	if (k == 1) return a;  /// start-hash
 	if (k >= 64) return (a == 0 ? 0 : 1);
-
 	using T = __uint128_t;
 	auto works = [&](T x) -> bool {
 		T r = 1;
@@ -25,5 +24,5 @@ template <class I = u64> I int_kth_root(I a, I k) {
 	if (a == I(-1)) a--;
 	I rt = I(pow(double(a), nextafter(1 / double(k), 0)));
 	while (works(rt + 1)) rt++;
-	return rt;
+	return rt;	/// end-hash
 }
