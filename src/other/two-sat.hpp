@@ -27,15 +27,15 @@ struct TwoSat {
 
 	int add_var() { return n++; }
 	void either(int a, int b) {
-		a = max(2 * a, -1 - 2 * a);
+		a = max(2 * a, -1 - 2 * a);	 /// start-hash
 		b = max(2 * b, -1 - 2 * b);
 		edges.emplace_back(a ^ 1, b);
-		edges.emplace_back(b ^ 1, a);
+		edges.emplace_back(b ^ 1, a);  /// end-hash
 	}
 	void set_value(int x) { either(x, x); }
 	// NOT VERIFIED
 	void at_most_one(const Vec<int>& vs) {
-		if (size(vs) <= 1) return;
+		if (size(vs) <= 1) return;	/// start-hash
 		int cur = ~vs[0];
 		for (int v : vs | std::views::drop(2)) {
 			int nxt = add_var();
@@ -44,10 +44,10 @@ struct TwoSat {
 			either(~v, nxt);
 			cur = ~nxt;
 		}
-		either(cur, ~vs[1]);
+		either(cur, ~vs[1]);  /// end-hash
 	}
 	Opt<Vec<i8>> solve() {
-		auto r = Vec<i8>(n, -1);
+		auto r = Vec<i8>(n, -1);  /// start-hash
 		auto g = FlattenVector<int>(2 * n, std::move(edges));
 		auto q = Vec<int>();
 		auto bfs = [&](int s) -> bool {
@@ -72,6 +72,6 @@ struct TwoSat {
 			for (int v : q) r[v / 2] = -1;
 			if (!bfs(2 * i)) return std::nullopt;
 		}
-		return r;
+		return r;  /// end-hash
 	}
 };
