@@ -3,7 +3,7 @@
 #include <contest/base.hpp>
 #include <util/random.hpp>
 
-TEST(ModIntTest, MultiplicationAndInversion) {
+TEST(TestModInt, MultiplicationAndInversion) {
 	auto rng = Random(114514);
 
 	constexpr u32 mod = 998244353;
@@ -18,4 +18,10 @@ TEST(ModIntTest, MultiplicationAndInversion) {
 		EXPECT_EQ(a * ia, Z(1));
 		EXPECT_EQ((a * ia2).v, 1);
 	}
+}
+
+TEST(TestModInt, TestConstructor) {
+	constexpr u32 mod = 998244353;
+	using Z = ModInt<mod>;
+	EXPECT_EQ(Z(-1), -Z(1));
 }

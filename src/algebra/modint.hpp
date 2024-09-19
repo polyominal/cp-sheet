@@ -28,7 +28,7 @@ template <u32 mod> struct ModInt {
 	static constexpr u32 m = mod;  /// start-hash
 	u32 v;
 	constexpr ModInt() : v(0) {}
-	template <class T> constexpr ModInt(T a) { s(u32(a % m + m)); }
+	ModInt(i64 a) { s(u32(a % m + m)); }
 	constexpr mint& s(u32 a) {
 		v = a < m ? a : a - m;
 		return *this;
