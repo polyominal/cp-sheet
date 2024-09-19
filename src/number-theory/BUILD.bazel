@@ -54,3 +54,18 @@ my_cc_test(
     srcs = ["extgcd-test.cpp"],
     deps = ["//src/number-theory:extgcd"],
 )
+
+my_cc_library(
+    name = "multiplicative-sum",
+    hdrs = ["multiplicative-sum.hpp"],
+)
+
+my_cc_test(
+    name = "multiplicative-sum-test",
+    srcs = ["multiplicative-sum-test.cpp"],
+    deps = [
+        "//src/algebra:modint",
+        "//src/number-theory:eratosthenes",
+        "//src/number-theory:multiplicative-sum",
+    ],
+)

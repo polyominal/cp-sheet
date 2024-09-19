@@ -21,16 +21,7 @@ inline i64 isqrt(i64 n) { return i64(sqrt(n)); }
 inline i64 icbrt(i64 n) { return i64(cbrt(n)); }
 inline i64 sq(i64 a) { return a * a; }
 
-inline i64 sump(int k, i64 n) {
-	if (k == 0) {
-		return n;
-	}
-	// Unreachable
-	assert(false);
-	return 0;
-}
-
-template <class T, int K> struct counting_primes {
+template <class T, int K> struct CountingPrime {
 	using A = array<T, K>;	/// start-hash
 	void add(A& a, const A& b) {
 		for (int k = 0; k < K; k++) a[k] += b[k];
@@ -90,7 +81,7 @@ template <class T, int K> struct counting_primes {
 		}
 	}  /// end-hash
 
-	counting_primes(i64 n_, const Vec<int>& ps_)
+	CountingPrime(i64 n_, const Vec<int>& ps_, std::function<T(int, i64)> sump)
 		: ps(ps_),
 		  n(n_),
 		  n2(int(isqrt(n))),
@@ -161,40 +152,31 @@ template <class T, int K> struct counting_primes {
 		return int(a <= n2 ? s - a : n / a - 1);
 	}  /// end-hash
 
-	// f(v)=f(p^c), where p is some prime
-	// totient function as an example:
-	T f(i64, int p, int c) {
-		T res = p - 1;
-		for (int z = 0; z < c - 1; z++) {
-			res *= p;
-		}
-		return res;
-	}
-
 	Vec<T> buf;
-	T multiplicative_sum() {  /// start-hash
+	T multiplicative_sum(const array<T, K>& coeff,
+						 std::function<T(i64, int, int)> f) {  /// start-hash
 		// sum of [p is prime] f(p)
 		buf.resize(s);
 		for (int i = 0; i < s; i++) {
-			buf[i] = sum[i][1] - sum[i][0];
+			buf[i] = std::inner_product(begin(sum[i]), end(sum[i]),
+										begin(coeff), T(0));
 		}
 
 		T ans = 1 + buf[0];
-		auto dfs =
-			yc([&](auto self, int i, int c, i64 v, i64 lim, T cur) -> void {
-				ans += cur * f(v * ps[i], ps[i], c + 1);
-				if (lim >= sq(ps[i])) {
-					self(i, c + 1, v * ps[i], lim / ps[i], cur);
-				}
-				cur *= f(v, ps[i], c);
-				ans += cur * (buf[get_idx(lim)] - buf[get_idx(ps[i])]);
-				for (int j = i + 1; sq(ps[j]) <= lim; j++) {
-					self(j, 1, ps[j], lim / ps[j], cur);
-				}
-			});
-		for (int i = 0; true; i++) {
+		auto dfs = [&](auto self, int i, int c, i64 v, i64 lim, T cur) -> void {
+			ans += cur * f(v * ps[i], ps[i], c + 1);
+			if (lim >= sq(ps[i])) {
+				self(self, i, c + 1, v * ps[i], lim / ps[i], cur);
+			}
+			cur *= f(v, ps[i], c);
+			ans += cur * (buf[get_idx(lim)] - buf[get_idx(ps[i])]);
+			for (int j = i + 1; sq(ps[j]) <= lim; j++) {
+				self(self, j, 1, ps[j], lim / ps[j], cur);
+			}
+		};
+		for (int i = 0; i < int(ps.size()); i++) {
 			if (sq(ps[i]) <= n) {
-				dfs(i, 1, ps[i], n / ps[i], 1);
+				dfs(dfs, i, 1, ps[i], n / ps[i], 1);
 			} else {
 				break;
 			}
@@ -202,5 +184,28 @@ template <class T, int K> struct counting_primes {
 		return ans;
 	}  /// end-hash
 };
+
+template <class T> T get_totient_sum(i64 n, const Vec<int>& primes) {
+	auto cp = CountingPrime<T, 2>(n, primes, [&](int k, i64 l) -> T {
+		if (k == 0) {
+			return T(l);
+		} else if (k == 1) {
+			if (l % 2 == 0) {
+				return T(l / 2) * T(l + 1);
+			} else {
+				return T(l) * T((l + 1) / 2);
+			}
+		} else {
+			assert(false);
+		}
+	});
+	return cp.multiplicative_sum({-T(1), T(1)}, [](i64, int p, int c) -> T {
+		auto res = T(p - 1);
+		for (int i = 1; i < c; i++) {
+			res *= T(p);
+		}
+		return res;
+	});
+}
 
 }  // namespace multiplicative_sum
