@@ -13,9 +13,9 @@
 
 // a convex and b arbitrary
 template <class T> Vec<T> min_plus_convex(const Vec<T>& a, const Vec<T>& b) {
-	int n = int(size(a)), m = int(size(b));
+	int n = int(a.size()), m = int(b.size());
 	if (!n || !m) return {};
-	auto x = monotone_minima(n + m - 1, m, [&](int i, int j, int k) -> bool {
+	auto x = monotone_minima(n + m - 1, m, [&](int i, int j, int k) {
 		if (i < k) return true;
 		if (i - j >= n) return false;
 		return a[i - j] + b[j] <= a[i - k] + b[k];
