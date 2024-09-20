@@ -2,8 +2,9 @@
 
 #include "data-structure/unionfind.hpp"
 
-template <class F> struct RangeParallelUnionFind {
+struct RangeParallelUnionFind {
 	Vec<UnionFind> uf;
+	using F = std::function<void(int, int)>;
 	const F f;
 	RangeParallelUnionFind(int n, F f_)
 		: uf(std::bit_width<u32>(n), n), f(f_) {}

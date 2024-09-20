@@ -11,7 +11,9 @@
 #include "contest/base.hpp"
 #include "data-structure/flatten-vector.hpp"
 
-template <class F> void triangles(int n, Vec<pair<int, int>> edges, F f) {
+inline void triangles(int n,
+					  Vec<pair<int, int>> edges,
+					  std::function<void(int, int, int)> f) {
 	auto deg = Vec<int>(n);
 	for (auto [a, b] : edges) {
 		deg[a]++;

@@ -88,7 +88,7 @@ struct FastSet {
 	}  /// end-hash
 
 	// not tested
-	template <class F> void enumerate(int l, int r, F f) {
+	void enumerate(int l, int r, std::function<void(int)> f) {
 		for (int p = next(l); p < r; p = next(p + 1)) {
 			f(p);
 		}

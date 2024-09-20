@@ -141,7 +141,7 @@ struct HLD {
 		}
 	}  /// end-hash
 
-	template <class F> int get_lowest(int a, F f) const {  /// start-hash
+	int get_lowest(int a, std::function<bool(int)> f) const {  /// start-hash
 		a = iord[a];
 		while (a != -1) {
 			int t = a - path[a].second + 1;
@@ -152,10 +152,11 @@ struct HLD {
 			int mi = t, ma = a + 1;
 			while (ma - mi > 1) {
 				int md = (mi + ma) / 2;
-				if (f(ord[md]))
+				if (f(ord[md])) {
 					mi = md;
-				else
+				} else {
 					ma = md;
+				}
 			}
 			return ord[mi];
 		}
