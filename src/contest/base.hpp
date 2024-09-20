@@ -3,7 +3,10 @@
 #include <algorithm>
 #include <cassert>
 #include <chrono>
+#include <functional>
+#include <iostream>
 #include <map>
+#include <queue>
 #include <random>
 #include <ranges>
 #include <set>
