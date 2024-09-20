@@ -1,6 +1,13 @@
 #pragma once
 
-#include <bits/stdc++.h>
+#include <algorithm>
+#include <cassert>
+#include <chrono>
+#include <map>
+#include <random>
+#include <ranges>
+#include <set>
+#include <string>
 
 using std::abs, std::sin, std::cos, std::tan, std::asin, std::acos, std::atan2;
 using std::min, std::max, std::swap;

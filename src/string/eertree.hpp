@@ -8,6 +8,7 @@
  * - 2023 Hefei Regional
  */
 
+#include <forward_list>
 #include "contest/base.hpp"
 
 // 0, ..., K-1
