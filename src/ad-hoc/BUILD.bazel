@@ -48,6 +48,12 @@ my_cc_library(
     hdrs = ["offline-query.hpp"],
 )
 
+my_cc_test(
+    name = "offline-query-test",
+    srcs = ["offline-query-test.cpp"],
+    deps = ["//src/ad-hoc:offline-query"],
+)
+
 my_cc_library(
     name = "segbeats",
     hdrs = ["segbeats.hpp"],
