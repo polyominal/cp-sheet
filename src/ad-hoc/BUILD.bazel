@@ -76,6 +76,16 @@ my_cc_library(
     ],
 )
 
+my_cc_test(
+    name = "palindromic-decomp-dp-test",
+    srcs = ["palindromic-decomp-dp-test.cpp"],
+    deps = [
+        "//src/ad-hoc:palindromic-decomp-dp",
+        "//src/algebra:modint",
+        "//src/string:manacher",
+    ],
+)
+
 my_cc_library(
     name = "golden-section-search",
     hdrs = ["golden-section-search.hpp"],
