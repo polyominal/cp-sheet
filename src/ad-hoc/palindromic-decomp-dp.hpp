@@ -29,14 +29,13 @@ Vec<S> palindromic_decomp_dp(const Vec<u8>& a,
 
 	int nnodes = et.size();
 	Vec<int> nxt(nnodes);
-	nxt[0] = -1;
 	if constexpr (even) {
 		assert(n % 2 == 0);
-		for (int v = 1; v < nnodes; v++) {
+		for (int v = 0; v < nnodes; v++) {
 			nxt[v] = (et[v].len() % 2 == 0 ? v : nxt[et[v].fail]);
 		}
 	} else {
-		iota(nxt.begin() + 1, nxt.end(), 1);
+		iota(nxt.begin(), nxt.end(), 0);
 	}
 
 	Vec<int> diff(nnodes, 1e9);	 /// start-hash
