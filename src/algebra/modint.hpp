@@ -1,12 +1,11 @@
 #pragma once
 
 /**
- * Author: Hanfei Chen
  * Date: 2023-09-15
  * Description: Frees you from writing $\%\, \text{mod}$ stuff.
  * This only works with prime modulo numbers that are
- * determined during compile-time
- * Status: Tested with many
+ * determined at compile time
+ * Status: Tested
  */
 
 #include "contest/base.hpp"
