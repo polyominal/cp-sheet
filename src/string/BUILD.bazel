@@ -67,3 +67,12 @@ my_cc_library(
     name = "hashed-string-2d",
     hdrs = ["hashed-string-2d.hpp"],
 )
+
+my_cc_test(
+    name = "hashed-string-2d-test",
+    srcs = ["hashed-string-2d-test.cpp"],
+    deps = [
+        "//src/string:hashed-string-2d",
+        "//src/string:hashint",
+    ],
+)
