@@ -5,7 +5,6 @@
 
 namespace testing {
 
-using multiplicative_sum::CountingPrime;
 using multiplicative_sum::get_totient_sum;
 
 TEST(TestMultiplicativeSum, TestTotientFunction) {

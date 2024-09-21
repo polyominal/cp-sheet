@@ -1,15 +1,9 @@
-/**
- * Author: Hanfei Chen
- * Date: 2023-08-25
- * Description: Blackbox sieve. Modify \texttt{f(v, p, c)} to fit your wish
- * Source: https://judge.yosupo.jp/submission/110133
- * Status: Tested with
- * - https://judge.yosupo.jp/problem/counting_primes
- * - https://judge.yosupo.jp/problem/sum_of_totient_function
- * Polymorphism support when?
- */
-
 #pragma once
+
+/**
+ * Date: 2024-09-21
+ * Source: https://judge.yosupo.jp/submission/110133
+ */
 
 #include "contest/base.hpp"
 
@@ -104,7 +98,6 @@ template <class T, int K> struct CountingPrime {
 		}
 
 		int idx = 0;
-		pref = {};
 		{
 			while (ps[idx] <= n6) {
 				for (int i = 0; i < s; i++) {
@@ -174,7 +167,7 @@ template <class T, int K> struct CountingPrime {
 				self(self, j, 1, ps[j], lim / ps[j], cur);
 			}
 		};
-		for (int i = 0; i < int(ps.size()); i++) {
+		for (int i = 0; true; i++) {
 			if (sq(ps[i]) <= n) {
 				dfs(dfs, i, 1, ps[i], n / ps[i], 1);
 			} else {
