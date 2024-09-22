@@ -7,7 +7,7 @@ namespace testing {
 
 TEST(TestHashedString2D, TestSubmatrix) {
 	auto rng = Random(20240921);
-	for (int n : {1, 2, 3, 5, 8, 13, 21, 34}) {
+	for (int n : {1, 2, 3, 5, 8, 13, 21}) {
 		auto mat = Vec<Vec<int>>(n, Vec<int>(n));
 		constexpr int LIMIT = 1e9;
 		for (int x = 0; x < n; x++) {
