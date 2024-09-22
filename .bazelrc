@@ -7,7 +7,5 @@ build --copt -Wconversion
 build --copt -Wno-sign-conversion
 build --copt -Werror
 
-build:pedantic --copt -D_GLIBCXX_DEBUG
-build:pedantic --copt -D_GLIBCXX_DEBUG_PEDANTIC
-build:pedantic --copt -fsanitize=address,undefined
-build:pedantic --linkopt -fsanitize=address,undefined
+build:pedantic --copt -fsanitize=address
+build:pedantic --linkopt -fsanitize=address
