@@ -9,19 +9,17 @@
 
 namespace multiplicative_sum {
 
-using std::sqrt, std::cbrt;
-
-inline i64 isqrt(i64 n) { return i64(sqrt(n)); }
-inline i64 icbrt(i64 n) { return i64(cbrt(n)); }
+inline i64 isqrt(i64 n) { return i64(std::sqrt(n)); }
+inline i64 icbrt(i64 n) { return i64(std::cbrt(n)); }
 inline i64 sq(i64 a) { return a * a; }
 
 template <class T, int K> struct CountingPrime {
 	using A = array<T, K>;	/// start-hash
 	void add(A& a, const A& b) {
-		for (int k = 0; k < K; k++) a[k] += b[k];
+		std::ranges::transform(a, b, a.begin(), std::plus<>());
 	}
 	void sub(A& a, const A& b) {
-		for (int k = 0; k < K; k++) a[k] -= b[k];
+		std::ranges::transform(a, b, a.begin(), std::minus<>());
 	}
 	const Vec<int>& ps;
 	const i64 n;
