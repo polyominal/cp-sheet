@@ -126,8 +126,8 @@ struct HLD {
 		return res;
 	}  /// end-hash
 
-	template <bool vertex = true, class F>
-	void apply(int s, int t, F f) {	 /// start-hash
+	template <bool vertex = true>
+	void apply(int s, int t, std::function<void(int, int)> f) {	 /// start-hash
 		int a = lca(s, t);
 		for (auto&& [x, y] : extract(s, a)) {
 			f(x + 1, y);
