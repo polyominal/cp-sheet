@@ -3,6 +3,8 @@
 
 #include <gtest/gtest.h>
 
+namespace testing {
+
 TEST(IntKthRootTest, LibraryCheckerExample) {
 	auto f = [&](u64 a, u64 k) -> u64 { return int_kth_root(a, k); };
 
@@ -19,3 +21,5 @@ TEST(IntKthRootTest, LibraryCheckerExample) {
 	EXPECT_EQ(f(18446744073709551615ull, 63), 2ull);
 	EXPECT_EQ(f(18446744073709551615ull, 64), 1ull);
 }
+
+}  // namespace testing

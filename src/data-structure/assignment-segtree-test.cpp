@@ -4,6 +4,8 @@
 #include <data-structure/assignment-segtree.hpp>
 #include <util/random.hpp>
 
+namespace testing {
+
 TEST(AssignmentSegtreeTest, Affine) {
 	auto rng = Random(20240130);
 
@@ -58,3 +60,5 @@ TEST(AssignmentSegtreeTest, Affine) {
 		}
 	}
 }
+
+}  // namespace testing

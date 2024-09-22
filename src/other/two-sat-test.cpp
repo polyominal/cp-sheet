@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <other/two-sat.hpp>
 
+namespace testing {
+
 bool verify_two_sat_case(int n, Vec<pair<int, int>> clauses) {
 	auto ts = TwoSat(n);
 	for (const auto& [a, b] : clauses) {
@@ -43,3 +45,5 @@ TEST(TestTwoSat, Example) {
 		EXPECT_FALSE(verify_two_sat_case(n, clauses));
 	}
 }
+
+}  // namespace testing

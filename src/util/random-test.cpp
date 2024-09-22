@@ -2,7 +2,9 @@
 #include "contest/base.hpp"
 #include "gtest/gtest.h"
 
-class TestRandom : public ::testing::Test {
+namespace testing {
+
+class TestRandom : public Test {
 protected:
 	Random rng;
 	TestRandom() : rng(20240107) {}
@@ -64,3 +66,5 @@ TEST_F(TestRandom, TestSample) {
 		EXPECT_EQ(ssize(samp_set), m);
 	}
 }
+
+}  // namespace testing

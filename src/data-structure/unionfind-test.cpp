@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <data-structure/unionfind.hpp>
 
+namespace testing {
+
 TEST(TestUnionFind, Example) {
 	auto uf = UnionFind(5);
 	EXPECT_TRUE(uf.same(0, 0));
@@ -14,3 +16,5 @@ TEST(TestUnionFind, Example) {
 	EXPECT_TRUE(uf.unite(3, 4).has_value());
 	EXPECT_TRUE(uf.same(0, 3));
 }
+
+}  // namespace testing

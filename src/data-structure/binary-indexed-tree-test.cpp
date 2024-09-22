@@ -3,6 +3,8 @@
 #include <data-structure/binary-indexed-tree.hpp>
 #include <util/random.hpp>
 
+namespace testing {
+
 TEST(BinaryIndexedTreeTest, PointAddRangeSum) {
 	auto rng = Random(1145141);
 
@@ -69,3 +71,5 @@ TEST(BinaryIndexedTreeTest, KthSearch) {
 		}
 	}
 }
+
+}  // namespace testing

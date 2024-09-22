@@ -3,6 +3,8 @@
 #include <data-structure/lazy-segtree.hpp>
 #include <util/random.hpp>
 
+namespace testing {
+
 TEST(LazySegtreeTest, RangeAffineRangeSum) {
 	auto rng = Random(54321);
 
@@ -166,3 +168,5 @@ TEST(LazySegtreeTest, RuntimePolymorphismExample) {
 		}
 	}
 }
+
+}  // namespace testing

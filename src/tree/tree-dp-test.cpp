@@ -4,6 +4,8 @@
 #include <tree/tree-dp.hpp>
 #include <util/random.hpp>
 
+namespace testing {
+
 TEST(TreeDPTest, TreePathCompositeSum) {
 	auto rng = Random(20240725);
 	for (int N : {1, 2, 3, 5, 8, 13, 21, 34, 55, 89}) {
@@ -61,3 +63,5 @@ TEST(TreeDPTest, TreePathCompositeSum) {
 		}
 	}
 }
+
+}  // namespace testing

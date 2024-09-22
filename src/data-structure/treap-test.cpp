@@ -3,6 +3,8 @@
 #include <data-structure/treap.hpp>
 #include <util/random.hpp>
 
+namespace testing {
+
 TEST(TreapTest, DynamicSequenceRangeAffineRangeSum) {
 	auto rng = Random(20240107);
 
@@ -84,3 +86,5 @@ TEST(TreapTest, DynamicSequenceRangeAffineRangeSum) {
 		}
 	}
 }
+
+}  // namespace testing

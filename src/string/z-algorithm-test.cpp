@@ -3,6 +3,8 @@
 #include <string/z-algorithm.hpp>
 #include <util/random.hpp>
 
+namespace testing {
+
 template <class S> Vec<int> z_naive(const S& s) {
 	int n = int(size(s));
 	auto r = Vec<int>(n + 1);
@@ -31,3 +33,5 @@ TEST(ZAlgorithmTest, FibonacciString) {
 		EXPECT_EQ(z_algo(S), z_naive(S));
 	}
 }
+
+}  // namespace testing

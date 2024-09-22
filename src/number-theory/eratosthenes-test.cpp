@@ -2,6 +2,8 @@
 #include <number-theory/eratosthenes.hpp>
 #include <util/random.hpp>
 
+namespace testing {
+
 TEST(EratosthenesSieveTest, EnumeratingPrimes) {
 	constexpr int MAXN = 1e5;
 	auto not_prime = Vec<bool>(MAXN);
@@ -40,3 +42,5 @@ TEST(EratosthenesSieveTest, EnumeratingPrimes) {
 		verify_given_N(N);
 	}
 }
+
+}  // namespace testing

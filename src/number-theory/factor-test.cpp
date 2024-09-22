@@ -3,6 +3,8 @@
 #include <contest/base.hpp>
 #include <number-theory/factor.hpp>
 
+namespace testing {
+
 using namespace factor;
 
 TEST(FactorTest, Primality) {
@@ -70,3 +72,5 @@ TEST(FactorTest, PrimitiveRoots) {
 		EXPECT_EQ(v, 1);
 	}
 }
+
+}  // namespace testing

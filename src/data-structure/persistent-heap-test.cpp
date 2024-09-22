@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 #include <data-structure/persistent-heap.hpp>
 
+namespace testing {
+
 TEST(TestMeldableHeap, Example) {
 	auto hm = HeapManager<int>();
 	auto a = hm.make_empty();
@@ -19,3 +21,5 @@ TEST(TestMeldableHeap, Example) {
 	EXPECT_EQ(hm.top(d).value(), 0);
 	EXPECT_EQ(hm.top(b).value(), 1);
 }
+
+}  // namespace testing

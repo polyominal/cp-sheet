@@ -3,6 +3,8 @@
 #include <graph/enumerate-triangles.hpp>
 #include <util/random.hpp>
 
+namespace testing {
+
 TEST(EnumerateTrianglesTest, Random) {
 	auto rng = Random(1145141);
 
@@ -41,3 +43,5 @@ TEST(EnumerateTrianglesTest, Random) {
 		EXPECT_EQ(res, res_naive);
 	}
 }
+
+}  // namespace testing
