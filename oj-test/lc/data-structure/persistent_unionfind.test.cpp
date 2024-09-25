@@ -1,5 +1,6 @@
 // verification-helper: PROBLEM https://judge.yosupo.jp/problem/persistent_unionfind
 
+#include "contest/fast-input.hpp"
 #include "data-structure/persistent-array.hpp"
 using namespace std;
 
@@ -14,8 +15,11 @@ struct Data {
 int main() {
 	ios_base::sync_with_stdio(false), cin.tie(nullptr);
 
+	using fast_input::Scanner;
+	auto sc = Scanner();
+
 	int N, Q;
-	cin >> N >> Q;
+	sc >> N >> Q;
 
 	auto pa = PersistentArray<Data>();
 	vector<int> roots = {pa.build(N)};
@@ -50,7 +54,7 @@ int main() {
 
 	while (Q--) {
 		int t, k, u, v;
-		cin >> t >> k >> u >> v;
+		sc >> t >> k >> u >> v;
 		roots.push_back(-1);
 		if (t == 0) {
 			roots.back() = merge(roots[k + 1], u, v);
