@@ -77,16 +77,15 @@ template <class T> Vec<T> factorize(T n) {
 template <class T> T primitive_root(T p) {
 	assert(is_prime(p));  /// start-hash
 	auto f = factorize(p - 1);
-	T c;
+	auto mt = std::mt19937(std::random_device()());
 	while (true) {
-		c = rand_int<T>(1, p - 1);
-		if (!std::ranges::any_of(f, [&](T d) {
+		if (T c = std::uniform_int_distribution<T>(1, p - 1)(mt);
+			!std::ranges::any_of(f, [&](T d) {
 				return pow_mod<u128>(c, (p - 1) / d, p) == 1;
 			})) {
-			break;
+			return c;
 		}
-	}
-	return c;  /// end-hash
+	}  /// end-hash
 }
 
 }  // namespace factor

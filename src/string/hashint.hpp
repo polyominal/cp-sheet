@@ -47,7 +47,3 @@ struct HashInt {
 		return a.get() == b.get();
 	}  /// end-hash
 };
-
-inline HashInt rand_base() {
-	return 2 * std::uniform_int_distribution<u64>(4e10, 5e10)(mt) + 1;
-}

@@ -2,11 +2,15 @@
 
 #include "string/hashed-string-2d.hpp"
 #include "string/hashint.hpp"
+#include "util/random.hpp"
 
 int main() {
 	using namespace std;
 
-	auto hm = Hashed2DManager<HashInt>({rand_base(), rand_base()});
+	auto rng = Random(1234);
+
+	auto hm = Hashed2DManager<HashInt>({rng.uniform<u64>(4e10, 5e10) * 2 + 1,
+										rng.uniform<u64>(4e10, 5e10) * 2 + 1});
 	using Hashed = decltype(hm)::Hashed;
 	using Matrix = decltype(hm)::Matrix;
 

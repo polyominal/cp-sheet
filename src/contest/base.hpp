@@ -30,10 +30,3 @@ using u32 = uint32_t;
 using u64 = uint64_t;
 using i128 = __int128_t;
 using u128 = __uint128_t;
-
-inline std::mt19937_64 mt(
-	std::chrono::steady_clock::now().time_since_epoch().count());
-
-template <class T> T rand_int(T l, T r) {
-	return std::uniform_int_distribution<T>(l, r)(mt);
-}

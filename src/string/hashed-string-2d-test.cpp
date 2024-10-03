@@ -16,7 +16,10 @@ TEST(TestHashedString2D, TestSubmatrix) {
 			}
 		}
 
-		auto hm = Hashed2DManager<HashInt>({rand_base(), rand_base()});
+		// auto hm = Hashed2DManager<HashInt>({rand_base(), rand_base()});
+		auto hm =
+			Hashed2DManager<HashInt>({rng.uniform<u64>(4e10, 5e10) * 2 + 1,
+									  rng.uniform<u64>(4e10, 5e10) * 2 + 1});
 		auto hashed_mat = hm.make(mat);
 
 		for (int x = 0; x < n; x++) {

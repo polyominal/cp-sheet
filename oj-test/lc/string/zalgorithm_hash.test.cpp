@@ -3,6 +3,7 @@
 #include "contest/base.hpp"
 #include "string/hashed-string.hpp"
 #include "string/hashint.hpp"
+#include "util/random.hpp"
 
 int main() {
 	using namespace std;
@@ -11,7 +12,8 @@ int main() {
 	cin >> s;
 	int n = int(size(s));
 
-	const HashInt base = rand_base();
+	auto rng = Random(12345);
+	const auto base = HashInt(rng.uniform<u64>(4e10, 5e10) * 2 + 1);
 	auto hm = HashedManager(base);
 	auto hs = hm.make(s);
 

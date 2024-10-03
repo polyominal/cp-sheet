@@ -29,7 +29,7 @@ template <class M, bool persistent = false> struct TreapManager {
 		}
 
 		for (int z = 0; z < 2; z++) {
-			states[z] = u32(mt());
+			states[z] = std::random_device()();
 		}
 	}
 

@@ -6,11 +6,11 @@
 namespace testing {
 
 TEST(TestHashedString, StringEquality) {
-	// this is somewhat undeterministic but oh well
-	const HashInt base = rand_base();
-	auto hm = HashedManager(base);
+	auto rng = Random(20241003);
 
-	auto rng = Random(20240825);
+	const auto base = HashInt(rng.uniform<u64>(4e10, 5e10) * 2 + 1);
+
+	auto hm = HashedManager(base);
 
 	for (int m : {1, 2, 3, 5}) {
 		auto a = Vec<string>(m);
@@ -52,10 +52,11 @@ TEST(TestHashedString, StringEquality) {
 }
 
 TEST(TestHashedString, StringConcatenation) {
-	const HashInt base = rand_base();
-	auto hm = HashedManager(base);
+	auto rng = Random(20241003);
 
-	auto rng = Random(20240902);
+	const auto base = HashInt(rng.uniform<u64>(4e10, 5e10) * 2 + 1);
+
+	auto hm = HashedManager(base);
 
 	for (int n : {0, 1, 2, 3, 5, 8, 13, 21, 34}) {
 		auto s = string();
