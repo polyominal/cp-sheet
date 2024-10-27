@@ -24,20 +24,20 @@
 
 % Config commands
 \newcommand{\subtitle}[1]{
-	\def\@subtitle{#1}
+  \def\@subtitle{#1}
 }
 \newcommand{\team}[2]{
-	\def\@teamname{#1}
-	\def\@teammembers{#2}
+  \def\@teamname{#1}
+  \def\@teammembers{#2}
 }
 \newcommand{\contest}[2]{
-	\def\@contestname{#1}
-	\def\@contestdate{#2}
+  \def\@contestname{#1}
+  \def\@contestdate{#2}
 }
 \newcommand{\university}[3]{
-	\def\@unishort{#1}
-	\def\@unilong{#2}
-	\def\@unilogo{#3}
+  \def\@unishort{#1}
+  \def\@unilong{#2}
+  \def\@unilogo{#3}
 }
 
 % Some default config
@@ -47,11 +47,11 @@
 \def\today{\number\year-\ifthenelse{\number\month<10}{0}{}\number\month-\ifthenelse{\number\day<10}{0}{}\number\day} % Defines \today as YYYY-MM-DD
 
 \renewcommand{\maketitle}[2]{
-	\begin{center}
-		{\LARGE \@title}\\
-		{\Large \@subtitle{} version #2}\\[0.1cm]
-		{\LARGE \textsc{#1}}
-	\end{center}
+  \begin{center}
+    {\LARGE \@title}\\
+    {\Large \@subtitle{} version #2}\\[0.1cm]
+    {\LARGE \textsc{#1}}
+  \end{center}
 }
 
 % Remove temp files from old failed runs
@@ -85,7 +85,7 @@
   \secdef
   \@chapter
   \@schapter
- }
+}
 
 % Don't add appendices to the Table of Contents
 % Currently, this disables parts of the local TOC for appendices chapters
@@ -93,44 +93,44 @@
 \setboolean{appendixmode}{false}
 \let\Oldaddtoc\addcontentsline
 \renewcommand{\addcontentsline}[3]{
-	\ifthenelse{
-		\boolean{appendixmode}\and\equal{#1}{toc}
-	}{}{\Oldaddtoc{#1}{#2}{#3}}
+  \ifthenelse{
+    \boolean{appendixmode}\and\equal{#1}{toc}
+  }{}{\Oldaddtoc{#1}{#2}{#3}}
 }
 
 % Redefine appendix
 \renewcommand\appendix{
-	% Change chapter counter to A,B,C,...
-	\setcounter{tocdepth}{8}
-	\setcounter{chapter}{0}
-	\def\thechapter{\Alph{chapter}}
-	% Switch to appendixmode defined above (disables TOC entries)
-	\setboolean{appendixmode}{true}
-	\clearpage
+  % Change chapter counter to A,B,C,...
+  \setcounter{tocdepth}{8}
+  \setcounter{chapter}{0}
+  \def\thechapter{\Alph{chapter}}
+  % Switch to appendixmode defined above (disables TOC entries)
+  \setboolean{appendixmode}{true}
+  \clearpage
 }
 
 \def\@makechapterhead#1{
 
-	\parindent \z@ \raggedright \normalfont \interlinepenalty\@M {\underline{\Large
-			\bfseries #1} } \ifnum \c@secnumdepth >\m@ne {\Large\bfseries (\thechapter) \par\nobreak }
-	\fi
-	\startcontents[chapters]
+  \parindent \z@ \raggedright \normalfont \interlinepenalty\@M {\underline{\Large
+  \bfseries #1} } \ifnum \c@secnumdepth >\m@ne {\Large\bfseries (\thechapter) \par\nobreak }
+  \fi
+  \startcontents[chapters]
 }
 
 \renewcommand\section{\@startsection {section}{1}{\z@}%
   {-0.5ex \@plus -1ex \@minus -.2ex}%
   {.4ex}%
-  {\normalfont\large\bfseries}}
+{\normalfont\large\bfseries}}
 
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}
-	{1ex\@plus -1ex \@minus -.3ex}
-	{.2ex}
-	{\normalfont\bfseries}}
+  {1ex\@plus -1ex \@minus -.3ex}
+  {.2ex}
+{\normalfont\bfseries}}
 
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}
-	{1ex\@plus -1ex \@minus -.3ex}
-	{1ex \@plus .2ex}
-	{\normalfont\normalsize\bfseries}}
+  {1ex\@plus -1ex \@minus -.3ex}
+  {1ex \@plus .2ex}
+{\normalfont\normalsize\bfseries}}
 
 % Styles for local toc
 \titlecontents{localsection}[1.5em]{\footnotesize}{}
@@ -147,12 +147,12 @@
 
 % Proper carets and tildes
 \newcommand*{\caret}{%
-	\begingroup
-	\fontencoding{T1}%
-	\fontfamily{pcr}% Courier
-	\selectfont
-	\string^%
-	\endgroup
+  \begingroup
+  \fontencoding{T1}%
+  \fontfamily{pcr}% Courier
+  \selectfont
+  \string^%
+  \endgroup
 }
 \renewcommand*{\tilde}{\raise.17ex\hbox{$\scriptstyle\mathtt{\sim}$}}
 
@@ -187,145 +187,145 @@
 \pdfsuppresswarningpagegroup=1
 
 \newcommand{\maketeampage}{
-	\pagestyle{empty}
-	\begin{center}
-		\strut % Magic
-		\vspace{3cm}\\
-		\includegraphics[width=3cm]{\@unilogo}\\
-		{\fontsize{25}{30}\selectfont \@unilong\\}
-		{\fontsize{60}{60}\selectfont \@teamname\\}
-		\vspace{0.5cm}
-		{\huge \@teammembers\\}
-		\vfill
-		{\fontsize{21}{25}\selectfont \@contestname}\\
-		% \vspace{0.5cm}
-		% {\huge \@contestdate}\\
-		\vspace{1cm}
-	\end{center}
-	\clearpage
-	\pagestyle{fancy}
-	\setcounter{page}{1}
+  \pagestyle{empty}
+  \begin{center}
+    \strut % Magic
+    \vspace{3cm}\\
+    \includegraphics[width=3cm]{\@unilogo}\\
+    {\fontsize{25}{30}\selectfont \@unilong\\}
+    {\fontsize{60}{60}\selectfont \@teamname\\}
+    \vspace{0.5cm}
+    {\huge \@teammembers\\}
+    \vfill
+    {\fontsize{21}{25}\selectfont \@contestname}\\
+    % \vspace{0.5cm}
+    % {\huge \@contestdate}\\
+    \vspace{1cm}
+  \end{center}
+  \clearpage
+  \pagestyle{fancy}
+  \setcounter{page}{1}
 }
 
 \newcommand{\kactlref}[1]{
-	\ifthenelse{\boolean{appendixmode}}{}{
-		\ifnum \value{section} > 0
-			\addcontentsline{ptc}{subsection}{\texttt{#1}\hspace{0.2em}}
-		\else
-			\addcontentsline{ptc}{section}{\texttt{#1}\hspace{0.2em}}
-		\fi
-	}
-	\marks\hdrmark{#1}
+  \ifthenelse{\boolean{appendixmode}}{}{
+    \ifnum \value{section} > 0
+    \addcontentsline{ptc}{subsection}{\texttt{#1}\hspace{0.2em}}
+    \else
+    \addcontentsline{ptc}{section}{\texttt{#1}\hspace{0.2em}}
+    \fi
+  }
+  \marks\hdrmark{#1}
 }
 
 % Like \needspace, except with flush bottoms.
 \newcommand{\myneedspace}[1]{%
-	\begingroup
-	\setlength{\dimen@}{#1}%
-	\vskip\dimen@
-	\penalty 9999%
-	\vskip -\dimen@
-	\vskip\z@skip
-	\endgroup
+  \begingroup
+  \setlength{\dimen@}{#1}%
+  \vskip\dimen@
+  \penalty 9999%
+  \vskip -\dimen@
+  \vskip\z@skip
+  \endgroup
 }
 
 \newcommand{\kactlimport}[2][]{ % Using empty default parameter
-	\leftcaption{}\rightcaption{}
-	\setboolean{hasdescription}{false}
-	\setboolean{hasusage}{false}
-	\setboolean{hastime}{false}
-	\setboolean{hasmemory}{false}
-	\setboolean{hasleftcaption}{false}
-	\myneedspace{3\baselineskip}
-	\penalty-100
-	#2
-	\immediate\write18{rm -f kactl.tmp} % Don't include old kactl.tmp on failure.
-	\immediate\write18{python3 kactlprocessor.py -i "\@kactldir/#2" -o kactl.tmp #1}
-	\immediate\input{kactl.tmp}
+  \leftcaption{}\rightcaption{}
+  \setboolean{hasdescription}{false}
+  \setboolean{hasusage}{false}
+  \setboolean{hastime}{false}
+  \setboolean{hasmemory}{false}
+  \setboolean{hasleftcaption}{false}
+  \myneedspace{3\baselineskip}
+  \penalty-100
+  #2
+  \immediate\write18{rm -f kactl.tmp} % Don't include old kactl.tmp on failure.
+  \immediate\write18{python3 kactlprocessor.py -i "\@kactldir/#2" -o kactl.tmp #1}
+  \immediate\input{kactl.tmp}
 }
 
 \newcommand{\import}[1]{
-	\input{"\@kactldir/#1"}
+  \input{"\@kactldir/#1"}
 }
 
 \newcommand{\kactlcontentdir}[1]{
-	\def\@kactlbasedir{#1}
-	\def\@kactldir{#1}
+  \def\@kactlbasedir{#1}
+  \def\@kactldir{#1}
 }
 \kactlcontentdir{.}
 
 \newcommand{\kactlchapter}[1]{
-	\def\@kactldir{\@kactlbasedir/#1}
-	\input{"\@kactldir/chapter.tex"}
-	\def\@kactldir{\@kactlbasedir}
+  \def\@kactldir{\@kactlbasedir/#1}
+  \input{"\@kactldir/chapter.tex"}
+  \def\@kactldir{\@kactlbasedir}
 }
 
 \newcommand{\kactlerror}[1]{
-	\PackageError{kactlpkg}{#1}{}
+  \PackageError{kactlpkg}{#1}{}
 }
 
 \newcommand{\kactlwarning}[1]{
-	\PackageWarning{kactlpkg}{#1}
+  \PackageWarning{kactlpkg}{#1}
 }
 
 \newboolean{hasleftcaption}
 \newcommand{\leftcaption}[1]{
-	\def\@leftcaption{#1}
-	\setboolean{hasleftcaption}{true}
+  \def\@leftcaption{#1}
+  \setboolean{hasleftcaption}{true}
 }
 \leftcaption{}
 \setboolean{hasleftcaption}{false}
 
 \newcommand{\rightcaption}[1]{
-	\def\@rightcaption{#1}
+  \def\@rightcaption{#1}
 }
 \rightcaption{}
 
 \newboolean{hasdescription}
 \newcommand{\defdescription}[1]{
-	\def\@defdescription{#1}
-	\setboolean{hasdescription}{true}
+  \def\@defdescription{#1}
+  \setboolean{hasdescription}{true}
 }
 \defdescription{}
 \setboolean{hasdescription}{false}
 
 \newboolean{hasusage}
 \newcommand{\defusage}[1]{
-	\def\@defusage{\texttt{#1}}
-	\setboolean{hasusage}{true}
+  \def\@defusage{\texttt{#1}}
+  \setboolean{hasusage}{true}
 }
 \defusage{}
 \setboolean{hasusage}{false}
 
 \newboolean{hastime}
 \newcommand{\deftime}[1]{
-	\def\@deftime{#1}
-	\setboolean{hastime}{true}
+  \def\@deftime{#1}
+  \setboolean{hastime}{true}
 }
 \deftime{}
 \setboolean{hastime}{false}
 
 \newboolean{hasmemory}
 \newcommand{\defmemory}[1]{
-	\def\@defmemory{#1}
-	\setboolean{hasmemory}{true}
+  \def\@defmemory{#1}
+  \setboolean{hasmemory}{true}
 }
 \defmemory{}
 \setboolean{hasmemory}{false}
 
 \newcommand{\codeheader}[2]{
-	{\par\noindent\scriptsize{\textbf{#1:} #2\par}}
+  {\par\noindent\scriptsize{\textbf{#1:} #2\par}}
 }
 
 \long\def\@makecaption#1#2{
-	\vspace{-3pt}
-	\ifthenelse{\boolean{hasdescription}}{\codeheader{Description}{\@defdescription}}{}
-	\ifthenelse{\boolean{hasusage}}{\codeheader{Usage}{\@defusage}}{}
-	\ifthenelse{\boolean{hasmemory}}{\codeheader{Memory}{\@defmemory}}{}
-	\ifthenelse{\boolean{hastime}}{\codeheader{Time}{\@deftime}}{}
-	\ifthenelse{\boolean{hasleftcaption}}{\vspace{0pt}}{\vspace{-5pt}}
-	\tiny
-	\texttt{\@leftcaption} \hfill \@rightcaption
+  \vspace{-3pt}
+  \ifthenelse{\boolean{hasdescription}}{\codeheader{Description}{\@defdescription}}{}
+  \ifthenelse{\boolean{hasusage}}{\codeheader{Usage}{\@defusage}}{}
+  \ifthenelse{\boolean{hasmemory}}{\codeheader{Memory}{\@defmemory}}{}
+  \ifthenelse{\boolean{hastime}}{\codeheader{Time}{\@deftime}}{}
+  \ifthenelse{\boolean{hasleftcaption}}{\vspace{0pt}}{\vspace{-5pt}}
+  \tiny
+  \texttt{\@leftcaption} \hfill \@rightcaption
 }
 
 \newcommand{\bigo}[1] {\ensuremath{\mathcal{O} \left( #1 \right)}}
