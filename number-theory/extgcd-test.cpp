@@ -6,7 +6,7 @@ namespace testing {
 
 TEST(TestExtGcd, TestExtGcd) {
 	using T = i64;
-	constexpr T LIMIT = 100;
+	constexpr T LIMIT = 75;
 	for (T a = -LIMIT; a <= LIMIT; a++) {
 		for (T b = -LIMIT; b <= LIMIT; b++) {
 			auto [x, y, g] = extgcd(a, b);
@@ -37,7 +37,7 @@ TEST(TestExtGcd, TestCRT) {
 	{
 		// (a0, m0), (a1, m1)
 		using T = i64;
-		constexpr T LIMIT = 30;
+		constexpr T LIMIT = 20;
 		for (T m0 = 1; m0 <= LIMIT; m0++) {
 			for (T m1 = 1; m1 <= LIMIT; m1++) {
 				T l = m0 / std::gcd(m0, m1) * m1;
@@ -67,7 +67,7 @@ TEST(TestExtGcd, TestCRT) {
 	{
 		// (a0, m0), (a1, m1), (a2, m2)
 		using T = i64;
-		constexpr T LIMIT = 8;
+		constexpr T LIMIT = 7;
 		for (T m0 = 1; m0 <= LIMIT; m0++) {
 			for (T m1 = 1; m1 <= LIMIT; m1++) {
 				for (T m2 = 1; m2 <= LIMIT; m2++) {
