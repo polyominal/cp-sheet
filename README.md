@@ -18,7 +18,7 @@ for development.
 We use Bazel as the build system. Build and run tests with
 
 ```sh
-bazel test //...
+bazel test //src...
 ```
 
 Check out `src/` and its subdirectories for the library implementations.
