@@ -1,0 +1,53 @@
+load("//:rules.bzl", "my_cc_library", "my_cc_test")
+
+my_cc_library(
+    name = "modint",
+    hdrs = ["modint.hpp"],
+)
+
+my_cc_test(
+    name = "modint-test",
+    srcs = ["modint-test.cpp"],
+    deps = ["//algebra:modint"],
+)
+
+my_cc_library(
+    name = "nft",
+    hdrs = ["nft.hpp"],
+)
+
+my_cc_test(
+    name = "nft-test",
+    srcs = ["nft-test.cpp"],
+    deps = [
+        "//algebra:modint",
+        "//algebra:nft",
+    ],
+)
+
+my_cc_library(
+    name = "barrett",
+    hdrs = ["barrett.hpp"],
+)
+
+my_cc_test(
+    name = "barrett-test",
+    srcs = ["barrett-test.cpp"],
+    deps = [
+        "//algebra:barrett",
+    ],
+)
+
+my_cc_library(
+    name = "matrix",
+    hdrs = ["matrix.hpp"],
+)
+
+my_cc_test(
+    name = "matrix-test",
+    srcs = ["matrix-test.cpp"],
+    deps = [
+        "//algebra:matrix",
+        "//algebra:modint",
+    ],
+)

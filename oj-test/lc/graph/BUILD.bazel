@@ -4,6 +4,6 @@ my_cc_binary(
     name = "dynamic_graph_vertex_add_component_sum",
     srcs = ["dynamic_graph_vertex_add_component_sum.test.cpp"],
     deps = [
-        "//src/ad-hoc:offline-query",
+        "//ad-hoc:offline-query",
     ],
 )

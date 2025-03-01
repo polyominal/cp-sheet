@@ -1,0 +1,147 @@
+load("//:rules.bzl", "my_cc_library", "my_cc_test")
+
+my_cc_library(
+    name = "enumerate-triangles",
+    hdrs = ["enumerate-triangles.hpp"],
+    deps = ["//data-structure:flatten-vector"],
+)
+
+my_cc_test(
+    name = "enumerate-triangles-test",
+    srcs = ["enumerate-triangles-test.cpp"],
+    deps = ["//graph:enumerate-triangles"],
+)
+
+my_cc_library(
+    name = "eulerian-trail",
+    hdrs = ["eulerian-trail.hpp"],
+)
+
+my_cc_test(
+    name = "eulerian-trail-test",
+    srcs = ["eulerian-trail-test.cpp"],
+    deps = ["//graph:eulerian-trail"],
+)
+
+my_cc_library(
+    name = "bipartite",
+    hdrs = ["bipartite.hpp"],
+)
+
+my_cc_test(
+    name = "bipartite-test",
+    srcs = ["bipartite-test.cpp"],
+    deps = ["//graph:bipartite"],
+)
+
+my_cc_library(
+    name = "complement-graph",
+    hdrs = ["complement-graph.hpp"],
+    deps = ["//data-structure:flatten-vector"],
+)
+
+my_cc_test(
+    name = "complement-graph-test",
+    srcs = ["complement-graph-test.cpp"],
+    deps = ["//graph:complement-graph"],
+)
+
+my_cc_library(
+    name = "dfs-tree",
+    hdrs = ["dfs-tree.hpp"],
+)
+
+my_cc_library(
+    name = "block-cut",
+    hdrs = ["block-cut.hpp"],
+    deps = ["//graph:dfs-tree"],
+)
+
+my_cc_test(
+    name = "block-cut-test",
+    srcs = ["block-cut-test.cpp"],
+    deps = [
+        "//data-structure:flatten-vector",
+        "//graph:block-cut",
+    ],
+)
+
+my_cc_library(
+    name = "two-edge-cc",
+    hdrs = ["two-edge-cc.hpp"],
+    deps = ["//graph:dfs-tree"],
+)
+
+my_cc_test(
+    name = "two-edge-cc-test",
+    srcs = ["two-edge-cc-test.cpp"],
+    deps = [
+        "//data-structure:flatten-vector",
+        "//graph:two-edge-cc",
+    ],
+)
+
+my_cc_library(
+    name = "mst-kruskal",
+    hdrs = ["mst-kruskal.hpp"],
+    deps = ["//data-structure:unionfind"],
+)
+
+my_cc_test(
+    name = "mst-kruskal-test",
+    srcs = ["mst-kruskal-test.cpp"],
+    deps = [
+        "//graph:mst-kruskal",
+    ],
+)
+
+my_cc_library(
+    name = "matching",
+    hdrs = ["matching.hpp"],
+)
+
+my_cc_test(
+    name = "matching-test",
+    srcs = ["matching-test.cpp"],
+    deps = [
+        "//graph:matching",
+    ],
+)
+
+my_cc_library(
+    name = "dominator",
+    hdrs = ["dominator.hpp"],
+)
+
+my_cc_test(
+    name = "dominator-test",
+    srcs = ["dominator-test.cpp"],
+    deps = [
+        "//data-structure:flatten-vector",
+        "//graph:dominator",
+    ],
+)
+
+my_cc_library(
+    name = "scc",
+    hdrs = ["scc.hpp"],
+)
+
+my_cc_test(
+    name = "scc-test",
+    srcs = ["scc-test.cpp"],
+    deps = [
+        "//data-structure:flatten-vector",
+        "//graph:scc",
+    ],
+)
+
+my_cc_library(
+    name = "maxflow",
+    hdrs = ["maxflow.hpp"],
+)
+
+my_cc_library(
+    name = "mcmf",
+    hdrs = ["mcmf.hpp"],
+)

@@ -18,6 +18,6 @@ jobs:
 
       - name: Test
         run: |
-          "${GITHUB_WORKSPACE}/bin/bazel" test //src/... --config=pedantic
+          "${GITHUB_WORKSPACE}/bin/bazel" test //... --config=pedantic
         env:
           CXX: "clang++"
