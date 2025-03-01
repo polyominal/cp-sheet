@@ -51,3 +51,16 @@ my_cc_test(
         "//algebra:modint",
     ],
 )
+
+my_cc_library(
+    name = "monoidal",
+    hdrs = ["monoidal.hpp"],
+)
+
+my_cc_test(
+    name = "monoidal-test",
+    srcs = ["monoidal-test.cpp"],
+    deps = [
+        "//algebra:monoidal",
+    ],
+)
