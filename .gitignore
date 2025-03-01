@@ -58,3 +58,6 @@
 /combined.cpp
 
 ws/
+
+# Bazel
+/bazel-*
