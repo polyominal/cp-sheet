@@ -1,14 +1,10 @@
-BasedOnStyle: "Chromium"
-
-UseTab: Always
+BasedOnStyle: 'Chromium'
 IndentWidth: 4
-TabWidth: 4
+AccessModifierOffset: -2
 
-AccessModifierOffset: -4
 ReflowComments: false
-AllowShortFunctionsOnASingleLine: All
-AllowShortIfStatementsOnASingleLine: true
-AllowShortLoopsOnASingleLine: true
-AlwaysBreakTemplateDeclarations: false
 
-ColumnLimit: 80
+InsertBraces: true
+AllowShortBlocksOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false

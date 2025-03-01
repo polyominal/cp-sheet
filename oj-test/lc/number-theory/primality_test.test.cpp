@@ -5,23 +5,23 @@
 #include "number-theory/factor.hpp"
 
 int main() {
-	using factor::is_prime;
-	using fast_input::Scanner;
+    using factor::is_prime;
+    using fast_input::Scanner;
 
-	auto sc = Scanner(stdin);
+    auto sc = Scanner(stdin);
 
-	int T;
-	sc >> T;
+    int T;
+    sc >> T;
 
-	while (T--) {
-		u64 n;
-		sc >> n;
-		if (is_prime(n)) {
-			std::cout << "Yes" << '\n';
-		} else {
-			std::cout << "No" << '\n';
-		}
-	}
+    while (T--) {
+        u64 n;
+        sc >> n;
+        if (is_prime(n)) {
+            std::cout << "Yes" << '\n';
+        } else {
+            std::cout << "No" << '\n';
+        }
+    }
 
-	return 0;
+    return 0;
 }

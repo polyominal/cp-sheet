@@ -5,17 +5,17 @@
 #include "number-theory/int-kth-root.hpp"
 
 int main() {
-	std::ios_base::sync_with_stdio(false);
+    std::ios_base::sync_with_stdio(false);
 
-	auto sc = fast_input::Scanner(stdin);
+    auto sc = fast_input::Scanner(stdin);
 
-	int T;
-	sc >> T;
-	while (T--) {
-		u64 a, k;
-		sc >> a >> k;
-		std::cout << int_kth_root(a, k) << '\n';
-	}
+    int T;
+    sc >> T;
+    while (T--) {
+        u64 a, k;
+        sc >> a >> k;
+        std::cout << int_kth_root(a, k) << '\n';
+    }
 
-	return 0;
+    return 0;
 }

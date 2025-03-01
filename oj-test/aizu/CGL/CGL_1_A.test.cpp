@@ -13,21 +13,21 @@ using P = geometry::Point<Real>;
 using L = geometry::L<Real>;
 
 int main() {
-	cout << fixed << setprecision(20);
+    cout << fixed << setprecision(20);
 
-	P p1, p2;
-	cin >> p1 >> p2;
-	auto l = L(p1, p2);
+    P p1, p2;
+    cin >> p1 >> p2;
+    auto l = L(p1, p2);
 
-	int Q;
-	cin >> Q;
-	while (Q--) {
-		P p;
-		cin >> p;
+    int Q;
+    cin >> Q;
+    while (Q--) {
+        P p;
+        cin >> p;
 
-		P proj = project(l, p);
-		cout << proj.x << ' ' << proj.y << '\n';
-	}
+        P proj = project(l, p);
+        cout << proj.x << ' ' << proj.y << '\n';
+    }
 
-	return 0;
+    return 0;
 }

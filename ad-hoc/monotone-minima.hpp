@@ -12,20 +12,24 @@
 
 // f(i, j, k) := [A_{i, j} <= A_{i, k}], given j < k
 inline Vec<int> monotone_minima(int n,
-								int m,
-								std::function<bool(int, int, int)> f) {
-	auto res = Vec<int>(n);	 /// start-hash
-	auto inner = [&](auto self, int s, int e, int l, int r) {
-		if (s == e) return;
-		int i = (s + e) / 2;
-		int b = l;
-		for (int k = l + 1; k < r; k++) {
-			if (!f(i, b, k)) b = k;
-		}
-		res[i] = b;
-		self(self, s, i, l, b + 1);
-		self(self, i + 1, e, b, r);
-	};
-	inner(inner, 0, n, 0, m);
-	return res;	 /// end-hash
+                                int m,
+                                std::function<bool(int, int, int)> f) {
+    auto res = Vec<int>(n);  /// start-hash
+    auto inner = [&](auto self, int s, int e, int l, int r) {
+        if (s == e) {
+            return;
+        }
+        int i = (s + e) / 2;
+        int b = l;
+        for (int k = l + 1; k < r; k++) {
+            if (!f(i, b, k)) {
+                b = k;
+            }
+        }
+        res[i] = b;
+        self(self, s, i, l, b + 1);
+        self(self, i + 1, e, b, r);
+    };
+    inner(inner, 0, n, 0, m);
+    return res;  /// end-hash
 }

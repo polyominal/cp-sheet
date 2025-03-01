@@ -3,10 +3,10 @@
 #include "contest/base.hpp"
 
 int main() {
-	int a, b;
-	using std::cin, std::cout;
-	cin >> a >> b;
-	cout << a + b << '\n';
+    int a, b;
+    using std::cin, std::cout;
+    cin >> a >> b;
+    cout << a + b << '\n';
 
-	return 0;
+    return 0;
 }

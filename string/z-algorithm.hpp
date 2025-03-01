@@ -12,19 +12,24 @@
 
 #include "contest/base.hpp"
 
-template <class S> Vec<int> z_algo(const S& s) {
-	int n = int(size(s));
-	auto res = Vec<int>(n + 1);
-	for (int i = 1, j = 0; i <= n; i++) {
-		int& k = res[i];
-		if (j + res[j] <= i) {
-			k = 0;
-		} else {
-			k = min(res[j] + j - i, res[i - j]);
-		}
-		while (i + k < n && s[k] == s[i + k]) k++;
-		if (j + res[j] < i + res[i]) j = i;
-	}
-	res[0] = n;
-	return res;
+template <class S>
+Vec<int> z_algo(const S& s) {
+    int n = int(size(s));
+    auto res = Vec<int>(n + 1);
+    for (int i = 1, j = 0; i <= n; i++) {
+        int& k = res[i];
+        if (j + res[j] <= i) {
+            k = 0;
+        } else {
+            k = min(res[j] + j - i, res[i - j]);
+        }
+        while (i + k < n && s[k] == s[i + k]) {
+            k++;
+        }
+        if (j + res[j] < i + res[i]) {
+            j = i;
+        }
+    }
+    res[0] = n;
+    return res;
 }

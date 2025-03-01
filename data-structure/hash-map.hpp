@@ -15,14 +15,14 @@
 #include <ext/pb_ds/assoc_container.hpp>
 #include "contest/base.hpp"
 
-struct CustomHash {	 /// start-hash
-	u64 operator()(u64 x) const {
-		static const u64
-			z = std::chrono::steady_clock::now().time_since_epoch().count(),
-			c = u64(4e18 * acos(0)) + 71;
-		return u64(__builtin_bswap64((x ^ z) * c));
-	}
-};	/// end-hash
+struct CustomHash {  /// start-hash
+    u64 operator()(u64 x) const {
+        static const u64
+            z = std::chrono::steady_clock::now().time_since_epoch().count(),
+            c = u64(4e18 * acos(0)) + 71;
+        return u64(__builtin_bswap64((x ^ z) * c));
+    }
+};  /// end-hash
 
 template <class K, class V, class Hash = CustomHash>
 using HashMap = __gnu_pbds::gp_hash_table<K, V, Hash>;

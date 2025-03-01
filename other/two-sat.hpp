@@ -21,57 +21,65 @@
 #include "data-structure/flatten-vector.hpp"
 
 struct TwoSat {
-	int n;
-	Vec<pair<int, int>> edges;
-	TwoSat(int n_ = 0) : n(n_) {}
+    int n;
+    Vec<pair<int, int>> edges;
+    TwoSat(int n_ = 0) : n(n_) {}
 
-	int add_var() { return n++; }
-	void either(int a, int b) {
-		a = max(2 * a, -1 - 2 * a);	 /// start-hash
-		b = max(2 * b, -1 - 2 * b);
-		edges.emplace_back(a ^ 1, b);
-		edges.emplace_back(b ^ 1, a);  /// end-hash
-	}
-	void set_value(int x) { either(x, x); }
-	// NOT VERIFIED
-	void at_most_one(const Vec<int>& vs) {
-		if (size(vs) <= 1) return;	/// start-hash
-		int cur = ~vs[0];
-		for (int v : vs | std::views::drop(2)) {
-			int nxt = add_var();
-			either(cur, ~v);
-			either(cur, nxt);
-			either(~v, nxt);
-			cur = ~nxt;
-		}
-		either(cur, ~vs[1]);  /// end-hash
-	}
-	Opt<Vec<i8>> solve() {
-		auto r = Vec<i8>(n, -1);  /// start-hash
-		auto g = FlattenVector<int>(2 * n, std::move(edges));
-		auto q = Vec<int>();
-		auto bfs = [&](int s) -> bool {
-			q.clear();
-			q.push_back(s);
-			r[s / 2] = !(s % 2);
-			for (size_t z = 0; z < size(q); z++) {
-				int v = q[z];
-				for (int w : g[v]) {
-					if (r[w / 2] == -1) {
-						r[w / 2] = !(w % 2);
-						q.push_back(w);
-					} else if (r[w / 2] == w % 2) {
-						return false;
-					}
-				}
-			}
-			return true;
-		};
-		for (int i = 0; i < n; i++) {
-			if (r[i] != -1 || bfs(2 * i + 1)) continue;
-			for (int v : q) r[v / 2] = -1;
-			if (!bfs(2 * i)) return std::nullopt;
-		}
-		return r;  /// end-hash
-	}
+    int add_var() { return n++; }
+    void either(int a, int b) {
+        a = max(2 * a, -1 - 2 * a);  /// start-hash
+        b = max(2 * b, -1 - 2 * b);
+        edges.emplace_back(a ^ 1, b);
+        edges.emplace_back(b ^ 1, a);  /// end-hash
+    }
+    void set_value(int x) { either(x, x); }
+    // NOT VERIFIED
+    void at_most_one(const Vec<int>& vs) {
+        if (size(vs) <= 1) {
+            return;  /// start-hash
+        }
+        int cur = ~vs[0];
+        for (int v : vs | std::views::drop(2)) {
+            int nxt = add_var();
+            either(cur, ~v);
+            either(cur, nxt);
+            either(~v, nxt);
+            cur = ~nxt;
+        }
+        either(cur, ~vs[1]);  /// end-hash
+    }
+    Opt<Vec<i8>> solve() {
+        auto r = Vec<i8>(n, -1);  /// start-hash
+        auto g = FlattenVector<int>(2 * n, std::move(edges));
+        auto q = Vec<int>();
+        auto bfs = [&](int s) -> bool {
+            q.clear();
+            q.push_back(s);
+            r[s / 2] = !(s % 2);
+            for (size_t z = 0; z < size(q); z++) {
+                int v = q[z];
+                for (int w : g[v]) {
+                    if (r[w / 2] == -1) {
+                        r[w / 2] = !(w % 2);
+                        q.push_back(w);
+                    } else if (r[w / 2] == w % 2) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        };
+        for (int i = 0; i < n; i++) {
+            if (r[i] != -1 || bfs(2 * i + 1)) {
+                continue;
+            }
+            for (int v : q) {
+                r[v / 2] = -1;
+            }
+            if (!bfs(2 * i)) {
+                return std::nullopt;
+            }
+        }
+        return r;  /// end-hash
+    }
 };

@@ -8,27 +8,27 @@
 using fast_input::Scanner;
 
 int main() {
-	using namespace std;
+    using namespace std;
 
-	auto sc = Scanner();
+    auto sc = Scanner();
 
-	using Z = ModInt<998244353>;
+    using Z = ModInt<998244353>;
 
-	int n, m;
-	sc >> n >> m;
-	auto a = Vec<Z>(n);
-	for (auto& v : a) {
-		sc >> v.v;
-	}
-	auto b = Vec<Z>(m);
-	for (auto& v : b) {
-		sc >> v.v;
-	}
+    int n, m;
+    sc >> n >> m;
+    auto a = Vec<Z>(n);
+    for (auto& v : a) {
+        sc >> v.v;
+    }
+    auto b = Vec<Z>(m);
+    for (auto& v : b) {
+        sc >> v.v;
+    }
 
-	auto c = multiply(a, b);
-	for (ssize_t i = 0; i < ssize(c); i++) {
-		cout << c[i].v << " \n"[i == ssize(c) - 1];
-	}
+    auto c = multiply(a, b);
+    for (ssize_t i = 0; i < ssize(c); i++) {
+        cout << c[i].v << " \n"[i == ssize(c) - 1];
+    }
 
-	return 0;
+    return 0;
 }

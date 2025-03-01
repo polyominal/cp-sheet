@@ -20,8 +20,10 @@ using std::set, std::map, std::multiset;
 using std::tie;
 using std::vector, std::array, std::string;
 
-template <class T> using Vec = vector<T>;
-template <class T> using Opt = std::optional<T>;
+template <class T>
+using Vec = vector<T>;
+template <class T>
+using Opt = std::optional<T>;
 
 using i8 = int8_t;
 using u8 = uint8_t;

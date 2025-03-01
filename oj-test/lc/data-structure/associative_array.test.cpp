@@ -7,36 +7,36 @@
 using std::cout;
 
 int main() {
-	std::ios_base::sync_with_stdio(false);
+    std::ios_base::sync_with_stdio(false);
 
-	auto sc = fast_input::Scanner(stdin);
+    auto sc = fast_input::Scanner(stdin);
 
-	int Q;
-	sc >> Q;
+    int Q;
+    sc >> Q;
 
-	using Key = u64;
-	using Value = u64;
-	auto table = HashMap<Key, Value>();
+    using Key = u64;
+    using Value = u64;
+    auto table = HashMap<Key, Value>();
 
-	for (int q = 0; q < Q; q++) {
-		int t;
-		Key k;
-		sc >> t >> k;
-		if (t == 0) {
-			Value v;
-			sc >> v;
-			table[k] = v;
-		} else if (t == 1) {
-			auto it = table.find(k);
-			if (it != table.end()) {
-				cout << it->second << '\n';
-			} else {
-				cout << 0 << '\n';
-			}
-		} else {
-			assert(false);
-		}
-	}
+    for (int q = 0; q < Q; q++) {
+        int t;
+        Key k;
+        sc >> t >> k;
+        if (t == 0) {
+            Value v;
+            sc >> v;
+            table[k] = v;
+        } else if (t == 1) {
+            auto it = table.find(k);
+            if (it != table.end()) {
+                cout << it->second << '\n';
+            } else {
+                cout << 0 << '\n';
+            }
+        } else {
+            assert(false);
+        }
+    }
 
-	return 0;
+    return 0;
 }

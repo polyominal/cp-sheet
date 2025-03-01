@@ -13,78 +13,90 @@
 
 using std::views::reverse;
 
-template <class S> struct TreeDP {
-	template <class G, class RF, class CF> struct Inner {
-		Vec<S> low, high;
-		Vec<int> edges, par;
-		const RF rake;
-		const CF compress;
-		Inner(const G& g, auto make, RF rake_, CF compress_)
-			: rake(rake_), compress(compress_) {
-			int n = int(g.size());
-			auto single = Vec<S>(n);
-			edges.resize(n - 1);
-			for (int v = 0; v < n; v++) {
-				single[v] = make(v);
-				for (int e : g[v]) edges[e] ^= v;
-			}
+template <class S>
+struct TreeDP {
+    template <class G, class RF, class CF>
+    struct Inner {
+        Vec<S> low, high;
+        Vec<int> edges, par;
+        const RF rake;
+        const CF compress;
+        Inner(const G& g, auto make, RF rake_, CF compress_)
+            : rake(rake_), compress(compress_) {
+            int n = int(g.size());
+            auto single = Vec<S>(n);
+            edges.resize(n - 1);
+            for (int v = 0; v < n; v++) {
+                single[v] = make(v);
+                for (int e : g[v]) {
+                    edges[e] ^= v;
+                }
+            }
 
-			auto bfs = Vec<int>{0};
-			bfs.reserve(n);
-			par.assign(n, -1);
-			for (size_t z = 0; z < size(bfs); z++) {
-				int v = bfs[z];
-				for (int e : g[v]) {
-					if (par[v] == e) continue;
-					int w = v ^ edges[e];
-					par[w] = e;
-					bfs.push_back(w);
-				}
-			}
+            auto bfs = Vec<int>{0};
+            bfs.reserve(n);
+            par.assign(n, -1);
+            for (size_t z = 0; z < size(bfs); z++) {
+                int v = bfs[z];
+                for (int e : g[v]) {
+                    if (par[v] == e) {
+                        continue;
+                    }
+                    int w = v ^ edges[e];
+                    par[w] = e;
+                    bfs.push_back(w);
+                }
+            }
 
-			low = single;
-			auto up = Vec<S>(n);
-			auto pref = Vec<S>(n);
-			for (int v : bfs | reverse) {
-				for (int e : g[v]) {
-					if (par[v] == e) continue;
-					int w = v ^ edges[e];
-					pref[w] = low[v];
-					up[w] = compress(low[w], e, v);
-					low[v] = rake(low[v], up[w], v);
-				}
-			}
+            low = single;
+            auto up = Vec<S>(n);
+            auto pref = Vec<S>(n);
+            for (int v : bfs | reverse) {
+                for (int e : g[v]) {
+                    if (par[v] == e) {
+                        continue;
+                    }
+                    int w = v ^ edges[e];
+                    pref[w] = low[v];
+                    up[w] = compress(low[w], e, v);
+                    low[v] = rake(low[v], up[w], v);
+                }
+            }
 
-			high.resize(n);
-			auto f = Opt<S>();
-			for (int v : bfs) {
-				if (v != 0) [[likely]] {
-					f = compress(high[v], par[v], v);
-				}
-				for (int e : g[v] | reverse) {
-					if (par[v] == e) continue;
-					int w = v ^ edges[e];
-					if (f.has_value()) [[likely]] {
-						high[w] = rake(pref[w], *f, v);
-						f = rake(up[w], *f, v);
-					} else {
-						high[w] = pref[w];
-						f = up[w];
-					}
-				}
-			}
-		}
+            high.resize(n);
+            auto f = Opt<S>();
+            for (int v : bfs) {
+                if (v != 0) [[likely]] {
+                    f = compress(high[v], par[v], v);
+                }
+                for (int e : g[v] | reverse) {
+                    if (par[v] == e) {
+                        continue;
+                    }
+                    int w = v ^ edges[e];
+                    if (f.has_value()) [[likely]] {
+                        high[w] = rake(pref[w], *f, v);
+                        f = rake(up[w], *f, v);
+                    } else {
+                        high[w] = pref[w];
+                        f = up[w];
+                    }
+                }
+            }
+        }
 
-		S get_vertex(int v) const {
-			if (v == 0) return low[v];
-			return rake(low[v], compress(high[v], par[v], v), v);
-		}
-	};
+        S get_vertex(int v) const {
+            if (v == 0) {
+                return low[v];
+            }
+            return rake(low[v], compress(high[v], par[v], v), v);
+        }
+    };
 
-	template <class G, class RF, class CF>
-	static auto solve(const G& g, auto make, RF rake, CF compress) {
-		return Inner(g, make, rake, compress);
-	}
+    template <class G, class RF, class CF>
+    static auto solve(const G& g, auto make, RF rake, CF compress) {
+        return Inner(g, make, rake, compress);
+    }
 };
 
 // using S = array<Z, 2>;	// [0]: sum; [1]: count

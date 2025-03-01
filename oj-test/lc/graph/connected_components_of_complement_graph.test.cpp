@@ -6,28 +6,28 @@
 using namespace std;
 
 int main() {
-	int n, m;
-	cin >> n >> m;
+    int n, m;
+    cin >> n >> m;
 
-	auto cg = ComplementGraph(n);
-	for (int e = 0; e < m; e++) {
-		int a, b;
-		cin >> a >> b;
-		cg.add_edge(a, b);
-	}
+    auto cg = ComplementGraph(n);
+    for (int e = 0; e < m; e++) {
+        int a, b;
+        cin >> a >> b;
+        cg.add_edge(a, b);
+    }
 
-	auto comps = Vec<Vec<int>>();
-	cg.get_connected([&](const Vec<int>& comp) { comps.push_back(comp); });
+    auto comps = Vec<Vec<int>>();
+    cg.get_connected([&](const Vec<int>& comp) { comps.push_back(comp); });
 
-	cout << size(comps) << '\n';
-	for (const auto& comp : comps) {
-		assert(!comp.empty());
-		cout << size(comp);
-		for (int v : comp) {
-			cout << ' ' << v;
-		}
-		cout << '\n';
-	}
+    cout << size(comps) << '\n';
+    for (const auto& comp : comps) {
+        assert(!comp.empty());
+        cout << size(comp);
+        for (int v : comp) {
+            cout << ' ' << v;
+        }
+        cout << '\n';
+    }
 
-	return 0;
+    return 0;
 }

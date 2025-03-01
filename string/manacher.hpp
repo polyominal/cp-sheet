@@ -25,22 +25,25 @@
  * [i, j) being palindromic <=> j-i <= res[i+j]
  * In particular, res[2*i+1] = -1 states that [i, i] is not palindromic.
  */
-template <class Eq> Vec<int> manacher(int n, Eq eq) {
-	auto res = Vec<int>(2 * n + 1);
-	int i = 0, a = 0, b = 0;
-	while (i <= 2 * n) {
-		while (0 < a && b < n) {
-			if (i - 2 * a >= -1 && !eq(a - 1, b)) break;
-			a--, b++;
-		}
-		int j = b - a;
-		res[i] = j;
-		int k = 1;
-		while (k < j && k + res[i - k] < j) {
-			res[i + k] = res[i - k];
-			k++;
-		}
-		i += k, a += k;
-	}
-	return res;
+template <class Eq>
+Vec<int> manacher(int n, Eq eq) {
+    auto res = Vec<int>(2 * n + 1);
+    int i = 0, a = 0, b = 0;
+    while (i <= 2 * n) {
+        while (0 < a && b < n) {
+            if (i - 2 * a >= -1 && !eq(a - 1, b)) {
+                break;
+            }
+            a--, b++;
+        }
+        int j = b - a;
+        res[i] = j;
+        int k = 1;
+        while (k < j && k + res[i - k] < j) {
+            res[i + k] = res[i - k];
+            k++;
+        }
+        i += k, a += k;
+    }
+    return res;
 }

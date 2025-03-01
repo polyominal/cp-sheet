@@ -16,56 +16,56 @@
 // dp[j] := sum_{i s.t. [i, j) is palindromic} {dp[i] * x}
 template <class S, bool even = false>
 Vec<S> palindromic_decomp_dp(const Vec<u8>& a,
-							 auto add,
-							 S add_e,
-							 auto mul_x,
-							 S mul_e) {
-	int n = int(a.size());	/// start-hash
-	Vec<int> locs(n);
-	Eertree et(n);
-	for (int i = 0; i < n; i++) {
-		locs[i] = et.append(u8(a[i]));
-	}  /// end-hash
+                             auto add,
+                             S add_e,
+                             auto mul_x,
+                             S mul_e) {
+    int n = int(a.size());  /// start-hash
+    Vec<int> locs(n);
+    Eertree et(n);
+    for (int i = 0; i < n; i++) {
+        locs[i] = et.append(u8(a[i]));
+    }  /// end-hash
 
-	int nnodes = et.size();
-	Vec<int> nxt(nnodes);
-	if constexpr (even) {
-		assert(n % 2 == 0);
-		for (int v = 0; v < nnodes; v++) {
-			nxt[v] = (et[v].len() % 2 == 0 ? v : nxt[et[v].fail]);
-		}
-	} else {
-		iota(nxt.begin(), nxt.end(), 0);
-	}
+    int nnodes = et.size();
+    Vec<int> nxt(nnodes);
+    if constexpr (even) {
+        assert(n % 2 == 0);
+        for (int v = 0; v < nnodes; v++) {
+            nxt[v] = (et[v].len() % 2 == 0 ? v : nxt[et[v].fail]);
+        }
+    } else {
+        iota(nxt.begin(), nxt.end(), 0);
+    }
 
-	Vec<int> diff(nnodes, 1e9);	 /// start-hash
-	Vec<pair<int, int>> top(nnodes);
-	for (int v = 2; v < nnodes; v++) {
-		int w = nxt[et[v].fail];
-		int d = et[v].len() - et[w].len();
-		diff[v] = d;
-		top[v] = (diff[v] == diff[w] ? top[w] : pair<int, int>(w, 0));
-		top[v].second++;
-	}  /// end-hash
+    Vec<int> diff(nnodes, 1e9);  /// start-hash
+    Vec<pair<int, int>> top(nnodes);
+    for (int v = 2; v < nnodes; v++) {
+        int w = nxt[et[v].fail];
+        int d = et[v].len() - et[w].len();
+        diff[v] = d;
+        top[v] = (diff[v] == diff[w] ? top[w] : pair<int, int>(w, 0));
+        top[v].second++;
+    }  /// end-hash
 
-	Vec<S> dp(n + 1, add_e), gdp = dp;	/// start-hash
-	dp[0] = mul_e;
-	for (int j = 0; j < n; j++) {
-		int v = nxt[locs[j]];
-		int i = (j + 1) - et[v].len();
-		while (v >= 2) {
-			int d = diff[v];
-			auto [p, s] = top[v];
-			if (s == 1) {
-				gdp[i] = dp[i];
-			} else {
-				gdp[i] = add(gdp[i], dp[i + d * (s - 1)]);
-			}
-			dp[j + 1] = add(dp[j + 1], mul_x(gdp[i]));
-			i += d * s;
-			v = p;
-		}
-	}  /// end-hash
+    Vec<S> dp(n + 1, add_e), gdp = dp;  /// start-hash
+    dp[0] = mul_e;
+    for (int j = 0; j < n; j++) {
+        int v = nxt[locs[j]];
+        int i = (j + 1) - et[v].len();
+        while (v >= 2) {
+            int d = diff[v];
+            auto [p, s] = top[v];
+            if (s == 1) {
+                gdp[i] = dp[i];
+            } else {
+                gdp[i] = add(gdp[i], dp[i + d * (s - 1)]);
+            }
+            dp[j + 1] = add(dp[j + 1], mul_x(gdp[i]));
+            i += d * s;
+            v = p;
+        }
+    }  /// end-hash
 
-	return dp;
+    return dp;
 }

@@ -5,21 +5,21 @@
 #include "string/suffix-array.hpp"
 
 int main() {
-	using namespace std;
-	using fast_input::Scanner;
+    using namespace std;
+    using fast_input::Scanner;
 
-	auto sc = Scanner();
-	string s;
-	sc >> s;
-	int n = int(size(s));
+    auto sc = Scanner();
+    string s;
+    sc >> s;
+    int n = int(size(s));
 
-	auto lcp = SuffixArray::construct(s).lcp;
-	i64 num_substr = i64(n) * (n + 1) / 2;
-	for (i64 x : lcp) {
-		num_substr -= x;
-	}
+    auto lcp = SuffixArray::construct(s).lcp;
+    i64 num_substr = i64(n) * (n + 1) / 2;
+    for (i64 x : lcp) {
+        num_substr -= x;
+    }
 
-	cout << num_substr << '\n';
+    cout << num_substr << '\n';
 
-	return 0;
+    return 0;
 }

@@ -5,27 +5,27 @@
 #include "tree/hld.hpp"
 
 int main() {
-	std::ios_base::sync_with_stdio(false);
+    std::ios_base::sync_with_stdio(false);
 
-	auto sc = fast_input::Scanner(stdin);
+    auto sc = fast_input::Scanner(stdin);
 
-	int N, Q;
-	sc >> N >> Q;
+    int N, Q;
+    sc >> N >> Q;
 
-	auto hld = HLD(N);
-	for (int i = 1; i < N; i++) {
-		int p;
-		sc >> p;
-		hld.add_edge(p, i);
-	}
-	hld.build();
+    auto hld = HLD(N);
+    for (int i = 1; i < N; i++) {
+        int p;
+        sc >> p;
+        hld.add_edge(p, i);
+    }
+    hld.build();
 
-	for (int q = 0; q < Q; q++) {
-		int a, b;
-		sc >> a >> b;
+    for (int q = 0; q < Q; q++) {
+        int a, b;
+        sc >> a >> b;
 
-		std::cout << hld.lca(a, b) << '\n';
-	}
+        std::cout << hld.lca(a, b) << '\n';
+    }
 
-	return 0;
+    return 0;
 }

@@ -25,83 +25,97 @@ namespace eulerian_trail {
 using E = pair<int, int>;
 template <bool cyc_only = false>
 Opt<Vec<E>> go(int nv, const Vec<Vec<E>>& g, int ne, int src = 0) {
-	assert(nv == int(size(g)));
-	assert(0 <= src && src < nv);
+    assert(nv == int(size(g)));
+    assert(0 <= src && src < nv);
 
-	Vec<Vec<E>::const_iterator> its(nv);  /// start-hash
-	for (int i = 0; i < nv; i++) its[i] = begin(g[i]);
-	Vec<int> state(nv);
-	if constexpr (!cyc_only) state[src]++;
-	Vec<bool> seen(ne);
-	Vec<E> res, stk = {E(src, -1)};	 /// end-hash
+    Vec<Vec<E>::const_iterator> its(nv);  /// start-hash
+    for (int i = 0; i < nv; i++) {
+        its[i] = begin(g[i]);
+    }
+    Vec<int> state(nv);
+    if constexpr (!cyc_only) {
+        state[src]++;
+    }
+    Vec<bool> seen(ne);
+    Vec<E> res, stk = {E(src, -1)};  /// end-hash
 
-	while (!stk.empty()) {	/// start-hash
-		auto [i, p] = stk.back();
-		auto& it = its[i];
-		if (it == end(g[i])) {
-			res.emplace_back(i, p);
-			stk.pop_back();
-			continue;
-		}
-		auto [j, e] = *(it++);
-		if (!seen[e]) {
-			state[i]--, state[j]++;
-			stk.emplace_back(j, e);
-			seen[e] = true;
-		}
-	}
-	if (int(size(res)) != ne + 1) {
-		return {};
-	}
-	for (int s : state) {
-		if (s < 0) return {};
-	}
-	return Vec<E>(rbegin(res), rend(res));	/// end-hash
+    while (!stk.empty()) {  /// start-hash
+        auto [i, p] = stk.back();
+        auto& it = its[i];
+        if (it == end(g[i])) {
+            res.emplace_back(i, p);
+            stk.pop_back();
+            continue;
+        }
+        auto [j, e] = *(it++);
+        if (!seen[e]) {
+            state[i]--, state[j]++;
+            stk.emplace_back(j, e);
+            seen[e] = true;
+        }
+    }
+    if (int(size(res)) != ne + 1) {
+        return {};
+    }
+    for (int s : state) {
+        if (s < 0) {
+            return {};
+        }
+    }
+    return Vec<E>(rbegin(res), rend(res));  /// end-hash
 }
 
 template <bool cyc_only = false>
 Opt<Vec<E>> trail_undirected(int nv, const Vec<pair<int, int>>& edges) {
-	assert(nv > 0);
+    assert(nv > 0);
 
-	Vec<Vec<E>> g(nv);
-	int e = 0;
-	for (auto [a, b] : edges) {
-		g[a].emplace_back(b, e);
-		g[b].emplace_back(a, e);
-		e++;
-	}
+    Vec<Vec<E>> g(nv);
+    int e = 0;
+    for (auto [a, b] : edges) {
+        g[a].emplace_back(b, e);
+        g[b].emplace_back(a, e);
+        e++;
+    }
 
-	int src = 0;  /// start-hash
-	for (int i = 0; i < nv; i++) {
-		if (!g[i].empty()) src = i;
-	}
-	for (int i = 0; i < nv; i++) {
-		if (size(g[i]) % 2 == 1) src = i;
-	}  /// end-hash
-	return go<cyc_only>(nv, g, int(size(edges)), src);
+    int src = 0;  /// start-hash
+    for (int i = 0; i < nv; i++) {
+        if (!g[i].empty()) {
+            src = i;
+        }
+    }
+    for (int i = 0; i < nv; i++) {
+        if (size(g[i]) % 2 == 1) {
+            src = i;
+        }
+    }  /// end-hash
+    return go<cyc_only>(nv, g, int(size(edges)), src);
 }
 
 template <bool cyc_only = false>
 Opt<Vec<E>> trail_directed(int nv, const Vec<pair<int, int>>& edges) {
-	assert(nv > 0);
+    assert(nv > 0);
 
-	Vec<Vec<E>> g(nv);
-	Vec<int> indeg(nv);
-	int e = 0;
-	for (auto [a, b] : edges) {
-		g[a].emplace_back(b, e);
-		indeg[b]++;
-		e++;
-	}
+    Vec<Vec<E>> g(nv);
+    Vec<int> indeg(nv);
+    int e = 0;
+    for (auto [a, b] : edges) {
+        g[a].emplace_back(b, e);
+        indeg[b]++;
+        e++;
+    }
 
-	int src = 0;  /// start-hash
-	for (int i = 0; i < nv; i++) {
-		if (!g[i].empty()) src = i;
-	}
-	for (int i = 0; i < nv; i++) {
-		if (indeg[i] < int(size(g[i]))) src = i;
-	}  /// end-hash
-	return go<cyc_only>(nv, g, int(size(edges)), src);
+    int src = 0;  /// start-hash
+    for (int i = 0; i < nv; i++) {
+        if (!g[i].empty()) {
+            src = i;
+        }
+    }
+    for (int i = 0; i < nv; i++) {
+        if (indeg[i] < int(size(g[i]))) {
+            src = i;
+        }
+    }  /// end-hash
+    return go<cyc_only>(nv, g, int(size(edges)), src);
 }
 
 }  // namespace eulerian_trail

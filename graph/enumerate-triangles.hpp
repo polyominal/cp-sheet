@@ -12,31 +12,33 @@
 #include "data-structure/flatten-vector.hpp"
 
 inline void triangles(int n,
-					  Vec<pair<int, int>> edges,
-					  std::function<void(int, int, int)> f) {
-	auto deg = Vec<int>(n);
-	for (auto [a, b] : edges) {
-		deg[a]++;
-		deg[b]++;
-	}
-	for (auto& [a, b] : edges) {
-		if (tie(deg[a], a) > tie(deg[b], b)) {
-			swap(a, b);
-		}
-	}
-	auto adj = FlattenVector<int>(n, edges);
+                      Vec<pair<int, int>> edges,
+                      std::function<void(int, int, int)> f) {
+    auto deg = Vec<int>(n);
+    for (auto [a, b] : edges) {
+        deg[a]++;
+        deg[b]++;
+    }
+    for (auto& [a, b] : edges) {
+        if (tie(deg[a], a) > tie(deg[b], b)) {
+            swap(a, b);
+        }
+    }
+    auto adj = FlattenVector<int>(n, edges);
 
-	Vec<int> ind(n);
-	int i = 0;
-	for (int x = 0; x < n; x++) {
-		++i;
-		for (int y : adj[x]) ind[y] = i;
-		for (int y : adj[x]) {
-			for (int z : adj[y]) {
-				if (ind[z] == i) {
-					f(x, y, z);
-				}
-			}
-		}
-	}
+    Vec<int> ind(n);
+    int i = 0;
+    for (int x = 0; x < n; x++) {
+        ++i;
+        for (int y : adj[x]) {
+            ind[y] = i;
+        }
+        for (int y : adj[x]) {
+            for (int z : adj[y]) {
+                if (ind[z] == i) {
+                    f(x, y, z);
+                }
+            }
+        }
+    }
 }
