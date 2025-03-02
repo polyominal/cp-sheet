@@ -85,10 +85,11 @@ class PersistentLazySegmentTree {
         }
 
         size_t m = (s + e) / 2;
-        const auto& node = pool[idx];
-        E new_laz = node.lazy.merge(laz);
-        return merge(apply_impl(node.left, s, m, l, r, new_laz, f),
-                     apply_impl(node.right, m, e, l, r, new_laz, f));
+        E new_laz = pool[idx].lazy.merge(laz);
+        size_t left = pool[idx].left;
+        size_t right = pool[idx].right;
+        return merge(apply_impl(left, s, m, l, r, new_laz, f),
+                     apply_impl(right, m, e, l, r, new_laz, f));
     }
 
     T prod_impl(size_t idx,
@@ -97,21 +98,22 @@ class PersistentLazySegmentTree {
                 size_t l,
                 size_t r,
                 const E& laz) const {
-        const auto& node = pool[idx];
         if (l <= s && e <= r) {
-            return laz.eval(node.val);
+            return laz.eval(pool[idx].val);
         }
 
         size_t m = (s + e) / 2;
-        E new_laz = node.lazy.merge(laz);
+        E new_laz = pool[idx].lazy.merge(laz);
+        size_t left = pool[idx].left;
+        size_t right = pool[idx].right;
 
         if (r <= m) {
-            return prod_impl(node.left, s, m, l, r, new_laz);
+            return prod_impl(left, s, m, l, r, new_laz);
         } else if (m <= l) {
-            return prod_impl(node.right, m, e, l, r, new_laz);
+            return prod_impl(right, m, e, l, r, new_laz);
         } else {
-            return prod_impl(node.left, s, m, l, r, new_laz)
-                .merge(prod_impl(node.right, m, e, l, r, new_laz));
+            return prod_impl(left, s, m, l, r, new_laz)
+                .merge(prod_impl(right, m, e, l, r, new_laz));
         }
     }
 
@@ -130,16 +132,17 @@ class PersistentLazySegmentTree {
             return apply_all(src_idx, src_laz);
         }
 
-        const auto& src_node = pool[src_idx];
-        const auto& mutator_node = pool[mutator_idx];
-        E new_src_laz = src_node.lazy.merge(src_laz);
-        E new_mutator_laz = mutator_node.lazy.merge(mutator_laz);
-
         size_t m = (s + e) / 2;
-        size_t left = copy_impl(src_node.left, mutator_node.left, s, m, l, r,
-                                new_src_laz, new_mutator_laz);
-        size_t right = copy_impl(src_node.right, mutator_node.right, m, e, l, r,
-                                 new_src_laz, new_mutator_laz);
-        return merge(left, right);
+        E new_src_laz = pool[src_idx].lazy.merge(src_laz);
+        E new_mutator_laz = pool[mutator_idx].lazy.merge(mutator_laz);
+        size_t src_left = pool[src_idx].left;
+        size_t src_right = pool[src_idx].right;
+        size_t mutator_left = pool[mutator_idx].left;
+        size_t mutator_right = pool[mutator_idx].right;
+
+        return merge(copy_impl(src_left, mutator_left, s, m, l, r, new_src_laz,
+                               new_mutator_laz),
+                     copy_impl(src_right, mutator_right, m, e, l, r, new_src_laz,
+                               new_mutator_laz));
     }
 };
