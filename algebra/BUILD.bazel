@@ -64,3 +64,11 @@ my_cc_test(
         "//algebra:monoidal",
     ],
 )
+
+my_cc_library(
+    name = "monoidal-sized",
+    hdrs = ["monoidal-sized.hpp"],
+    deps = [
+        "//algebra:monoidal",
+    ],
+)

@@ -14,14 +14,13 @@
  * Time: O(\log N) per operation
  */
 
+#include "algebra/monoidal-sized.hpp"
 #include "contest/base.hpp"
 
-template <class M, bool persistent = false>
+template <typename T, typename E, bool persistent = false>
+    requires Monoid<T> && EffectWithSize<E, T>
 struct TreapManager {
-    using S = M::S;
-    using F = M::F;
-
-    TreapManager(M m_, int alloc = 0) : m(m_) {
+    TreapManager(int alloc = 0) {
         if (alloc > 0) {
             nodes.reserve(alloc);
         } else {
@@ -34,22 +33,21 @@ struct TreapManager {
         }
     }
 
-    using Tree = int;
+    using Tree = size_t;
 
     Tree make_empty() { return Tree(null); }
 
-    Tree make_single(S s) {  /// start-hash
-        int i = int(nodes.size());
-        nodes.push_back(Node{null, null, 1, false, false, s, s, m.id()});
-        return i;
+    Tree make_single(const T& s) {  /// start-hash
+        nodes.push_back(Node{null, null, 1, false, false, s, s, E::e()});
+        return nodes.size() - 1;
     }  /// end-hash
 
     Tree make_copy(Tree o) { return _make_copy(o); }
 
     int size(const Tree t) { return _size(t); }
-    int reverse(Tree t) { return _reverse(t); }
-    int apply(Tree t, F f) { return _apply(t, f); }
-    S prod(const Tree& t) { return _prod(t); }
+    Tree reverse(Tree t) { return _reverse(t); }
+    Tree apply(Tree t, const E& f) { return _apply(t, f); }
+    T prod(Tree t) { return _prod(t); }
 
     Tree split_k(Tree& t, int k) {  /// start-hash
         Tree o;
@@ -59,7 +57,7 @@ struct TreapManager {
 
     Tree merge(Tree a, Tree b) { return _merge(a, b); }
 
-    Tree build(const Vec<S>& a) {  /// start-hash
+    Tree build(const Vec<T>& a) {  /// start-hash
         if (a.empty()) {
             return make_empty();
         }
@@ -67,20 +65,20 @@ struct TreapManager {
     }  /// end-hash
 
   private:
-    static constexpr int null = -42;
-    M m;
+    static constexpr Tree null = std::numeric_limits<Tree>::max();
 
     struct Node {  /// start-hash
-        int li, ri, sz;
+        Tree li, ri;
+        int sz;
         bool rev, app;
-        S a, s;
-        F f;
+        T a, s;
+        E f;
     };
     Vec<Node> nodes;
-    Node& node(int i) { return nodes[i]; }
-    int _size(int i) { return i == null ? 0 : node(i).sz; }  /// end-hash
+    Node& node(Tree i) { return nodes[i]; }
+    int _size(Tree i) { return i == null ? 0 : node(i).sz; }  /// end-hash
 
-    int _make_copy(int o) {  /// start-hash
+    Tree _make_copy(Tree o) {  /// start-hash
         if constexpr (!persistent) {
             return o;
         }
@@ -88,13 +86,11 @@ struct TreapManager {
         if (o == null) {
             return null;
         }
-        assert(nodes.size() < nodes.capacity());
-        int i = int(nodes.size());
         nodes.push_back(node(o));
-        return i;
+        return nodes.size() - 1;
     }  /// end-hash
 
-    int _build(const Vec<S>& a, int l, int r) {  /// start-hash
+    Tree _build(const Vec<T>& a, int l, int r) {  /// start-hash
         if (r - l == 1) {
             return make_single(a[l]);
         }
@@ -102,13 +98,13 @@ struct TreapManager {
         return _merge(_build(a, l, md), _build(a, md, r));
     }  /// end-hash
 
-    void _update(int i) {  /// start-hash
+    void _update(Tree i) {  /// start-hash
         auto& n = node(i);
-        n.s = m.op(_prod(n.li), m.op(n.a, _prod(n.ri)));
+        n.s = _prod(n.li).merge(n.a.merge(_prod(n.ri)));
         n.sz = size(n.li) + size(n.ri) + 1;
     }  /// end-hash
 
-    int _reverse(int i) {  /// start-hash
+    Tree _reverse(Tree i) {  /// start-hash
         if (i == null) {
             return i;
         }
@@ -119,22 +115,22 @@ struct TreapManager {
         return i;
     }  /// end-hash
 
-    S _prod(int i) { return i == null ? m.e() : node(i).s; }
+    T _prod(Tree i) { return i == null ? T::e() : node(i).s; }
 
-    int _apply(int i, F f) {  /// start-hash
+    Tree _apply(Tree i, const E& f) {  /// start-hash
         if (i == null) {
             return i;
         }
         i = _make_copy(i);
         auto& n = node(i);
-        n.s = m.mapping_sz(f, n.s, n.sz);
-        n.a = m.mapping_sz(f, n.a, 1);
-        n.f = m.composition(f, n.f);
+        n.s = f.act(n.s, n.sz);
+        n.a = f.act(n.a, 1);
+        n.f = f.merge(n.f);
         n.app = true;
         return i;
     }  /// end-hash
 
-    int downdate(int i) {  /// start-hash
+    Tree downdate(Tree i) {  /// start-hash
         assert(i != null);
         i = _make_copy(i);
         auto& n = node(i);
@@ -146,21 +142,21 @@ struct TreapManager {
         if (n.app) {
             n.li = _apply(n.li, n.f);
             n.ri = _apply(n.ri, n.f);
-            n.f = m.id();
+            n.f = E::e();
             n.app = false;
         }
         return i;
     }  /// end-hash
 
     template <class F>
-    pair<int, int> _split(int i, F go_left) {  /// start-hash
+    pair<Tree, Tree> _split(Tree i, F go_left) {  /// start-hash
         if (i == null) {
             return {null, null};
         }
         i = downdate(i);
         auto& n = node(i);
-        int li = n.li, ri = n.ri;
-        int x, y;
+        Tree li = n.li, ri = n.ri;
+        Tree x, y;
         if (go_left(li, ri)) {
             y = i;
             tie(x, n.li) = _split(n.li, go_left);
@@ -172,8 +168,8 @@ struct TreapManager {
         return {x, y};
     }  /// end-hash
 
-    pair<int, int> _split_k(int i, int k) {  /// start-hash
-        return _split(i, [&](int li, int) -> bool {
+    pair<Tree, Tree> _split_k(Tree i, int k) {  /// start-hash
+        return _split(i, [&](Tree li, Tree) -> bool {
             int lsz = size(li);
             if (k <= lsz) {
                 return true;
@@ -200,14 +196,14 @@ struct TreapManager {
         return res;
     }  /// end-hash
 
-    int _merge(int a, int b) {  /// start-hash
+    Tree _merge(Tree a, Tree b) {  /// start-hash
         if (a == null) {
             return b;
         }
         if (b == null) {
             return a;
         }
-        int r;
+        Tree r;
         u32 sa = size(a), sb = size(b);
         if (rng() % (sa + sb) < sa) {
             r = downdate(a);

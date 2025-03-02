@@ -65,6 +65,7 @@ my_cc_test(
 my_cc_library(
     name = "treap",
     hdrs = ["treap.hpp"],
+    deps = ["//algebra:monoidal-sized"],
 )
 
 my_cc_test(
