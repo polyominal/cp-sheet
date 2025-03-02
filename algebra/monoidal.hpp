@@ -12,6 +12,6 @@ concept Monoid = requires(const T& a, const T& b) {
 
 template <typename E, typename T>
 concept Effect = requires(const E& e, const T& x) {
-    { e.eval(x) } -> std::same_as<T>;
+    { e.act(x) } -> std::same_as<T>;
     requires Monoid<E>;
 };

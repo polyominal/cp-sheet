@@ -8,28 +8,23 @@ struct Pair {
     int64_t value;
     int size;
 
-    Pair(const int64_t value_, const int size_ = 1)
-        : value(value_), size(size_) {}
-
-    Pair merge(const Pair& other) const {
-        return Pair(value + other.value, size + other.size);
+    constexpr Pair merge(const Pair& other) const {
+        return {value + other.value, size + other.size};
     }
-    static Pair e() { return Pair(0, 0); }
+    constexpr static Pair e() { return {0, 0}; }
 };
 
 struct Affine {
     int64_t a;
     int64_t b;
 
-    Affine(const int64_t& a_, const int64_t& b_) : a(a_), b(b_) {}
-
-    Affine merge(const Affine& other) const noexcept {
-        return Affine(a * other.a, b * other.a + other.b);
+    constexpr Affine merge(const Affine& other) const {
+        return {a * other.a, b * other.a + other.b};
     }
 
-    static Affine e() noexcept { return Affine(1, 0); }
+    constexpr static Affine e() { return {1, 0}; }
 
-    Pair eval(Pair x) const noexcept {
+    constexpr Pair act(Pair x) const {
         return {a * x.value + b * x.size, x.size};
     }
 };
@@ -40,7 +35,11 @@ TEST(TestPersistentLazySegmentTree, DegeneratedExample) {
 
     auto st = PersistentLazySegmentTree<T, E>();
 
-    auto t_0 = st.build(Vec<T>{1, 2, 3, 4, 5});
+    auto a = Vec<T>();
+    for (int i = 0; i < 5; i++) {
+        a.push_back({i + 1, 1});
+    }
+    auto t_0 = st.build(a);
     EXPECT_EQ(st.prod(t_0, 0, 5, 5).value, 15);
 
     auto t_1 = st.apply(t_0, 0, 5, E{2, 1}, 5);

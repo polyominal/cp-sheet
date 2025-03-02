@@ -10,9 +10,9 @@ struct Value {
     uint32_t sum;
     uint32_t cnt;
 
-    static Value e() { return {0, 0}; }
+    constexpr static Value e() { return {0, 0}; }
 
-    Value merge(const Value& other) const {
+    constexpr Value merge(const Value& other) const {
         return {static_cast<uint32_t>((sum + other.sum) % MOD),
                 cnt + other.cnt};
     }
@@ -23,16 +23,16 @@ struct Affine {
     uint32_t a;
     uint32_t b;
 
-    static Affine e() { return {1, 0}; }
+    constexpr static Affine e() { return {1, 0}; }
 
-    Affine merge(const Affine& other) const {
-        return {static_cast<uint32_t>((uint64_t)a * other.a % MOD),
-                static_cast<uint32_t>(((uint64_t)b * other.a + other.b) % MOD)};
+    constexpr Affine merge(const Affine& other) const {
+        return {static_cast<uint32_t>(uint64_t(a) * other.a % MOD),
+                static_cast<uint32_t>((uint64_t(b) * other.a + other.b) % MOD)};
     }
 
-    Value eval(const Value& x) const {
+    constexpr Value act(const Value& x) const {
         return {static_cast<uint32_t>(
-                    ((uint64_t)a * x.sum + (uint64_t)b * x.cnt) % MOD),
+                    (uint64_t(a) * x.sum + uint64_t(b) * x.cnt) % MOD),
                 x.cnt};
     }
 };

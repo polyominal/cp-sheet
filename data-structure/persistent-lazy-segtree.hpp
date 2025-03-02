@@ -58,7 +58,7 @@ class PersistentLazySegmentTree {
 
     size_t apply_all(size_t node_idx, const E& laz) {
         const auto& node = pool[node_idx];
-        T new_val = laz.eval(node.val);
+        T new_val = laz.act(node.val);
         E new_lazy = node.lazy.merge(laz);
         return create_node(std::move(new_val), std::move(new_lazy), node.left,
                            node.right);
@@ -98,7 +98,7 @@ class PersistentLazySegmentTree {
                 size_t r,
                 const E& laz) const {
         if (l <= s && e <= r) {
-            return laz.eval(pool[idx].val);
+            return laz.act(pool[idx].val);
         }
 
         size_t m = (s + e) / 2;
