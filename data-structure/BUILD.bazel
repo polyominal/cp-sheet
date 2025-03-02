@@ -168,3 +168,19 @@ my_cc_test(
         "//data-structure:static-range",
     ],
 )
+
+my_cc_library(
+    name = "persistent-lazy-segtree",
+    hdrs = ["persistent-lazy-segtree.hpp"],
+    deps = [
+        "//algebra:monoidal",
+    ],
+)
+
+my_cc_test(
+    name = "persistent-lazy-segtree-test",
+    srcs = ["persistent-lazy-segtree-test.cpp"],
+    deps = [
+        "//data-structure:persistent-lazy-segtree",
+    ],
+)
