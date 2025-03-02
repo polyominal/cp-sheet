@@ -4,23 +4,9 @@
 #include "algebra/monoidal.hpp"
 #include "contest/base.hpp"
 
-template <Monoid T, typename E>
-    requires Monoid<T> && Effect<E, T>
-struct Node {
-    T val;
-    E lazy;
-    size_t left;
-    size_t right;
-
-    Node(T&& val_, E&& lazy_, size_t l_, size_t r_)
-        : val(std::move(val_)), lazy(std::move(lazy_)), left(l_), right(r_) {}
-};
-
 template <typename T, typename E>
+    requires Monoid<T> && Effect<E, T>
 class PersistentLazySegmentTree {
-    std::vector<Node<T, E>> pool;
-    static constexpr size_t NONE = std::numeric_limits<size_t>::max();
-
   public:
     PersistentLazySegmentTree(size_t capacity = 0) { pool.reserve(capacity); }
 
@@ -52,6 +38,19 @@ class PersistentLazySegmentTree {
     }
 
   private:
+    struct Node {
+        T val;
+        E lazy;
+        size_t left;
+        size_t right;
+
+        Node(T&& val_, E&& lazy_, size_t l_, size_t r_)
+            : val(std::move(val_)),
+              lazy(std::move(lazy_)),
+              left(l_),
+              right(r_) {}
+    };
+
     size_t create_node(T&& val, E&& lazy, size_t left, size_t right) {
         pool.emplace_back(std::move(val), std::move(lazy), left, right);
         return pool.size() - 1;
@@ -142,7 +141,10 @@ class PersistentLazySegmentTree {
 
         return merge(copy_impl(src_left, mutator_left, s, m, l, r, new_src_laz,
                                new_mutator_laz),
-                     copy_impl(src_right, mutator_right, m, e, l, r, new_src_laz,
-                               new_mutator_laz));
+                     copy_impl(src_right, mutator_right, m, e, l, r,
+                               new_src_laz, new_mutator_laz));
     }
+
+    std::vector<Node> pool;
+    static constexpr size_t NONE = std::numeric_limits<size_t>::max();
 };
