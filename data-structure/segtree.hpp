@@ -12,17 +12,17 @@
  * - https://judge.yosupo.jp/problem/vertex_set_path_composite (set; also justified runtime polymorphism!)
  */
 
+#include "algebra/monoidal.hpp"
 #include "contest/base.hpp"
 
-template <class M>
+template <typename T>
+    requires Monoid<T>
 struct Segtree {
-    using S = M::S;
-    M m;
-    Vec<S> d;
+    Vec<T> d;
     int n, h, sz;
-    Segtree(M m_) : m(m_), n(0), h(0), sz(0) {}
+    Segtree() : n(0), h(0), sz(0) {}
     template <class A>
-    Segtree(int n_, A a, M m_) : m(m_) {
+    Segtree(int n_, A a) {
         build(n_, a);
     }
 
@@ -36,7 +36,7 @@ struct Segtree {
             d[sz + i] = a(i);
         }
         for (int i = n; i < sz; i++) {
-            d[sz + i] = m.e();
+            d[sz + i] = T::e();
         }
         for (int i = sz - 1; i >= 1; i--) {
             update(i);
@@ -44,34 +44,34 @@ struct Segtree {
     }  /// end-hash
 
     void update(int i) {  /// start-hash
-        d[i] = m.op(d[2 * i], d[2 * i + 1]);
+        d[i] = d[2 * i].merge(d[2 * i + 1]);
     }  /// end-hash
 
-    S prod(int l, int r) {  /// start-hash
+    T prod(int l, int r) const {  /// start-hash
         assert(0 <= l && l <= r && r <= n);
         if (l == r) {
-            return m.e();
+            return T::e();
         }
         l += sz, r += sz;
-        S sl = m.e(), sr = m.e();
+        T sl = T::e(), sr = T::e();
         for (int a = l, b = r; a < b; a /= 2, b /= 2) {
             if (a & 1) {
-                sl = m.op(sl, d[a++]);
+                sl = sl.merge(d[a++]);
             }
             if (b & 1) {
-                sr = m.op(d[--b], sr);
+                sr = d[--b].merge(sr);
             }
         }
-        return m.op(sl, sr);
+        return sl.merge(sr);
     }  /// end-hash
 
-    const S& all_prod() const { return d[1]; }
+    const T& all_prod() const { return d[1]; }
 
-    Vec<S> to_array() const {
-        return Vec<S>(d.begin() + sz, d.begin() + sz + n);
+    Vec<T> to_array() const {
+        return Vec<T>(d.begin() + sz, d.begin() + sz + n);
     }
 
-    void set(int p, S s) {  /// start-hash
+    void set(int p, const T& s) {  /// start-hash
         assert(0 <= p && p < n);
         p += sz;
         d[p] = s;

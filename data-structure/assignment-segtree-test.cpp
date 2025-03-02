@@ -13,26 +13,31 @@ TEST(AssignmentSegtreeTest, Affine) {
     using num = ModInt<mod>;
 
     struct Monoid {
-        using S = pair<num, num>;
+        num a;
+        num b;
 
-        constexpr S e() { return S(1, 0); }
-        S op(S f, S g) {
-            return {f.first * g.first, f.second * g.first + g.second};
+        static Monoid e() { return {1, 0}; }
+
+        Monoid merge(const Monoid& other) const {
+            return {a * other.a, a * other.b + b};
         }
-    } m;
-    using S = Monoid::S;
+
+        bool operator==(const Monoid& other) const = default;
+    };
 
     for (int N : {0, 1, 2, 3, 5, 8, 13, 21, 34}) {
-        auto uniform_affine = [&]() -> S {
-            return S(rng.uniform<uint32_t>(0, mod - 1),
-                     rng.uniform<uint32_t>(0, mod - 1));
+        // auto ast = AssignmentSegtree(N, [&A](int i) { return A[i]; });
+        auto uniform_affine = [&]() -> Monoid {
+            return {num(rng.uniform<uint32_t>(0, mod - 1)),
+                    num(rng.uniform<uint32_t>(0, mod - 1))};
         };
-        Vec<S> A(N);
-        for (S& a : A) {
-            a = uniform_affine();
+        auto A = Vec<Monoid>(N);
+        for (int i = 0; i < N; i++) {
+            A[i] = uniform_affine();
         }
 
-        auto ast = AssignmentSegtree(N, [&A](int i) { return A[i]; }, m);
+        auto ast =
+            AssignmentSegtree<Monoid>(N, [&](int i) -> Monoid { return A[i]; });
 
         constexpr int Q = 20;
         for (int q = 0; q < Q; q++) {
@@ -45,7 +50,10 @@ TEST(AssignmentSegtreeTest, Affine) {
                         break;
                     }
                 }
-                auto f = uniform_affine();
+                Monoid f = {
+                    num(rng.uniform<uint32_t>(0, mod - 1)),
+                    num(rng.uniform<uint32_t>(0, mod - 1)),
+                };
                 for (int i = l; i < r; i++) {
                     A[i] = f;
                 }
@@ -53,11 +61,11 @@ TEST(AssignmentSegtreeTest, Affine) {
             }
 
             for (int l = 0; l <= N; l++) {
-                S prod = m.e();
+                Monoid prod = Monoid::e();
                 for (int r = l; r <= N; r++) {
                     EXPECT_EQ(prod, ast.prod(l, r));
                     if (r < N) {
-                        prod = m.op(prod, A[r]);
+                        prod = prod.merge(A[r]);
                     }
                 }
             }

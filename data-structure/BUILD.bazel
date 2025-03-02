@@ -21,6 +21,7 @@ my_cc_library(
 my_cc_library(
     name = "segtree",
     hdrs = ["segtree.hpp"],
+    deps = ["//algebra:monoidal"],
 )
 
 my_cc_library(

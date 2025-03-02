@@ -13,18 +13,17 @@
 #include "data-structure/fast-set.hpp"
 #include "data-structure/segtree.hpp"
 
-template <class M>
+template <typename T>
+    requires Monoid<T>
 struct AssignmentSegtree {
-    using S = M::S;
-    M m;
     int n;
-    Segtree<M> st;
+    Segtree<T> st;
     FastSet cut;
-    Vec<S> dat;
+    Vec<T> dat;
 
-    AssignmentSegtree(M m_) : m(m_), n(0), st(m) {}
+    AssignmentSegtree() : n(0), st() {}
     template <class A>
-    AssignmentSegtree(int n_, A a, M m_) : m(m_), n(n_), st(m) {
+    AssignmentSegtree(int n_, A a) : n(n_), st() {
         build(n_, a);
     }
     template <class A>
@@ -41,21 +40,21 @@ struct AssignmentSegtree {
         dat = st.to_array();
     }
 
-    S pow(S s, int b) {
-        S r = m.e();
+    T pow(T s, int b) {
+        T r = T::e();
         while (b) {
             if (b & 1) {
-                r = m.op(r, s);
+                r = r.merge(s);
             }
-            s = m.op(s, s);
+            s = s.merge(s);
             b >>= 1;
         }
         return r;
     }
 
-    S prod(int l, int r) {
+    T prod(int l, int r) {
         if (l == r) {
-            return m.e();
+            return T::e();
         }
         int a = cut.prev(l);
         int b = cut.next(l);
@@ -63,13 +62,13 @@ struct AssignmentSegtree {
         if (a == c) {
             return pow(dat[a], r - l);
         }
-        S u = pow(dat[a], b - l);
-        S v = st.prod(b, c);
-        S w = pow(dat[c], r - c);
-        return m.op(u, m.op(v, w));
+        T u = pow(dat[a], b - l);
+        T v = st.prod(b, c);
+        T w = pow(dat[c], r - c);
+        return u.merge(v).merge(w);
     }
 
-    void assign(int l, int r, S s) {
+    void assign(int l, int r, const T& s) {
         if (l == r) {
             return;
         }
@@ -79,13 +78,13 @@ struct AssignmentSegtree {
             st.set(a, pow(dat[a], l - a));
         }
         if (r < b) {
-            S t = dat[cut.prev(r)];
+            T t = dat[cut.prev(r)];
             dat[r] = t;
             cut.set(r);
             st.set(r, pow(t, b - r));
         }
         cut.enumerate(l + 1, r, [&](int i) -> void {
-            st.set(i, m.e());
+            st.set(i, T::e());
             cut.reset(i);
         });
         dat[l] = s;
