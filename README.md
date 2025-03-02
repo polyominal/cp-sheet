@@ -18,10 +18,8 @@ for development.
 We use Bazel as the build system. Build and run tests with
 
 ```sh
-bazel test //src...
+bazel test //...
 ```
-
-Check out `src/` and its subdirectories for the library implementations.
 
 In addition, run
 
@@ -32,29 +30,6 @@ oj-verify run
 to run tests in `oj-test/`,
 which are based on Libray Checker's
 (<https://judge.yosupo.jp/>) test cases.
-
-## KACTL Document Generation
-
-Navigate to `kactl/` and build with
-
-```sh
-make kactl
-```
-
-This produces `kactl.pdf` in `kactl/`.
-
-## Note
-
-Code in this library is designed to maximize
-the convenience of usage in fast-paced competitions,
-particularly in ICPC contests where you have to
-manually type up everything within constrained time.
-
-To this end, evil practices can be applied
-to enhance competitive advantage. For example,
-
-- Preferring `int` over `size_t` to avoid complications with unsigned types
-- Using short identifiers (e.g., `cnt` instead of `counter`) to minimize code length
 
 ## License
 
