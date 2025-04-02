@@ -1,28 +1,53 @@
-#include "contest/base.hpp"
+#include <array>
+#include <vector>
 
-template <class T>
 struct CartesianTree {
-    int n, root;
-    Vec<int> p;
-    Vec<array<int, 2>> c;
-    CartesianTree(const Vec<T>& a)
-        : n(int(size(a))), root(0), p(n, -1), c(n, {-1, -1}) {
-        auto stk = Vec<int>{0};
+  public:
+    int root;
+    std::vector<int> par;
+    std::vector<std::array<int, 2>> ch;
+
+    template <typename T>
+    explicit CartesianTree(const std::vector<T>& values) {
+        initialize(values);
+    }
+
+  private:
+    template <typename Range>
+    void initialize(const Range& values) {
+        const int n = static_cast<int>(std::size(values));
+        root = 0;
+        par.assign(n, -1);
+        ch.assign(n, {-1, -1});
+        if (n == 0) {
+            return;
+        }
+
+        auto stk = std::vector<int>{0};
         stk.reserve(n);
         for (int i = 1; i < n; i++) {
-            if (a[stk.back()] > a[i]) {
-                while (size(stk) >= 2 && a[stk.end()[-2]] > a[i]) {
+            if (values[stk.back()] > values[i]) {
+                while (std::size(stk) >= 2 &&
+                       values[stk[std::size(stk) - 2]] > values[i]) {
                     stk.pop_back();
                 }
-                if (size(stk) == 1) {
-                    root = p[c[i][0] = stk.back()] = i;
+                if (std::size(stk) == 1) {
+                    root = i;
+                    ch[i][0] = stk.back();
+                    par[stk.back()] = i;
                 } else {
-                    p[c[i][0] = stk.back()] = i;
-                    c[p[i] = stk.end()[-2]][1] = i;
+                    ch[i][0] = stk.back();
+                    par[stk.back()] = i;
+
+                    int j = stk[std::size(stk) - 2];
+                    ch[j][1] = i;
+                    par[i] = j;
                 }
                 stk.back() = i;
             } else {
-                c[p[i] = stk.back()][1] = i;
+                int j = stk.back();
+                ch[j][1] = i;
+                par[i] = j;
                 stk.push_back(i);
             }
         }

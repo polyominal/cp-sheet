@@ -14,7 +14,7 @@ int main() {
     }
 
     auto ct = CartesianTree(A);
-    auto p = ct.p;
+    auto p = ct.par;
     p[ct.root] = ct.root;
     for (int i = 0; i < N; i++) {
         cout << p[i] << " \n"[i + 1 == N];
