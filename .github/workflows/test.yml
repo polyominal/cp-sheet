@@ -1,10 +1,17 @@
 name: Unit tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   unit_tests:
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        compiler: [clang++, g++]
 
     steps:
       - uses: actions/checkout@v4
@@ -21,4 +28,4 @@ jobs:
           cd ${GITHUB_WORKSPACE}/src
           "${GITHUB_WORKSPACE}/bin/bazel" test //... --config=pedantic
         env:
-          CXX: "clang++"
+          CXX: ${{ matrix.compiler }}
