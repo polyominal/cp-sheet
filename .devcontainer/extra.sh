@@ -2,4 +2,4 @@
 
 set -e
 
-pipx install online-judge-tools online-judge-verify-helper
+pipx install competitive-verifier
