@@ -22,7 +22,7 @@
 					"-Wshadow",
 					"-Wconversion",
 					"-Wno-sign-conversion",
-					"-Isrc"
+					"-I${containerWorkspaceFolder}/src"
 				],
 				"clangd.arguments": [
 					"--background-index",
