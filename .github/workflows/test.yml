@@ -1,23 +1,31 @@
 name: Unit tests
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
 jobs:
   unit_tests:
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        compiler: [clang++, g++]
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Install bazelisk
         run: |
-          curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.21.0/bazelisk-linux-amd64"
+          curl -LO "https://github.com/bazelbuild/bazelisk/releases/download/v1.25.0/bazelisk-linux-amd64"
           mkdir -p "${GITHUB_WORKSPACE}/bin/"
           mv bazelisk-linux-amd64 "${GITHUB_WORKSPACE}/bin/bazel"
           chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
 
       - name: Test
         run: |
+          cd ${GITHUB_WORKSPACE}/src
           "${GITHUB_WORKSPACE}/bin/bazel" test //... --config=pedantic
         env:
-          CXX: "clang++"
+          CXX: ${{ matrix.compiler }}
