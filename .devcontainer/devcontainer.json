@@ -6,11 +6,11 @@
 		},
 		"ghcr.io/devcontainers/features/python:1": {},
 		"ghcr.io/devcontainers-community/features/llvm:3": {
-			"version": 18
+			"version": 19
 		},
 		"ghcr.io/devcontainers-community/features/bazel:1": {}
 	},
-	"updateContentCommand": "./.devcontainer/extra.sh",
+	"postCreateCommand": "./.devcontainer/post_create.sh",
 	"customizations": {
 		"vscode": {
 			"settings": {
@@ -22,7 +22,7 @@
 					"-Wshadow",
 					"-Wconversion",
 					"-Wno-sign-conversion",
-					"-Isrc"
+					"-I${containerWorkspaceFolder}/src"
 				],
 				"clangd.arguments": [
 					"--background-index",
@@ -37,9 +37,12 @@
 				"editor.formatOnSave": true
 			},
 			"extensions": [
-				"llvm-vs-code-extensions.vscode-clangd",
-				"BazelBuild.vscode-bazel"
+				"llvm-vs-code-extensions.vscode-clangd"
 			]
 		}
+	},
+	"containerEnv": {
+		"CC": "clang",
+		"CXX": "clang++"
 	}
 }
